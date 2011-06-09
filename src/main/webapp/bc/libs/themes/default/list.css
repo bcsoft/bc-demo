@@ -1,0 +1,180 @@
+/**
+ * 列表视图样式
+ *
+ * @author rongjihuang@gmail.com
+ * @date 2011-04-24
+ */
+
+/**table重设*/
+table.table{
+	/*width: 100%;
+	height: 100%;*/
+	table-layout: fixed;
+	border-spacing: 0;
+	background: none;
+	padding:0;
+	margin:0;
+	cursor: default;
+	overflow: visible;
+}
+
+/**表格的数据加载动画*/
+#bc-grid-loader{
+	position: absolute;
+	width:32px;height:32px;
+	background: url("images/loader/loader01_32x32.gif") no-repeat;
+	padding:0;margin:0;
+}
+
+/**表格*/
+.bc-grid{
+	padding:0;
+	margin:0;
+}
+
+/**表格头*/
+.bc-grid .header {
+	overflow: hidden;
+}
+/**表格数据列表*/
+.bc-grid .data {
+	position: relative;
+	/*height: 100px;*/
+}
+.bc-grid .header td{
+	text-align: center;
+}
+.bc-grid .header td .wrapper{
+	position: relative;/*用于sortableIcon的定位*/
+}
+.bc-grid .header td .sortableIcon{
+	position: absolute;
+	right:0;
+	top:50%;
+	margin-top: -8px;
+}
+.bc-grid .left{
+	border-right: 1px solid #aaa;
+}
+
+.bc-grid .left,.bc-grid .left table.table,.bc-grid .left table.table td.id{
+	width: 40px;
+	overflow: hidden;
+}
+.bc-grid .left,.bc-grid .right{
+	float: left;
+}
+
+.bc-grid .data .left{
+	/*height: 83px;*/
+}
+.bc-grid .data .right{
+	overflow: auto;
+	/*height: 100px;*/
+	/*width: 200px;*/
+}
+.bc-grid .header .right{
+	overflow: hidden;
+	/*width: 183px;*/
+}
+.bc-grid .header.ui-state-default{
+	border: 0;
+}
+.bc-grid .right table.table{
+	/*width: 300px;*/
+}
+
+.bc-grid td.first,.bc-grid td.middle,.bc-grid td.last,.bc-grid td.id{
+	border-bottom: 1px solid #ccc;
+	padding-left: 0.25em;
+	padding-right: 0.25em;
+	
+	/*内容溢出控制*/
+	overflow:hidden;
+	text-overflow:ellipsis;
+	-o-text-overflow:ellipsis;
+	-icab-text-overflow: ellipsis;
+	-khtml-text-overflow: ellipsis;
+	-moz-text-overflow: ellipsis;
+	-webkit-text-overflow: ellipsis;
+	white-space:nowrap;
+	-moz-binding: url('ellipsis.xml#ellipsis');
+}
+
+.bc-grid .header td.empty{
+	border-bottom: 1px solid #ccc;
+	padding: 0;
+}
+.bc-grid td.middle,.bc-grid td.last{
+	border-left: 1px solid #ccc;
+}
+.bc-grid tr.row{
+	height:1.8em;
+}
+.bc-grid td.id{
+	/*border-right: 1px solid #ccc;*/
+}
+.bc-grid td.id span.ui-icon{
+	display:none;
+}
+.bc-grid td.id span.ui-icon-check,.bc-grid td.id span.ui-icon-notice{
+	display:inline-block;
+	*display:block;/*ie6,ie7*/
+	*float: left;/*ie6,ie7*/
+}
+.bc-grid .header td.id span.ui-icon{
+	margin:auto;/*现代浏览器居中处理*/
+}
+.bc-grid .pager{
+	clear: both;
+	padding: 0.2em;
+}
+.bc-grid .pager.ui-widget-content{
+	border-left-width:0;
+	border-right-width:0;
+	border-bottom-width:0;
+}
+
+.bc-grid .pager {
+	display: block;
+	margin: 0;
+	padding: 0;
+	clear: both;
+}
+.bc-grid .pager li {
+	position: relative;
+	margin: 2px;
+	padding: 4px 0;
+	cursor: pointer;
+	float: left;
+	list-style: none;
+}
+.bc-grid .pager li span.ui-icon {
+	float: left;
+	margin: 0 4px;
+}
+.bc-grid .pager .pagerIconGroup{
+	padding: 2px 2px;
+}
+.bc-grid .pager .pagerIconGroup a.pagerIcon{
+	margin: 0;
+	border: 0;
+}
+.bc-grid .pager .pagerIconGroup span.ui-icon{
+	margin: 2px;
+}
+.bc-grid .pager li span.pageNo,.bc-grid .pager li span.pageSize {
+	float: left;
+	height: 16px;
+	font-size: 12px;
+}
+.bc-grid .pager li span.pageNo {
+	margin: 2px 4px;
+}
+.bc-grid .pager li span.pageSize {
+	margin: 2px 4px;
+}
+.bc-grid .pager li a {
+	float: left;
+	display: block;
+}

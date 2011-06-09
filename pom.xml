@@ -1,0 +1,133 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>cn.bc</groupId>
+		<artifactId>bc-parent</artifactId>
+		<version>0.1-SNAPSHOT</version>
+	</parent>
+	<artifactId>bc-demo</artifactId>
+	<packaging>war</packaging>
+	<name>bc平台演示</name>
+	
+	<properties>
+		<hibernate.show_sql>false</hibernate.show_sql>
+		<!-- 警示：update/create-drop/create/validate，如果在classpath中有/import.sql文件， 
+			hibernate3在启动时会执行 -->
+		<hibernate.hbm2ddl.auto>none</hibernate.hbm2ddl.auto>
+		<struts2.jquery.version>2.5.3</struts2.jquery.version>
+	</properties>
+
+	<build>
+		<finalName>bc-demo</finalName>
+	</build>
+
+	<dependencies>
+		<!-- 第三方依赖包 -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate.javax.persistence</groupId>
+			<artifactId>hibernate-jpa-2.0-api</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		
+		<!-- 平台模块 -->
+		<dependency>
+			<groupId>cn.bc</groupId>
+			<artifactId>bc-orm-hibernate</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>cn.bc</groupId>
+			<artifactId>bc-web-struts2</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>cn.bc</groupId>
+			<artifactId>bc-identity</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>cn.bc</groupId>
+			<artifactId>bc-desktop</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>cn.bc</groupId>
+			<artifactId>bc-test</artifactId>
+			<version>${project.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>cn.bc</groupId>
+			<artifactId>bc-report</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>cn.bc</groupId>
+			<artifactId>bc-message</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>cn.bc</groupId>
+			<artifactId>bc-work</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		
+		<!-- for provided -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jsp-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		
+		<!-- for test -->
+
+		<!--
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20080701</version>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.jgeppert.struts2.jquery</groupId>
+			<artifactId>struts2-jquery-plugin</artifactId>
+			<version>${struts2.jquery.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.jgeppert.struts2.jquery</groupId>
+			<artifactId>struts2-jquery-chart-plugin</artifactId>
+			<version>${struts2.jquery.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.jgeppert.struts2.jquery</groupId>
+			<artifactId>struts2-jquery-richtext-plugin</artifactId>
+			<version>${struts2.jquery.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.jgeppert.struts2.jquery</groupId>
+			<artifactId>struts2-jquery-grid-plugin</artifactId>
+			<version>${struts2.jquery.version}</version>
+		</dependency>
+		-->
+	</dependencies>
+</project>

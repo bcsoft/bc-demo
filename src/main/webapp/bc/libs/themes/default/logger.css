@@ -1,0 +1,232 @@
+/**
+ * JavaScript日志组件样式
+ *
+ * @author rongjihuang@gmail.com
+ * @date 2011-04-11
+ */
+ 
+/**容器样式*/
+.logger {
+	position: absolute;
+	border: 0px solid green;
+	bottom: 10px;
+	left: 10px;
+	text-align: left;
+	font-size: 12px;
+	
+	-moz-opacity:0.5;
+	opacity:.50;
+	filter:alpha(opacity=50);
+	-moz-user-select:none;
+	-khtml-user-select:none;
+	display: none;
+	width:auto;
+	_width:318px;
+}
+
+/**标题样式*/
+.logger .header{
+	background-color: #000000;
+}
+.logger .header,.logger .header div{
+	height: 22px;
+}
+.logger .header span{
+	width: 16px;
+	height: 16px;
+	margin-top:0px;
+	margin-left:3px;
+	margin-right:3px;
+	background:transparent url(images/logger/log_icons.png) no-repeat scroll 0 0;
+	_background-image:url(images/logger/log_icons_ie6.png);/*fix IE6*/
+}
+.logger .header .leftSide,.logger .header .rightSide{
+	float: left;
+	width: 9px;
+	background:transparent url(images/logger/log_bg.png) repeat-y scroll 0 0;
+}
+.logger .header .leftSide{
+	background-position: -18px 0;
+}
+.logger .header .rightSide{
+	background-position: -21px 0;
+}
+.logger .header .left{
+	float:left;
+	width: 150px;
+}
+.logger .header .left span{
+	float:left;
+}
+.logger .header .right{
+	float:left;
+	width: 150px;
+}
+.logger .header .right span{
+	float:right;
+}
+.logger .header span.error {
+	background-position: 0px 0px;
+}
+.logger .header span.errorDisabled {
+	background-position: -16px 0px;
+}
+.logger .header span.warn {
+	background-position: 0px -16px;
+}
+.logger .header span.warnDisabled {
+	background-position: -16px -16px;
+}
+.logger .header span.info {
+	background-position: 0px -32px;
+}
+.logger .header span.infoDisabled {
+	background-position: -16px -32px;
+}
+.logger .header span.debug {
+	background-position: 0px -48px;
+}
+.logger .header span.debugDisabled {
+	background-position: -16px -48px;
+}
+.logger .header span.profile {
+	background-position: 0px -64px;
+}
+.logger .header span.profileDisabled {
+	background-position: -16px -64px;
+}
+.logger .header span.close {
+	background-position: 0px -80px;
+}
+.logger .header span.clear {
+	background-position: -16px -80px;
+}
+.logger .header span.desc {
+	background-position: 0px -96px;
+}
+.logger .header span.descDisabled {
+	background-position: -16px -96px;
+}
+
+/**内容样式*/
+.logger .content{
+	background-color: #000000;
+}
+.logger .content,.logger .content div{
+	height: 200px;
+}
+.logger .content .leftSide,.logger .content .rightSide{
+	float: left;
+	width: 9px;
+	background:transparent url(images/logger/log_bg.png) repeat-y scroll 0 0;
+}
+.logger .content .leftSide{
+	background-position: -18px 0px;
+}
+.logger .content .rightSide{
+	background-position: -21px 0px;
+}
+.logger .content .center{
+	float: left;
+	width: 300px;
+	overflow: auto;
+}
+.logger .content ol{
+	height: 100%;
+	overflow: auto;
+	width: 100%;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+.logger .content ol li{
+	padding: 1px 2px 1px 23px;
+	border-bottom: 1px solid #333333;
+	color: #000000;
+	margin: 0;
+	line-height: 20px;
+	vertical-align: middle;
+	color: #CCC;
+}
+.logger .content ol li span{
+	width: 16px;
+	height: 16px;
+	background:transparent url(images/logger/log_icons.png) no-repeat scroll 0 0;
+	_background-image:url(images/logger/log_icons_ie6.png);/*fix IE6*/
+	border: 0;
+	display: block;
+	float: left;
+	margin-left: -20px;
+	_margin-left: -10px;/*fix IE6*/
+	margin-top: 2px;
+	display: block;
+}
+
+.logger .content ol li.error span {
+	background-position: 0 0;
+}
+
+.logger .content ol li.warn span {
+	background-position: 0 -16px;
+}
+
+.logger .content ol li.info span {
+	background-position: 0 -32px;
+}
+
+.logger .content ol li.debug span {
+	background-position: 0 -48px;
+}
+
+.logger .content ol li.profile span {
+	background-position: 0 -64px;
+}
+
+.logger .content ol li.profile {
+	font-style: italic;
+	color: #DDD;
+}
+
+/**顶部样式*/
+.logger .top,.logger .top div{
+	height: 9px;
+	overflow: hidden;
+}
+.logger .top .leftSide,.logger .top .rightSide{
+	float: left;
+	width: 9px;
+	background:transparent url(images/logger/log_bg.png) no-repeat scroll 0 0;
+}
+.logger .top .leftSide{
+	background-position: 0 0;
+}
+.logger .top .rightSide{
+	background-position: -9px 0px;
+}
+.logger .top .center{
+	float: left;
+	width: 300px;
+	background:transparent url(images/logger/log_bg1.png) repeat-x scroll 0 0;
+}
+
+/**底部样式*/
+.logger .footer,.logger .footer div{
+	height: 9px;
+	overflow: hidden;
+}
+.logger .footer .leftSide,.logger .footer .rightSide{
+	float: left;
+	width: 9px;
+	background:transparent url(images/logger/log_bg.png) no-repeat scroll 0 0;
+}
+.logger .footer .leftSide{
+	background-position: 0 -9px;
+}
+.logger .footer .rightSide{
+	background-position: -9px -9px;
+}
+.logger .footer .center{
+	float: left;
+	width: 300px;
+	background:transparent url(images/logger/log_bg1.png) repeat-x scroll 0 -4px;
+}

@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app id="WebApp_ID" version="2.4"
+	xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+  	<!-- 文档按如下顺序布局可以保证在weblogic8下启动时不会报web.xml不规范的错误：
+  		display-name>description>context-param>filter>filter-mapping>listener>servlet
+  		>servlet-mapping>session-config>welcome-file-list>error-page>taglib
+  	 -->
+  	
+	<display-name>webTest</display-name>
+
+	<welcome-file-list>
+		<welcome-file>/login.action</welcome-file>
+	</welcome-file-list>
+	
+	<!-- Log4j -->
+	<servlet>
+		<servlet-name>log4jConfig</servlet-name>
+		<servlet-class>cn.bc.web.servlet.Log4jConfigServlet</servlet-class>
+		<init-param>
+			<param-name>log4jConfigLocation</param-name>
+			<param-value>/WEB-INF/classes/log4j.xml</param-value>
+		</init-param>
+		<load-on-startup>0</load-on-startup>
+	</servlet>
+
+	<!-- 配置Spring加载哪些配置文件，多个文件用逗号连接，可使用通配符， 
+		如/WEB-INF/applicationContext-*.xml,classpath*:applicationContext-*.xml 
+	-->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:spring.xml</param-value>
+	</context-param>
+
+	<!-- 配置Spring的监听器 -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	
+	<!-- Spring Open Session or EntityManager In View filter:这个必须放在其他filter前，否则无效 -->
+	<filter>
+		<filter-name>springOpenInViewFilter</filter-name>
+		<!--<filter-class>org.springframework.orm.hibernate3.support.OpenSessionInViewFilter</filter-class>-->
+		<filter-class>org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>springOpenInViewFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<!-- 配置Struts2过滤器 -->
+	<filter>
+		<filter-name>struts2</filter-name>
+		<filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>struts2</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<!-- utf-8编码过虑器 -->
+	<filter>
+		<filter-name>characterEncodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+		<init-param>
+			<param-name>forceEncoding</param-name>
+			<param-value>false</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>characterEncodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<!-- 缓存过滤器:js、css、图片等文件添加永久缓存(设为10年) -->
+	<filter>
+		<filter-name>foreverCacheFilter</filter-name>
+		<filter-class>cn.bc.web.filter.CacheFilter</filter-class>
+		<init-param>
+			<param-name>expires</param-name>
+			<!--缓存时间配置 ,单位为分钟,配为-1代表永久的缓存-->
+			<param-value>-1</param-value>
+		</init-param>
+		<init-param>
+			<param-name>excludePaths</param-name>
+			<param-value>/attachment/*</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>foreverCacheFilter</filter-name>
+		<url-pattern>*.css</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>foreverCacheFilter</filter-name>
+		<url-pattern>*.cssgz</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>foreverCacheFilter</filter-name>
+		<url-pattern>*.js</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>foreverCacheFilter</filter-name>
+		<url-pattern>*.jsgz</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>foreverCacheFilter</filter-name>
+		<url-pattern>*.gif</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>foreverCacheFilter</filter-name>
+		<url-pattern>*.jpg</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>foreverCacheFilter</filter-name>
+		<url-pattern>*.png</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>foreverCacheFilter</filter-name>
+		<url-pattern>*.tif</url-pattern>
+	</filter-mapping>
+	
+	<!-- 对响应进行gzip压缩的过虑器  -->
+	<filter>
+		<filter-name>gzipFilter</filter-name>
+		<filter-class>cn.bc.web.filter.gzip.GzipFilter</filter-class>
+		<!-- 排除某些目录或文件不处理(多个配置间用逗号分隔): 如对于下载文件的url则需要在这里配置排除  -->
+	 	<init-param>
+			<param-name>excludePaths</param-name>
+			<param-value>/attachmentAction*</param-value>
+		</init-param>
+		<!-- 是否启用js、css文件的静态gzip支持 -->
+		<init-param>
+		   	<param-name>enableStaticGzip</param-name>
+		   	<param-value>false</param-value>
+	  </init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>gzipFilter</filter-name>
+		<url-pattern>*.js</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>gzipFilter</filter-name>
+		<url-pattern>*.css</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>gzipFilter</filter-name>
+		<url-pattern>*.htm</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>gzipFilter</filter-name>
+		<url-pattern>*.html</url-pattern>
+	</filter-mapping>
+	<!-- <filter-mapping>
+		<filter-name>gzipFilter</filter-name>
+		<url-pattern>*.jsp</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>gzipFilter</filter-name>
+		<servlet-name>OzActionServlet</servlet-name>
+	</filter-mapping>  -->
+</web-app>

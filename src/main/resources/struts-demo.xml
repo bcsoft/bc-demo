@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<!-- 登录 -->
+	<package name="login" extends="struts-default" namespace="/">
+		<action name="doLogin" class="loginAction" method="doLogin">
+			<result>/bc/login/loginResult.jsp</result>
+		</action>
+		<!-- 设置空的name，使web.xml中可以通过action来配置welcome-file -->
+		<action name="" class="loginAction">
+			<result>/bc/login/login.jsp</result>
+		</action>
+		<action name="login" class="loginAction">
+			<result>/bc/login/login.jsp</result>
+		</action>
+		<action name="logout" class="loginAction" method="doLogout">
+			<result type="redirect">/login</result>
+		</action>
+	</package>
+	<!-- 主页配置 -->
+	<package name="index" extends="struts-default" namespace="/">
+		<action name="index" class="indexAction">
+			<result>/bc/index/desktop.jsp</result>
+			<result name="redirect" type="redirect">/login</result>
+		</action>
+		<!-- 设置空的name，使web.xml中可以通过action来配置welcome-file
+		<action name="" class="indexAction">
+			<result>/bc/index/desktop.jsp</result>
+		</action> -->
+	</package>
+	
+	<!-- 图表 -->
+	<package name="chart" extends="bc-default" namespace="/bc/chart">
+		<action name="pie" class="chartDemoAction" method="pie">
+			<result name="pie">/bc-test/chart/pie.jsp</result>
+		</action>
+		<action name="bar" class="chartDemoAction" method="bar">
+			<result name="bar">/bc-test/chart/bar.jsp</result>
+		</action>
+		<action name="spline" class="chartDemoAction" method="spline">
+			<result name="spline">/bc-test/chart/spline.jsp</result>
+		</action>
+		<action name="mix" class="chartDemoAction" method="mix">
+			<result name="mix">/bc-test/chart/mix.jsp</result>
+		</action>
+	</package>
+</struts>

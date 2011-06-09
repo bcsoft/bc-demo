@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>BoxPointer</title>
+<link rel="stylesheet" type="text/css"
+	href="../../ui-libs/jquery-ui/1.8.11/themes/base/jquery.ui.all.css" />
+<link rel="stylesheet" type="text/css"
+	href="../../bc/libs/themes/default/core.css" />
+<link rel="stylesheet" type="text/css"
+	href="../../bc/libs/themes/default/boxPointer.css" />
+<script type="text/javascript"
+	src="../../ui-libs/jquery/1.5.1/jquery.min.js"></script>
+<script type="text/javascript"
+	src="../../ui-libs/jquery-ui/1.8.11/i18n/jquery-ui-i18n.js"></script>
+<script type="text/javascript"
+	src="../../ui-libs/jquery-ui/1.8.11/jquery-ui.min.js"></script>
+<script type="text/javascript" src="../../bc/libs/core.js"></script>
+<script type="text/javascript" src="../../bc/libs/boxPointer.js"></script>
+<link rel="stylesheet" type="text/css"
+	href="../../bc/libs/themes/default/logger.css" />
+<script type="text/javascript" src="../../bc/libs/logger.js"></script>
+	<script type="text/javascript" src="../../ui-libs/jquery-ui/themeSwitcher/switcher.js"></script>
+<style type="text/css">
+#c input{width:95%;}
+</style>
+</head>
+<body>
+	<div id="themeSwitcher" style="position:absolute;right:20px;top:10px;"></div>
+	<div id="dlg">测试一下！</div>
+	<h>BoxPointer</h>
+	<p>
+	<input id="btnShow" type="button" value="显示"/>
+	<input id="btnHide" type="button" value="隐藏" />
+	</p>
+	<div id="c" style="position:absolute;left:200px;top:50px;border:1px solid black;padding:10px;width:400px;">
+	<p>
+		<input id="text1" type="text" value="top测试-5秒后自动关闭" data-dir="top" />
+	</p>
+	<p>
+		<input id="text2" type="text" value="left测试" style="width: 150px"
+			data-dir="left" />
+	</p>
+	<p>
+		<input id="text3" type="text" value="bottom测试" data-dir="bottom" />
+	</p>
+	<p>
+		<input id="text4" type="text" value="right测试" data-dir="right" />
+	</p>
+	<p>
+		<input id="text5" type="text" value="auto测试测试测试测试测试测试" />
+	</p>
+	<p>
+		<input id="text6" type="text" value="无关闭按钮，7秒后自动关闭" data-dir="right" />
+	</p>
+	<p>
+		<textarea id="textarea1" rows="3" data-dir="left">测试2测试2测试2<br />测试3<br />测试3<br />测试3<br />测试3</textarea>
+	</p>
+	<p>
+		<select id="select1" data-dir="right">
+			<option>测试1</option>
+			<option selected="selected">测试2</option>
+			<option>测试3</option>
+			<option>测试4</option>
+		</select>
+	</p>
+	</div>
+	<script type="text/javascript">
+		jQuery(function($) {
+			$("body").dblclick(function() {
+				$(".boxPointer").unbind().remove();
+			});
+			
+			$("#btnShow").click(function(){
+				$("#c :input").each(function() {
+					var $this = $(this);
+					var option = {
+						of : this,
+						dir : $this.attr("data-dir"),
+						content : $this.val()
+					};
+					if(this.id == "text6")
+						option.close=7000;
+					bc.boxPointer.show(option);
+				});
+			});
+			$("#btnHide").click(function(){
+				$(".boxPointer").unbind().remove();
+			});
+			
+			//主题设置
+			$('#themeSwitcher').themeswitcher({closeOnSelect:false,height:340,root:"../.."});
+			
+			$("#dlg").click(function(){
+				$("#dlg").dialog();
+			});
+		});
+	</script>
+</body>
+</html>

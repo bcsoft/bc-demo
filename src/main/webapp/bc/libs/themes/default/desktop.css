@@ -1,0 +1,270 @@
+/**
+ * 桌面主题样式
+ *
+ * @author rongjihuang@gmail.com
+ * @date 2011-04-11
+ */
+html,body{
+	overflow: hidden;
+	height: 100%;
+	width: 100%;
+}
+body{
+	/*background: url(images/bg_page.png) repeat top left;
+	background-color: #FAFAFA;*/
+	background-color: #CCD9C8;
+}
+body.ui-widget-content{
+	border-width: 0;
+}
+body .ui-widget-overlay {
+	opacity: .40;
+	filter: Alpha(Opacity=40);
+}
+/*加载动画*/
+#loader {
+	height: 32px;
+	width: auto;
+	overflow: hidden;
+	border: 0;
+	position: absolute;
+	margin: 10px;
+	font-size: 24px;
+	background-image: url(images/loader/loader01_32x32.gif);
+	background-repeat: no-repeat;
+	height: 32px;
+	text-indent: 34px;
+	display: none;
+	line-height: 32px;
+	z-index: 10000;
+}
+
+/*测试用*/
+#heavyControl{
+	position: absolute;
+	border:1px solid #ccc;
+	right:10px;
+	bottom:60px;
+	width:300px;
+	padding:4px;
+}
+
+/*整体布局*/
+#layout {
+	height: 100%;
+	width: 100%;
+	overflow: hidden;
+	border: 0;
+	position: absolute;
+	z-index: 0;
+}
+
+/*桌面区域*/
+#desktop {
+	position: absolute;
+	/*width: 100%;*/
+	top: 40px;
+	overflow: auto;
+}
+
+/**桌面快捷方式*/
+a.shortcut{
+	float: left;
+	/*clear: left; 设置这个就默认竖排了*/
+	margin: 10px 5px 5px 10px;
+	display: inline-block;
+	/*color: #ffffff;*/
+	text-decoration: none;
+	border: 2px solid transparent;
+	border-radius: 8px; 
+	cursor: default;
+	_text-align: center;/*fixed ie6:使内部内容水平居中*/
+	width:5.5em;
+}
+a.shortcut:HOVER{
+	border-color: green;
+}
+a.shortcut .icon{
+	display: block;
+	width:52px;height:52px;
+	background: url(images/shortcuts/shortcuts.png) no-repeat -208px -156px;
+	/*filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/logo48.png', sizingMethod='scale');*/
+	margin: auto;
+	margin-top:2px;
+}
+a.shortcut .text{
+	margin: auto;
+	display: block;
+	width:5em;
+	/*color: white;*/
+	overflow: hidden;
+	text-overflow: ellipsis;
+	cursor: default;
+	text-align: center;
+	padding:2px;
+}
+
+/**快速任务栏*/
+#quickbar {
+	position: absolute;
+	z-index: 10000;
+	height: 40px;/*这个不设置的话会导致元素高度全部计算诡异*/
+	top: 0;
+	background-color: #9EB1A3;
+	width: 100%;
+	/*overflow: hidden;
+	background: url(images/bg_quickbar1.png) repeat-x top left;*/
+	z-index: 10!important;
+	border-width:0 0 1px 0;
+	table-layout: fixed;
+	margin:0;padding:0;
+}
+#quickbar > tbody,#quickbar > tbody > tr{
+	margin:0;padding:0;
+}
+#quickStart {
+	width: 40px;
+	vertical-align: middle;
+}
+#quickStart a {
+	cursor: pointer;
+	height: 32px;
+	width: 32px;
+	background: url(images/browser/chrome32.png) no-repeat;
+	text-decoration: none;
+	display: block;
+}
+#quickStart.ui-state-active{
+	border:0;
+}
+#quickShowHide {
+	width: 12px;
+	vertical-align: top;
+	height:100%;
+}
+#quickShowHide a {
+	background: url(images/showHide.png) repeat-y 0 0;
+	display:block;
+	width:100%;
+	height:100%;
+	text-decoration: none;
+}
+#quickShowHide a:HOVER {
+	background-position: -24px 0;
+}
+#quickLogout {
+	width: 40px;
+	vertical-align: middle;
+	height:100%;
+}
+#quickLogout a {
+	background: url(images/logout.png) repeat-y 0 0;
+	display:block;
+	width:32px;
+	height:32px;
+	text-decoration: none;
+	margin: auto;
+}
+#quickButtons {
+	height: 100%;
+	vertical-align: middle;
+}
+#quickButtons .quickButton {
+	float: left;
+	margin: 2px 0px 2px 2px;
+	padding: 8px;
+	border: 1px solid black;
+	text-decoration: none;
+	cursor: default;
+	position: relative;
+}
+#quickButtons .quickButton .ui-icon{
+	position: absolute;
+	display:block;
+	width:16px;height:16px;
+	top:50%;
+	margin-top: -8px;
+	padding:0;
+	border: 0;
+}
+#quickButtons .quickButton .text{
+	padding-left: 20px;
+	padding-right: 2px;
+}
+#quickButtons .quickButton .loading{
+	background: url(images/loader/loader01_16x16.gif) no-repeat 0 0;
+}
+
+/*设置字体大小*/
+#setting{
+	position: fixed;
+	_position: absolute;
+	top:40px;
+	right:20px;
+	overflow: visible;
+	z-index:100;
+	*width:150px;/*ie6,ie7*/
+	display: none;
+}
+#fontSliderContainer{
+	margin-bottom:10px;
+}
+
+/*版权相关*/
+#copyrightBar {
+	position: absolute;
+	bottom: 0px;
+	left: 0;
+	width: 100%;
+	height: 30px;
+	line-height: 30px;
+	overflow: hidden;
+	overflow: hidden;
+	text-align: center;
+}
+#copyrightBar a {
+	/*display:block;
+	width:100%;height:100%;*/
+	font-size:0.75em;
+	color:#888;
+	text-decoration: none;
+	cursor: pointer;
+	margin: auto;
+}
+#poweredBy {
+	margin:5px; float:right;
+}
+.bc-slide,.bc-slide.ui-state-high {
+	border:2px solid red;
+}
+#poweredBy span{
+	display: block;width:83px;height:34px;
+	background: url(images/poweredBy.png) 0 0 no-repeat;
+}
+#rightPanel{
+	position:absolute;
+	right:0;
+	top:50px;
+}
+#rightPanel .item{
+	margin:4px;
+}
+.imgtest{
+	display:block;
+	background: url(images/shortcuts/shortcuts.png) no-repeat -52px 0;
+	width:52px;height:52px;
+	zoom:0.5;
+}
+.imgtest:HOVER{
+	zoom:1;
+}
+#loginInfo{
+	position: absolute;
+	bottom: 0;
+	left:0;
+	height: 30px;
+	line-height: 30px;
+	font-size:0.75em;
+	color:#888;
+	padding-left:10px;
+}

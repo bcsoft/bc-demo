@@ -1,0 +1,153 @@
+/**
+ * 全局样式控制
+ * 主要设置一些跨浏览器的兼容设置
+ *
+ * @author rongjihuang@gmail.com
+ * @date 2011-04-11
+ */
+html {
+	height: 100%;
+}
+
+/**全局字体控制*/
+body {
+	height: 100%;
+	overflow: hidden;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-family: "微软雅黑", "宋体", sans-serif;
+	/*font-size: 62.5%;使1em=12px,浏览器默认为1em=16px,ie:_font-size: 63%;*/
+	font-size: 14px;/*调整为默认14px | 0.87em*/
+}
+
+.hide{display:none;}
+
+/**内容溢出控制*/
+.ellipsis {
+	overflow:hidden;
+	text-overflow:ellipsis;
+	-o-text-overflow:ellipsis;
+	-icab-text-overflow: ellipsis;
+	-khtml-text-overflow: ellipsis;
+	-moz-text-overflow: ellipsis;
+	-webkit-text-overflow: ellipsis;
+	white-space:nowrap;
+	-moz-binding: url('ellipsis.xml#ellipsis');
+}
+.text-overflow-ellipsis{
+	text-overflow: ellipsis;
+	white-space:nowrap;
+	overflow:hidden;
+}
+
+
+/**
+ * jquery-ui样式的特殊覆盖或扩展
+ *
+ * @author rongjihuang@gmail.com
+ * @date 2011-04-13
+ */
+/**修改字体*/
+.ui-widget {font-family: "微软雅黑", "宋体", sans-serif;}
+.ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button {font-family: "微软雅黑", "宋体", sans-serif;}
+/**修改对话框*/
+.bc-ui-dialog {padding: 0;}
+.bc-ui-dialog .ui-widget-header {border-width: 0;}
+.bc-ui-dialog .ui-widget-header.ui-corner-all {border-bottom-right-radius: 0;border-bottom-left-radius: 0;}
+.bc-ui-dialog .ui-dialog-content {
+	padding: 0;
+	/*margin: 0 8px 8px 8px;*/
+}
+.bc-ui-dialog.ui-widget-content {
+	border-width: 4px;
+}
+.bc-ui-dialog .bc-toolbar.ui-widget-content  {
+	border-top:0;border-left:0;border-right:0;
+}
+
+.bc-slide {
+	position: absolute;
+	min-width: 200px;
+	min-height: 50px;
+	_height: 50px;
+	z-index: 10000;
+	padding:4px;
+	right:2px;
+	bottom:2px;
+}
+.bc-slide .ui-widget-content {
+	cursor: default;
+}
+.clickToSelect{
+	cursor: pointer;	
+}
+
+
+.bc-page,.bc-page.ui-dialog-content{
+	overflow: hidden;
+}
+.bc-autoScroll{
+	overflow: auto;
+}
+.bc-autoScroll-x{
+	overflow-x: auto;
+	overflow-y: hidden;
+}
+.bc-autoScroll-y{
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
+.bc-toolbar{
+	position:relative;
+	padding:0.2em;
+}
+.bc-buttonGroup,.bc-separatorButton,.bc-searchButton{
+	display: inline-block;	
+}
+.bc-toolbar .ui-button-text{
+	/*padding-top: 0.2em;
+	padding-bottom: 0.2em;*/
+}
+.bc-searchButton{
+	position: absolute;
+	top: 0.4em;
+	right: 0.4em;
+}
+.bc-searchButton a{
+	position: absolute;
+	top: 50%;
+	margin-top: -8px;
+	left: 0.12em;
+}
+.bc-searchButton input{
+	padding-left: 1.4em;
+	width: 180px;
+}
+.w60{width: 60px;}
+.w80{width: 80px;}
+.w100{width: 100px;}
+.w120{width: 20px;}
+.w150{width: 150px;}
+.w200{width: 200px;}
+.w220{width: 220px;}
+.w250{width: 250px;}
+.w300{width: 300px;}
+.w400{width: 400px;}
+.w500{width: 500px;}
+.w600{width: 600px;}
+.m4{margin: 4px;}
+.m6{margin: 6px;}
+.m8{margin: 8px;}
+.m10{margin: 10px;}
+
+/*水平排列li元素的通用样式*/
+ul.horizontal,div.horizontal{overflow:auto;list-style:none;padding:4px;margin:0;}
+li.horizontal{position:relative;margin:2px 4px 2px 0;float:left;padding:2px 4px;}
+li.horizontal span.text{margin-right:16px;cursor:default;}
+li.horizontal span.text2{cursor:default;}
+span.ui-icon.verticalMiddle{position:absolute;top:50%;margin-top:-8px;width:16px;height:16px;right:4px;cursor:pointer;}
+
+/*普通的标题*/
+.title{border-width:0 0 1px 0 !important;padding:0.25em;}
