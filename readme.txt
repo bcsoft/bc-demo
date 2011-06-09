@@ -1,16 +1,19 @@
 ﻿BC平台演示
 
-一）浏览器兼容性：
+浏览地址： https://github.com/rongjihuang/bc-demo
+源码检出： git@github.com:rongjihuang/bc-demo.git
+
+一) 浏览器兼容性：
 Chrome11、Firefox4、Safari5、Opera11、IE9、IE8
 
-二）源码编译运行步骤：
+二) 源码编译运行步骤：
 1) 检出本工程
-   检出地址：git@github.com:rongjihuang/bc-demo.git
+   检出地址： git@github.com:rongjihuang/bc-demo.git
 2) 检出ui-libs工程到本工程的src/main/webapp目录下
-   检出地址：git@github.com:rongjihuang/ui-libs.git
+   检出地址： git@github.com:rongjihuang/ui-libs.git
 3) 检出bc-framework工程并编译发布
-   检出地址：git@github.com:rongjihuang/bc-framework.git
-   编译发布: >mvn clean install -Dmaven.test.skip=true
+   检出地址： git@github.com:rongjihuang/bc-framework.git
+   编译发布:  >mvn clean install -Dmaven.test.skip=true
    部署测试数据库(mysql): 
        >cd bc-framework
        >ant
