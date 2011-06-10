@@ -39,7 +39,7 @@ bc.grid.export2Excel = function($grid,el) {
 		+'<div style="padding:0 4px;text-align:right;">'
 		+'<a id="continue" style="text-decoration:underline;cursor:pointer;">继续</a>&nbsp;&nbsp;'
 		+'<a id="cancel" style="text-decoration:underline;cursor:pointer;">取消</a></div>'
-		+'<input type="hidden" name="searchText">'
+		+'<input type="hidden" name="search">'
 		+'<input type="hidden" name="exportKeys">'
 		+'</form>');
 	
@@ -113,7 +113,7 @@ bc.grid.export2Excel = function($grid,el) {
 		if($search.size()){
 			var searchText = $search.val();
 			if(searchText && searchText.length > 0)
-				boxPointer.find(":hidden[name='searchText']").val(searchText);
+				boxPointer.find(":hidden[name='search']").val(searchText);
 		}
 		
 		//提交表单
