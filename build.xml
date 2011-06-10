@@ -15,5 +15,16 @@
 
 	<target name="help">
 		<echo message="运行 'ant cleanAll' 删除除源代码之外的所有文件和目录" />
+		<echo message="运行 'ant copy' 从bc-framework中复制数据库初始化脚本" />
+	</target>
+	
+	<target name="copy">
+		<copy verbose="true" todir="./src/main/resources/cn/bc/demo" overwrite="true">  
+			<fileset dir="../bc-framework/build">  
+				<include name="db.*.drop.sql"/>
+				<include name="db.*.create.sql"/>
+				<include name="db.*.data.sql"/>
+			</fileset>  
+		</copy>
 	</target>
 </project>

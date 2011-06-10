@@ -30,6 +30,7 @@
 	<include file="cn/bc/report/web/struts2/struts.xml" />
 	<include file="cn/bc/message/web/struts2/struts.xml" />
 	<include file="cn/bc/work/web/struts2/struts.xml" />
+	<include file="cn/bc/log/web/struts2/struts.xml" />
 
 	<!-- 项目自定义的配置文件 -->
 	<include file="struts-demo.xml" />

@@ -31,6 +31,9 @@
 		<class>cn.bc.work.domain.TodoWork</class>
 		<class>cn.bc.work.domain.DoneWork</class>
 
+		<!-- syslog -->
+		<class>cn.bc.log.domain.Syslog</class>
+
 		<!-- Test
 		<class>cn.bc.one2onetest.Person</class>
 		<class>cn.bc.one2onetest.Address</class> -->

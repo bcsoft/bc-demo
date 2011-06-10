@@ -3,7 +3,7 @@
  */
 package cn.bc.login;
 
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
@@ -23,6 +23,9 @@ import cn.bc.identity.domain.Actor;
 import cn.bc.identity.domain.ActorRelation;
 import cn.bc.identity.domain.AuthData;
 import cn.bc.identity.service.UserService;
+import cn.bc.log.domain.Syslog;
+import cn.bc.log.service.SyslogService;
+import cn.bc.log.web.struts2.SyslogAction;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -42,11 +45,17 @@ public class LoginAction extends ActionSupport implements SessionAware {
 	public String msg;// 登录信息
 	public boolean success;// 登录是否成功
 	private UserService userService;
+	private SyslogService syslogService;
 	private Map<String, Object> session;
 
 	@Autowired
 	public void setUserService(UserService userService) {
 		this.userService = userService;
+	}
+
+	@Autowired
+	public void setSyslogService(SyslogService syslogService) {
+		this.syslogService = syslogService;
 	}
 
 	public void setSession(Map<String, Object> session) {
@@ -92,8 +101,6 @@ public class LoginAction extends ActionSupport implements SessionAware {
 					logger.fatal(info);
 					msg = "登录成功，跳转到系统主页！";
 
-					// TODO 记录登录日志
-
 					// 将登录信息记录到session中
 					this.session.put("user", user);
 
@@ -102,6 +109,8 @@ public class LoginAction extends ActionSupport implements SessionAware {
 							new Integer[] { Actor.TYPE_UNIT,
 									Actor.TYPE_DEPARTMENT });
 					this.session.put("belong", belong);
+					Actor unit = this.loadUnit(belong);
+					this.session.put("unit", unit);
 
 					// 用户所在的岗位
 					List<Actor> groups = this.userService.findMaster(
@@ -109,7 +118,21 @@ public class LoginAction extends ActionSupport implements SessionAware {
 							new Integer[] { ActorRelation.TYPE_BELONG },
 							new Integer[] { new Integer(Actor.TYPE_GROUP) });
 					this.session.put("groups", groups);
-					this.session.put("loginTime", new Date());
+					Calendar now = Calendar.getInstance();
+					this.session.put("loginTime", now.getTime());
+
+					// 记录登陆日志
+					Syslog log = SyslogAction
+							.buildSyslog(
+									now,
+									Syslog.TYPE_LOGIN,
+									user,
+									belong,
+									unit,
+									user.getName() + getText("syslog.login"),
+									"true".equalsIgnoreCase(getText("app.traceClientMachine")),
+									ServletActionContext.getRequest());
+					syslogService.save(log);
 				}
 			}
 		}
@@ -117,10 +140,34 @@ public class LoginAction extends ActionSupport implements SessionAware {
 		return SUCCESS;
 	}
 
+	// 递归向上查找部门所属的单位
+	private Actor loadUnit(Actor belong) {
+		belong = this.userService.loadBelong(belong.getId(),
+				new Integer[] { Actor.TYPE_UNIT });
+		if (belong.getType() != Actor.TYPE_UNIT) {
+			return loadUnit(belong);
+		} else {
+			return belong;
+		}
+	}
+
 	// 注销
 	public String doLogout() throws Exception {
-		((org.apache.struts2.dispatcher.SessionMap<String, Object>) this.session)
-				.invalidate();
+		Actor user = (Actor) this.session.get("user");
+		if (user != null) {// 表明之前session还没过期
+			Actor belong = (Actor) this.session.get("belong");
+			Actor unit = (Actor) this.session.get("unit");
+			Calendar now = Calendar.getInstance();
+			Syslog log = SyslogAction.buildSyslog(now, Syslog.TYPE_LOGOUT,
+					user, belong, unit, user.getName()
+							+ getText("syslog.logout"),
+					"true".equalsIgnoreCase(getText("app.traceClientMachine")),
+					ServletActionContext.getRequest());
+			syslogService.save(log);
+
+			((org.apache.struts2.dispatcher.SessionMap<String, Object>) this.session)
+					.invalidate();
+		}
 		return SUCCESS;
 	}
 }

@@ -264,7 +264,7 @@ bc.page = {
 		});
 	},
 	/**编辑*/
-	edit: function(){
+	edit: function(readOnly){
 		var $this = $(this);
 		var url = $this.attr("data-editUrl");
 		var $tds = $this.find(".bc-grid>.data>.left tr.ui-state-focus>td.id");
@@ -280,10 +280,10 @@ bc.page = {
 				}
 			});
 		}else if($tds.length > 1){
-			bc.msg.slide("一次只可以编辑一条信息，请确认您只选择了一条信息！");
+			bc.msg.slide(!readOnly ? "一次只可以编辑一条信息，请确认您只选择了一条信息！" : "一次只可以查看一条信息，请确认您只选择了一条信息！");
 			return;
 		}else{
-			bc.msg.slide("请先选择要编辑的条目！");
+			bc.msg.slide(!readOnly ? "请先选择要编辑的信息！" : "请先选择要查看的信息！");
 			return;
 		}
 	}
