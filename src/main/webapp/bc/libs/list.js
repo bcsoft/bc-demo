@@ -20,9 +20,10 @@ bc.grid = {
 			container.find(".data .left").scrollTop($(this).scrollTop());
 		});
 		//记录表格的原始宽度
-		var $data_table = $grid.find(".data .right .table");
-		var originWidth = $data_table.width();
-		$data_table.data("originWidth", originWidth);
+		//var $data_table = $grid.find(".data .right .table");
+		//var originWidth = parseInt($data_table.attr("originWidth"));
+		//$data_table.data("originWidth", originWidth);
+		//logger.info("originWidth:" + originWidth);
 		
 		//绑定并触发一下对话框的resize事件
 		//container.trigger("dialogresize");
@@ -41,47 +42,68 @@ bc.grid = {
 	resizeGridPage: function(container) {
 		var $grid = container.find(".bc-grid");
 		if($grid.size()){
-			//data宽度
 			var $data_right = $grid.find(".data .right");
 			var $data_left = $grid.find(".data .left");
 			var $header_right = $grid.find(".header .right");
-			var sw = 0, sh = 0 ;//边框加补白的值
+			
+			//边框加补白的值
+			var sw = 0, sh = 0 ;
 			if($.support.boxModel){
 				sw = $grid.outerWidth()-$grid.width() + ($data_left.outerWidth()-$data_left.width());
 				sh = $grid.outerHeight()-$grid.height();
 			}
+			
+			//设置右容器的宽度
 			$data_right.width(container.width()-$data_left.width()-sw);
+			$header_right.width($data_right[0].clientWidth);//当缩小宽度时，因float，会换行导致高度增高，故在设置高度前必须设置一下
+			
+			//设置右table的宽度
 			var $data_table = $data_right.find(".table");
-			var originWidth = $data_table.data("originWidth");//原始宽度
+			var $header_table = $header_right.find(".table");
+			var originWidth = parseInt($data_table.attr("originWidth"));//$data_table.data("originWidth");//原始宽度
 			var clientWidth = $data_right[0].clientWidth;
 			var newTableWidth = Math.max(originWidth, clientWidth);
 			$data_table.width(newTableWidth);
+			$header_table.width(newTableWidth);
+			logger.info("originWidth=" + originWidth);
+			logger.info("newTableWidth=" + newTableWidth);
 			
-			//其他元素高度累计
+			//累计表格兄弟的高度
 			var otherHeight = 0;
-			$grid.siblings().each(function(){
-				otherHeight += $(this).outerHeight(true);//累计表格兄弟的高度
-			});
-			$grid.height(container.height()-otherHeight-sh);//重设表格的高度
-			$data_right.parent().siblings().each(function(){
-				otherHeight += $(this).outerHeight(true);//再累计表格头和分页条的高度
+			$grid.siblings().each(function(i){
+				otherHeight += $(this).outerHeight(true);
+				logger.info(i + ":" + $(this).outerHeight(true));
 			});
 			
-			//data高度(id列要减去data区的水平滚动条高度)
+			//重设表格的高度
+			$grid.height(container.height()-otherHeight-sh);
+			
+			//再累计表格头和分页条的高度
+			$data_right.parent().siblings().each(function(i){
+				otherHeight += $(this).outerHeight(true);
+			});
+			
+			//data右容器高度
 			$data_right.height(container.height()-otherHeight - sh);
 			
-			//如果导致滚动条切换显示了，再重新计算一下
+			//如果设置data右容器高度后导致垂直滚动条切换显示了，须额外处理一下
 			var _clientWidth = $data_right[0].clientWidth;
 			if(_clientWidth != clientWidth){//从无垂直滚动条到出现滚动条的处理
-				logger.info("clientWidth");
-				$data_table.width(_clientWidth);
-				newTableWidth = _clientWidth;
+				//logger.info("clientWidth");
+				//$data_table.width(_clientWidth);
+				//newTableWidth = _clientWidth;
+				$header_right.width($data_right[0].clientWidth);
 			}
-			//header宽度(要减去data区的垂直滚动条宽度)
-			$header_right.width($data_right[0].clientWidth);
-			$header_right.find(".table").width(newTableWidth);
 			
+			//header宽度(要减去data区的垂直滚动条宽度)
+			//$header_right.width($data_right[0].clientWidth);
+			//$header_right.find(".table").width(newTableWidth);
+			
+			//data左容器高度(要考虑data右容器水平滚动条高度)
 			$grid.find(".data .left").height($data_right[0].clientHeight);
+			
+			logger.info(":::" + $grid.find(".header").outerHeight(true)  + "," + $grid.find(".header")[0].clientHeight);
+			logger.info("width2:" + $data_table.width());
 		}
 	},
 	/**

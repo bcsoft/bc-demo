@@ -65,7 +65,7 @@
 								data-id='code'
 								data-label='<s:text name="duty.code" />'><div class="wrapper"><s:text name="duty.code" /></div>
 							</td>
-							<td class="last sortable" style="width: 100px" 
+							<td class="last sortable"
 								data-id='name'
 								data-label='<s:text name="duty.name" />'><div class="wrapper"><s:text name="duty.name" />
 								<span class="sortableIcon ui-icon hide"></span></div>
@@ -97,7 +97,7 @@
 			</div>
 			<!-- 表格数据行：其他列数据 -->
 			<div class="right">
-				<table class="table" cellspacing="0" cellpadding="0" style="width:300px;">
+				<table class="table" cellspacing="0" cellpadding="0" style="width:300px" originWidth="300">
 					<tbody>
 						<s:iterator value="es" status="stuts">
 							<tr
@@ -106,7 +106,7 @@
 								</td>
 								<td class="middle" style="width: 60px"><s:property value="code" />
 								</td>
-								<td class="last" style="width: 100px"><s:property value="name" />
+								<td class="last"><s:property value="name" />
 								</td>
 <!-- 								<td class="empty">&nbsp;</td> -->
 							</tr>
