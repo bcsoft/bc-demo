@@ -56,7 +56,7 @@
 								data-id='code'
 								data-label='<s:text name="duty.code" />'>
 								<div class="wrapper"><s:text name="duty.code" />
-								<span class="sortableIcon ui-icon ui-icon-triangle-1-n"></span></div>
+								<span class="sortableIcon asc ui-icon ui-icon-triangle-1-n"></span></div>
 							</td>
 							<td class="middle" style="width: 60px" 
 								data-id='code'
@@ -115,6 +115,10 @@
 		<!-- 表格分页条 -->
 		<ul class="pager ui-widget-content ui-widget ui-helper-clearfix">
 			<li data-action="refresh" class='pagerIcon ui-state-default ui-corner-all' title="刷新"><span class="ui-icon ui-icon-refresh"></span></li>
+			<li id="changeSortType" data-action="changeSortType" class='pagerIcon ui-state-default ui-corner-all' 
+				title="当前为本地排序，点击切换为远程排序"
+				title4clickToRemoteSort="当前为本地排序,点击切换为远程排序"
+				title4clickToLocalSort="当前为远程排序,点击切换为本地排序"><span class="ui-icon ui-icon-transferthick-e-w"></span></li>
 			<!-- 表格分页条：分页按钮 -->
 			<li id="seek" class="pagerIconGroup seek ui-state-default ui-corner-all">
 				<a id="toFirstPage" class="pagerIcon ui-state-default ui-corner-all"><span class="ui-icon ui-icon-seek-first" title="首页"></span></a>

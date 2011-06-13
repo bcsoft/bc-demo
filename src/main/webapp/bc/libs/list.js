@@ -161,6 +161,18 @@ bc.grid = {
 		
 		var data = option.data || {};
 		
+		//附加排序参数
+		var $sortColumn = $page.find(".bc-grid .header .table td.sortable.asc,.bc-grid .header .table td.sortable.desc");
+		if($sortColumn.size()){
+			var sort = "";
+			var $t;
+			$sortColumn.each(function(i){
+				$t = $(this);
+				sort += (i == 0 ? "" : ",") + $t.attr("data-id") + ($t.hasClass("asc") ? " asc" : " desc");
+			});
+			data["sort"] = sort;
+		}
+		
 		//附加分页参数
 		var $pager_seek = $page.find("ul.pager>li.seek");
 		if($pager_seek.size()){
@@ -223,6 +235,16 @@ $("ul li.pagerIcon").live("click", function() {
 	case "refresh"://刷新视图
 		//重新加载列表数据
 		bc.grid.reloadData($page);
+		break;
+	case "changeSortType"://切换本地排序和远程排序
+		$this.toggleClass("ui-state-active");
+		if($this.hasClass("ui-state-active")){
+			$this.attr("title",$this.attr("title4clickToLocalSort"));
+			$this.parents(".bc-grid").attr("remoteSort","true");
+		}else{
+			$this.attr("title",$this.attr("title4clickToRemoteSort"));
+			$this.parents(".bc-grid").attr("remoteSort","false");
+		}
 		break;
 	case "print"://打印视图
 		window.print();
@@ -303,17 +325,6 @@ $("ul li.pagerIconGroup.size>.pagerIcon").live("click", function() {
 	
 	return false;
 });
-/*
-//点击刷新按钮
-$("ul #refresh").live("click", function() {
-	//重新加载列表数据
-	bc.grid.reloadData($(this).parents(".bc-page"));
-});
-//点击打印按钮
-$("ul #print").live("click", function() {
-	window.print();
-});
-*/
 
 //单击行切换样式
 $(".bc-grid>.data>.right tr.row").live("click",function(){
@@ -349,27 +360,31 @@ $(".bc-grid>.header td.id>span.ui-icon").live("click",function(){
 	.find("td.id>span.ui-icon").toggleClass("ui-icon-check",check);
 });
 
-//列表的本地排序
+//列表的排序
 $(".bc-grid>.header>.right tr.row>td.sortable").live("click",function(){
 	logger.info("sortable");
 	//标记当前列处于排序状态
 	var $this = $(this).toggleClass("current",true);
 	
 	//将其他列的排序去除
-	$this.siblings(".current").removeClass("current")
-	.find("span.ui-icon").addClass("hide");
+	$this.siblings(".current").removeClass("current asc desc")
+	.find("span.ui-icon").addClass("hide").removeClass("ui-icon-triangle-1-n ui-icon-triangle-1-s");
 	
 	var $icon = $this.find("span.ui-icon");
 	//切换排序图标
 	var dir = 0;
-	if($icon.hasClass("ui-icon-triangle-1-n")){//正序
+	if($this.hasClass("asc")){//正序变逆序
+		$this.removeClass("asc").addClass("desc");
 		$icon.removeClass("hide ui-icon-triangle-1-n").addClass("ui-icon-triangle-1-s");
 		dir = -1;
-	}else if($icon.hasClass("ui-icon-triangle-1-s")){//逆序
+	}else if($this.hasClass("desc")){//逆序变正序
+		$this.removeClass("desc").addClass("asc");
 		$icon.removeClass("hide ui-icon-triangle-1-s").addClass("ui-icon-triangle-1-n");
 		dir = 1;
-	}else{
-		$icon.removeClass("hide").addClass("ui-icon-triangle-1-s");//逆序
+	}else{//无序变正序
+		$this.addClass("asc");
+		$icon.removeClass("hide").addClass("ui-icon-triangle-1-n");
+		dir = 1;
 	}
 
 	//排序列表中的行
@@ -377,12 +392,14 @@ $(".bc-grid>.header>.right tr.row>td.sortable").live("click",function(){
 	var tdIndex = this.cellIndex;//要排序的列索引
 	var remoteSort = $grid.attr("remoteSort") === "true";//是否远程排序，默认本地排序
 	if(remoteSort){//远程排序
-		logger.profile("do remote sort");
-		//TODO
-		
-		logger.profile("do remote sort");
+		logger.profile("do remote sort:");
+		bc.grid.reloadData($grid.parents(".bc-page"),{
+			callback:function(){
+				logger.profile("do remote sort:");
+			}
+		});
 	}else{//本地排序
-		logger.profile("do local sort");
+		logger.profile("do local sort:");
 		//对数据所在table和id所在table进行排序
 		var rightTrs = bc.grid.sortTable($grid.find(">.data>.right>table.table>tbody"), tdIndex, dir);
 		
@@ -402,7 +419,7 @@ $(".bc-grid>.header>.right tr.row>td.sortable").live("click",function(){
 		}
 		$tbody.html(t.join(""));
 		
-		logger.profile("do local sort");
+		logger.profile("do local sort:");
 	}
 });
 
