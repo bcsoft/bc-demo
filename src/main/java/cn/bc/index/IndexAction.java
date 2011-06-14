@@ -3,6 +3,7 @@
  */
 package cn.bc.index;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -19,12 +20,14 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
+import cn.bc.Context;
 import cn.bc.core.exception.CoreException;
 import cn.bc.desktop.domain.Personal;
 import cn.bc.desktop.domain.Shortcut;
 import cn.bc.desktop.service.PersonalService;
 import cn.bc.desktop.service.ShortcutService;
 import cn.bc.identity.domain.Actor;
+import cn.bc.identity.web.SystemContext;
 import cn.bc.security.domain.Module;
 import cn.bc.web.ui.html.menu.Menu;
 import cn.bc.web.ui.html.menu.MenuItem;
@@ -52,6 +55,10 @@ public class IndexAction extends ActionSupport implements SessionAware {
 
 	public IndexAction() {
 		contextPath = ServletActionContext.getRequest().getContextPath();
+	}
+
+	public Context getContext() {
+		return (Context) this.session.get(Context.KEY);
 	}
 
 	public void setSession(Map<String, Object> session) {
@@ -102,14 +109,11 @@ public class IndexAction extends ActionSupport implements SessionAware {
 
 	public String execute() throws Exception {
 		// 检测用户是否登录,未登录则跳转到登录页面
-		Actor user = (Actor) session.get("user");
-		if (user == null) {
-			logger.info("redirect");
+		SystemContext context = (SystemContext) this.session.get(Context.KEY);
+		if (context == null || context.getUser() == null) {
 			return "redirect";
 		}
-
-		// String userLoginName = "admin";
-		// Actor user = this.actorService.loadByCode(userLoginName);
+		Actor user = context.getUser();
 
 		// 个人配置
 		this.personalConfig = this.personalConfigService.loadByActor(
@@ -128,6 +132,13 @@ public class IndexAction extends ActionSupport implements SessionAware {
 				logger.debug(++i + ") " + m);
 			}
 		}
+
+		// 将有权限使用的模块记录到上下文
+		List<String> ms = new ArrayList<String>();
+		for (Module m : modules) {
+			ms.add(m.getCode());
+		}
+		context.setAttr(SystemContext.KEY_MODULES, ms);
 
 		// 找到顶层模块
 		Map<Module, Set<Module>> parentChildren = new LinkedHashMap<Module, Set<Module>>();
@@ -212,10 +223,10 @@ public class IndexAction extends ActionSupport implements SessionAware {
 	private String buildMenuItemUrl(Module m) {
 		String url = m.getUrl();
 		if (url != null && url.length() > 0) {
-			if (m.getType() == Module.TYPE_OUTER_LINK) {//不处理外部链接
+			if (m.getType() == Module.TYPE_OUTER_LINK) {// 不处理外部链接
 				return url;
-			} else{
-				return contextPath + url;//内部的url需要附加部署路路径
+			} else {
+				return contextPath + url;// 内部的url需要附加部署路路径
 			}
 		} else {
 			return null;

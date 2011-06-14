@@ -34,6 +34,9 @@
 		<!-- syslog -->
 		<class>cn.bc.log.domain.Syslog</class>
 
+		<!-- bulletin -->
+		<class>cn.bc.bulletin.domain.Bulletin</class>
+
 		<!-- Test
 		<class>cn.bc.one2onetest.Person</class>
 		<class>cn.bc.one2onetest.Address</class> -->

@@ -3,6 +3,7 @@
  */
 package cn.bc.login;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
@@ -19,10 +20,13 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.DigestUtils;
 
+import cn.bc.Context;
 import cn.bc.identity.domain.Actor;
 import cn.bc.identity.domain.ActorRelation;
 import cn.bc.identity.domain.AuthData;
 import cn.bc.identity.service.UserService;
+import cn.bc.identity.web.SystemContext;
+import cn.bc.identity.web.SystemContextImpl;
 import cn.bc.log.domain.Syslog;
 import cn.bc.log.service.SyslogService;
 import cn.bc.log.web.struts2.SyslogAction;
@@ -101,25 +105,39 @@ public class LoginAction extends ActionSupport implements SessionAware {
 					logger.fatal(info);
 					msg = "登录成功，跳转到系统主页！";
 
+					// 创建默认的上下文实现并保存到session中
+					Context context = new SystemContextImpl();
+					this.session.put(SystemContext.KEY, context);
+
 					// 将登录信息记录到session中
-					this.session.put("user", user);
+					context.setAttr(SystemContext.KEY_USER, user);
 
 					// 用户所隶属的单位或部门
 					Actor belong = this.userService.loadBelong(user.getId(),
 							new Integer[] { Actor.TYPE_UNIT,
 									Actor.TYPE_DEPARTMENT });
-					this.session.put("belong", belong);
+					context.setAttr(SystemContext.KEY_BELONG, belong);
 					Actor unit = this.loadUnit(belong);
-					this.session.put("unit", unit);
+					context.setAttr(SystemContext.KEY_UNIT, unit);
 
 					// 用户所在的岗位
 					List<Actor> groups = this.userService.findMaster(
 							user.getId(),
 							new Integer[] { ActorRelation.TYPE_BELONG },
 							new Integer[] { new Integer(Actor.TYPE_GROUP) });
-					this.session.put("groups", groups);
+					List<String> gcs = new ArrayList<String>();
+					for (Actor group : groups) {
+						gcs.add(group.getCode());
+					}
+					context.setAttr(SystemContext.KEY_GROUPS, gcs);
+
+					// 用户的角色
+
+					// 用户的权限
+
+					// 登录时间
 					Calendar now = Calendar.getInstance();
-					this.session.put("loginTime", now.getTime());
+					this.session.put("loginTime", now);
 
 					// 记录登陆日志
 					Syslog log = SyslogAction

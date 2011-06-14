@@ -55,6 +55,8 @@
 	<import resource="classpath:cn/bc/work/spring.xml"/>
 	<!-- bc-log包的配置 -->
 	<import resource="classpath:cn/bc/log/spring.xml"/>
+	<!-- bc-bulletin包的配置 -->
+	<import resource="classpath:cn/bc/bulletin/spring.xml"/>
 
 	<!-- 项目自身模块的配置 -->
 	<import resource="classpath:spring-demo.xml" />
