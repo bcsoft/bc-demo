@@ -32,6 +32,7 @@ import cn.bc.log.service.SyslogService;
 import cn.bc.log.web.struts2.SyslogAction;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.opensymphony.xwork2.util.LocalizedTextUtil;
 
 /**
  * 登录处理
@@ -147,7 +148,11 @@ public class LoginAction extends ActionSupport implements SessionAware {
 									user,
 									belong,
 									unit,
-									user.getName() + getText("syslog.login"),
+									user.getName()
+											+ LocalizedTextUtil.findText(
+													SyslogAction.class,
+													"syslog.login",
+													this.getLocale()),
 									"true".equalsIgnoreCase(getText("app.traceClientMachine")),
 									ServletActionContext.getRequest());
 					syslogService.save(log);
@@ -171,14 +176,23 @@ public class LoginAction extends ActionSupport implements SessionAware {
 
 	// 注销
 	public String doLogout() throws Exception {
-		Actor user = (Actor) this.session.get("user");
+		SystemContext context = (SystemContext) this.session.get(Context.KEY);
+		Actor user = null;
+		if (context != null)
+			user = context.getUser();
 		if (user != null) {// 表明之前session还没过期
-			Actor belong = (Actor) this.session.get("belong");
-			Actor unit = (Actor) this.session.get("unit");
+			Actor belong = context.getBelong();
+			Actor unit = context.getUnit();
 			Calendar now = Calendar.getInstance();
-			Syslog log = SyslogAction.buildSyslog(now, Syslog.TYPE_LOGOUT,
-					user, belong, unit, user.getName()
-							+ getText("syslog.logout"),
+			Syslog log = SyslogAction.buildSyslog(
+					now,
+					Syslog.TYPE_LOGOUT,
+					user,
+					belong,
+					unit,
+					user.getName()
+							+ LocalizedTextUtil.findText(SyslogAction.class,
+									"syslog.logout", this.getLocale()),
 					"true".equalsIgnoreCase(getText("app.traceClientMachine")),
 					ServletActionContext.getRequest());
 			syslogService.save(log);
