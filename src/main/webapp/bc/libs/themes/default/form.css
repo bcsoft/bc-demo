@@ -4,6 +4,7 @@
  * @author rongjihuang@gmail.com
  * @date 2011-05-20
  */
+/** 表单*/
 .bc-form {
 	width:100%;
 	height:100%;
@@ -13,6 +14,15 @@
 .bc-form.ui-widget-content{
 	border:0;
 }
+/** 表单右上角信息*/
+.formInfo {
+	margin: 8px 8px 0 8px;
+	text-align: right;
+	color: #888;
+	font-size: 0.75em;
+	padding-right: 4px;
+}
+/** 单列(2个td)元素表单的元素容器*/
 .formTable {
 	table-layout: fixed;/**/
 	border-spacing: 0;
@@ -23,6 +33,7 @@
 	width:98%;
 	height:100%;
 }
+/** 两列(4个td)元素表单的元素容器*/
 .formTable2 {
 	margin: 8px;
 	width:600px;
