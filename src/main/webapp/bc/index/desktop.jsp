@@ -142,6 +142,21 @@
 	<script type="text/javascript" src="<s:url value='/ui-libs/jquery-ui/1.8.13/ui/minified/jquery-ui.min.js' ><s:param name='ts' value='%{getText("app.ts")}'/></s:url>"></script>
 	<script type="text/javascript" src="<s:url value='/ui-libs/jquery-ui/plugins/menu/3.0/fg.menu.js' ><s:param name='ts' value='%{getText("app.ts")}'/></s:url>"></script>
 	<script type="text/javascript" src="<s:url value='/bc/libs/core.js' ><s:param name='ts' value='%{getText("app.ts")}'/></s:url>"></script>
+	<script type="text/javascript">
+		bc.root = "<%=request.getContextPath()%>";
+		bc.debug = <s:text name="app.debug" />;
+		if (bc.debug) {
+			bc.ts = new Date().getTime();//首次打开主页的时间
+			jQuery(function() {
+				//logger.toggle();
+				//logger.enable("debug");
+			});
+		}else{
+			bc.ts = "<s:text name="app.ts" />";//系统编译发布的时间
+		}
+		var userCode = '<s:property value="context.user.code" />';
+		var userName = '<s:property value="context.user.name" />';
+	</script>
 	<script type="text/javascript" src="<s:url value='/bc/libs/ajax.js' ><s:param name='ts' value='%{getText("app.ts")}'/></s:url>"></script>
 	<script type="text/javascript" src="<s:url value='/bc/libs/msg.js' ><s:param name='ts' value='%{getText("app.ts")}'/></s:url>"></script>
 	<script type="text/javascript" src="<s:url value='/bc/libs/validate.js' ><s:param name='ts' value='%{getText("app.ts")}'/></s:url>"></script>
@@ -152,6 +167,7 @@
 	<script type="text/javascript" src="<s:url value='/bc/libs/form.js' ><s:param name='ts' value='%{getText("app.ts")}'/></s:url>"></script>
 	<script type="text/javascript" src="<s:url value='/bc/libs/boxPointer.js' ><s:param name='ts' value='%{getText("app.ts")}'/></s:url>"></script>
 	<script type="text/javascript" src="<s:url value='/bc/libs/loader.js' ><s:param name='ts' value='%{getText("app.ts")}'/></s:url>"></script>
+	<script type="text/javascript" src="<s:url value='/bc/libs/editor.js' ><s:param name='ts' value='%{getText("app.ts")}'/></s:url>"></script>
 	<s:if test='{getText("app.debug") == "true"}'>
 	<link rel="stylesheet" type="text/css" href="<s:url value='/bc/libs/themes/default/logger.css' ><s:param name='ts' value='%{getText("app.ts")}'/></s:url>" />
 	<script type="text/javascript" src="<s:url value='/bc/libs/logger.js' ><s:param name='ts' value='%{getText("app.ts")}'/></s:url>"></script>
@@ -170,21 +186,6 @@
 	</script>
 	</s:else>
 	<script type="text/javascript" src="<s:url value='/bc/libs/desktop.js' ><s:param name='ts' value='%{getText("app.ts")}'/></s:url>"></script>
-	<script type="text/javascript">
-		bc.root = "<%=request.getContextPath()%>";
-		bc.debug = <s:text name="app.debug" />;
-		if (bc.debug) {
-			bc.ts = new Date().getTime();//首次打开主页的时间
-			jQuery(function() {
-				//logger.toggle();
-				//logger.enable("debug");
-			});
-		}else{
-			bc.ts = "<s:text name="app.ts" />";//系统编译发布的时间
-		}
-		var userCode = '<s:property value="#session.user.code" />';
-		var userName = '<s:property value="#session.user.name" />';
-	</script>
 	<script type="text/javascript" src="<s:url value='/ui-libs/jquery-ui/themeSwitcher/switcher.js' ><s:param name='ts' value='%{getText("app.ts")}'/></s:url>"></script>
 </body>
 </html>

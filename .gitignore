@@ -1,5 +1,6 @@
 src/main/webapp/ui-libs
 src/main/webapp/ui-libs-demo
+src/main/webapp/uploads
 .metadata
 .settings
 .classpath

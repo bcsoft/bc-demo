@@ -15,13 +15,39 @@
 	border:0;
 }
 /** 表单右上角信息*/
-.formInfo {
+.formTopInfo {
 	margin: 8px 8px 0 8px;
 	text-align: right;
 	color: #888;
 	font-size: 0.75em;
 	padding-right: 4px;
 }
+/** 表单底部注释信息*/
+.formComment {
+	margin: 4px 8px;
+	padding:0.25em;
+	color: #888;
+	font-size: 0.75em;
+	text-align: left;
+}
+/** 表单元素容器*/
+div.formFields {
+	margin: 8px;
+}
+/** 表单元素容器*/
+table.formFields {
+	width:100%;
+	border:0;
+}
+/** 表单富文本编辑器容器*/
+div.formEditor {
+	margin: 8px;
+}
+/** 表单附件区容器*/
+div.formAttachs {
+	margin: 8px;
+}
+
 /** 单列(2个td)元素表单的元素容器*/
 .formTable {
 	table-layout: fixed;/**/
@@ -37,10 +63,6 @@
 .formTable2 {
 	margin: 8px;
 	width:600px;
-}
-.formComment {
-	margin: 4px 8px;
-	padding:0.25em;
 }
 
 td.label{
@@ -72,6 +94,15 @@ td.value input,td.value textarea{
 td.value .ui-icon{
 	float: left;
 	margin-top: 4px;
+}
+
+textarea.bc-editor{
+	width: 100%;
+	height: 100%;
+	margin:0;
+	padding:0;
+	border:0;
+	min-height:300px;
 }
 
 

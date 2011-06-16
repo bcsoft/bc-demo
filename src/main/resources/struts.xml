@@ -4,6 +4,9 @@
     "http://struts.apache.org/dtds/struts-2.0.dtd">
 <!-- 项目的Struts2全局配置文件，在这里通过include引用其他模块的配置文件 -->
 <struts>
+	<!-- 配置不要被struts2的Filter过滤的url，value值是正则表达式，可以写多个 ，用逗号分隔 -->
+	<constant name="struts.action.excludePattern" value="/upload4xhEditor/*" />
+	
 	<!-- 配置开发模式：产品环境下必须修改为false -->
 	<constant name="struts.devMode" value="true" />
 
@@ -32,6 +35,7 @@
 	<include file="cn/bc/work/web/struts2/struts.xml" />
 	<include file="cn/bc/log/web/struts2/struts.xml" />
 	<include file="cn/bc/bulletin/web/struts2/struts.xml" />
+	<include file="cn/bc/docs/web/struts2/struts.xml" />
 
 	<!-- 项目自定义的配置文件 -->
 	<include file="struts-demo.xml" />

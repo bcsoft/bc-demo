@@ -26,6 +26,32 @@
 		<load-on-startup>0</load-on-startup>
 	</servlet>
 
+	<!-- xhEditor上传文件 -->
+	<servlet>
+		<servlet-name>xhEditorUploadFileServlet</servlet-name>
+		<servlet-class>cn.bc.docs.web.XhEditorUploadFileServlet</servlet-class>
+		<init-param>
+			<!-- 上传文件存储的目录，相对于应用部署目录下的相对路径 -->
+			<param-name>baseDir</param-name>
+			<param-value>uploads</param-value>
+		</init-param>
+		<init-param>
+			<!-- 上传类型限制，如 "jpg,jpeg,bmp,gif,png"，为空代表无限制 -->
+			<param-name>fileExt</param-name>
+			<param-value></param-value>
+		</init-param>
+		<init-param>
+			<!-- 上传文件大小限制，单位为字节，默认1M=1048576 -->
+			<param-name>maxSize</param-name>
+			<param-value>104857600</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>xhEditorUploadFileServlet</servlet-name>
+		<url-pattern>/upload4xhEditor/*</url-pattern>
+	</servlet-mapping>
+
 	<!-- 配置Spring加载哪些配置文件，多个文件用逗号连接，可使用通配符， 如/WEB-INF/applicationContext-*.xml,classpath*:applicationContext-*.xml -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>

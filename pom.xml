@@ -94,6 +94,11 @@
 		</dependency>
 		<dependency>
 			<groupId>cn.bc</groupId>
+			<artifactId>bc-docs</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>cn.bc</groupId>
 			<artifactId>bc-bulletin</artifactId>
 			<version>${project.version}</version>
 		</dependency>
