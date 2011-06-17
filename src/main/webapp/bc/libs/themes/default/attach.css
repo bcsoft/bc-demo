@@ -1,0 +1,76 @@
+/**
+ * 附件空件样式控制
+ *
+ * @author rongjihuang@gmail.com
+ * @date 2011-06-01
+ */
+
+/** 附件大容器 */
+.attachs {
+	
+}
+
+/** 选择附加的input的容器 */
+.attachs .selectFile {
+	margin: 8px 0 0 5px;
+}
+
+/** 选择附加的input控件 */
+.attachs .selectFile input {
+	
+}
+/**  */
+.attachs ul.items {
+	list-style: none;
+	border: 0;
+	padding: 0;
+	margin: 0;
+}
+
+/** 附件的汇总信息 */
+.attachs ul.items li.total {
+	margin: 8px 0 0 5px;
+}
+
+/**  */
+.attachs ul.items li.item {
+	margin: 8px 0 0 5px;
+}
+.attachs ul.items li.item table.item{
+	table-layout: fixed;
+}
+.attachs ul.items li.item table.item td.icon{
+	padding-right:4px;
+}
+.attachs ul.items li.item table.item div.subject,.attachs ul.items li.total span{
+	font-weight: bold;
+}
+.attachs ul.items li.item table.item div.operate a,.attachs ul.items li.total a{
+	margin:4px;
+	color: #2A5DB0;
+}
+
+
+/**
+ * 文件类型图标
+ * innmm -->nn:行号，mm:列号
+ * @author rongjihuang@gmail.com
+ * @date 2011-06-01
+ */
+span.file-icon{
+	background: url(images/files/files.png) no-repeat 0 0;
+	display: block; text-indent: -99999px; overflow: hidden;
+	width:32px;height:32px;
+}
+span.file-icon.doc{
+	background-position: -32px 0;
+}
+span.file-icon.xls{
+	background-position: -64px 0;
+}
+span.file-icon.ppt{
+	background-position: -96px 0;
+}
+span.file-icon.txt{
+	background-position: -128px 0;
+}
