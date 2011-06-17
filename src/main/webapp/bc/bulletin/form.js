@@ -9,6 +9,9 @@ bc.bulletinForm = {
 		});
 
 		//绑定富文本编辑
-		$form.find("textarea").xheditor(bc.editor.getConfig("bulletin"));
+		$form.find("textarea").xheditor(bc.editor.getConfig({
+			ptype: "bulletin.editor",
+			puid: $form.find(":input[name='e.uid']").val()
+		}));
 	}
 };

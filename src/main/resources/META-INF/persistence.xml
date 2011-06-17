@@ -34,6 +34,9 @@
 		<!-- syslog -->
 		<class>cn.bc.log.domain.Syslog</class>
 
+		<!-- docs -->
+		<class>cn.bc.docs.domain.Attach</class>
+
 		<!-- bulletin -->
 		<class>cn.bc.bulletin.domain.Bulletin</class>
 
