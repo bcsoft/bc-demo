@@ -46,47 +46,14 @@
 		<div class="formEditor">
 			<s:textarea name="e.content" cssClass="bc-editor" data-validate="required"></s:textarea>
 		</div>
-		<div class="formAttachs attachs">
-			<ul class="items">
-				<li class="total">
-					<span>2 个附件</span> -- 
-					<a href="#" target="blank" data-url="/bc/bc/attach/downloadAll">下载所有附件</a>
-					<a href="#" target="blank" data-url="/bc/bc/attach/deleteAll">删除所有附件</a>
-					<input type="file" name="file" value="添加附件" multiple/>
-				</li>
-				<li class="item">
-					<table class="item" cellpadding="0" cellspacing="0">
-						<tr>
-							<td class="icon"><span class="file-icon doc"></span></td>
-							<td class="info">
-								<div class="subject">附件名称</div>
-								<div class="operate">
-									<span>32KB</span>
-									<a href="#">查看</a>
-									<a href="#">下载</a>
-									<a href="#">删除</a>
-								</div>
-							</td>
-						</tr>
-					</table>
-				</li>
-				<li class="item">
-					<table class="item" cellpadding="0" cellspacing="0">
-						<tr>
-							<td class="icon"><span class="file-icon xls"></span></td>
-							<td class="info">
-								<div class="subject">附件名称</div>
-								<div class="operate">
-									<span>32KB</span>
-									<a href="#">查看</a>
-									<a href="#">下载</a>
-									<a href="#">删除</a>
-								</div>
-							</td>
-						</tr>
-					</table>
-				</li>
-			</ul>
+		<div class="formAttachs ui-widget-content attachs" data-ptype="bulletin.main"
+			 data-maxCount="2" data-maxSize="524288000" data-extends="doc,xls,docx,xlsx,png,mp3">
+			<div class="header">
+				<span class="summary">2 个附件共 100KB</span>
+				<span class="uploadFile">添加附件<input type="file" class="uploadFile" name="uploadFile" multiple/></span>
+				<a href="#" class="operation" data-url="/bc/bc/attach/downloadAll">下载所有附件</a>
+				<a href="#" class="operation" data-url="/bc/bc/attach/deleteAll">删除所有附件</a>
+			</div>
 		</div>
 		<s:hidden name="e.inner" />
 		<s:hidden name="e.uid" />

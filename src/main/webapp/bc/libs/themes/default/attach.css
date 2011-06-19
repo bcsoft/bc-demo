@@ -9,47 +9,69 @@
 .attachs {
 	
 }
-
-/** 选择附加的input的容器 */
-.attachs .selectFile {
-	margin: 8px 0 0 5px;
-}
-
-/** 选择附加的input控件 */
-.attachs .selectFile input {
-	
-}
-/**  */
-.attachs ul.items {
-	list-style: none;
-	border: 0;
-	padding: 0;
-	margin: 0;
-}
-
-/** 附件的汇总信息 */
-.attachs ul.items li.total {
-	margin: 8px 0 0 5px;
-}
-
-/**  */
-.attachs ul.items li.item {
-	margin: 8px 0 0 5px;
-}
-.attachs ul.items li.item table.item{
+.attachs table{
 	table-layout: fixed;
 }
-.attachs ul.items li.item table.item td.icon{
-	padding-right:4px;
+
+/** 附件的汇总信息容器 */
+.attachs .header {
+	margin: 8px 0 0 5px;
 }
-.attachs ul.items li.item table.item div.subject,.attachs ul.items li.total span{
+
+/** 添加附加的input控件的容器 */
+.attachs .header span.uploadFile {
+	position:relative;
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+/** 添加附加的input控件 */
+.attachs .header input.uploadFile {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 5em;
+	height: 1.5em;
+	filter: alpha(opacity = 0);
+	opacity: 0;
+	cursor: pointer;
+}
+
+/** 每个附加的总容器 */
+.attachs .attach {
+	margin: 8px 0 0 5px;
+}
+
+/** 附加的图标 */
+.attachs .attach .icon {
+	padding-right: 4px;
+	vertical-align: middle;
+}
+
+.attachs .header .summary, .attachs .attach .subject {
 	font-weight: bold;
 }
-.attachs ul.items li.item table.item div.operate a,.attachs ul.items li.total a{
-	margin:4px;
+
+.attachs .header span.uploadFile, .attachs .header .operation, .attachs .attach .operation {
+	margin: 6px;
 	color: #2A5DB0;
 }
 
+.attachs .attach td.operations {
+	vertical-align: middle;
+	padding-right:6px;
+}
+
+.attachs .attach .progressbar.ui-progressbar
+,.attachs .attach .progressbar .ui-progressbar-value{
+	border-radius:0;
+	margin:0;
+}
+.attachs .attach .progressbar{
+	width:15em;
+	height:1em;
+	margin-left:6px;
+}
 
 /**
  * 文件类型图标
@@ -57,20 +79,27 @@
  * @author rongjihuang@gmail.com
  * @date 2011-06-01
  */
-span.file-icon{
+span.file-icon {
 	background: url(images/files/files.png) no-repeat 0 0;
-	display: block; text-indent: -99999px; overflow: hidden;
-	width:32px;height:32px;
+	display: block;
+	text-indent: -99999px;
+	overflow: hidden;
+	width: 32px;
+	height: 32px;
 }
-span.file-icon.doc{
+
+span.file-icon.doc {
 	background-position: -32px 0;
 }
-span.file-icon.xls{
+
+span.file-icon.xls {
 	background-position: -64px 0;
 }
-span.file-icon.ppt{
+
+span.file-icon.ppt {
 	background-position: -96px 0;
 }
-span.file-icon.txt{
+
+span.file-icon.txt {
 	background-position: -128px 0;
 }
