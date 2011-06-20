@@ -6,7 +6,7 @@
 		<version>0.2-SNAPSHOT</version>
 	</parent>
 	<artifactId>bc-demo</artifactId>
-  <version>0.2-SNAPSHOT</version>
+  	<version>0.2-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>bc平台演示</name>
 	
@@ -16,10 +16,19 @@
 			hibernate3在启动时会执行 -->
 		<hibernate.hbm2ddl.auto>none</hibernate.hbm2ddl.auto>
 		<struts2.jquery.version>2.5.3</struts2.jquery.version>
+		
+		<app.ts>20110619</app.ts>
+		<app.debug>true</app.debug>
 	</properties>
 
 	<build>
 		<finalName>bc-demo</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+			</plugin>
+		</plugins>
 	</build>
 	<scm>
 		<connection>scm:git:git://github.com/rongjihuang/bc-demo.git</connection>

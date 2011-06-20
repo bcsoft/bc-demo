@@ -1,0 +1,967 @@
+/**
+ * 全局样式控制
+ * 主要设置一些跨浏览器的兼容设置
+ *
+ * @author rongjihuang@gmail.com
+ * @date 2011-04-11
+ */
+html {
+	height: 100%;
+}
+
+/**全局字体控制*/
+body {
+	height: 100%;
+	overflow: hidden;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-family: "微软雅黑", "宋体", sans-serif;
+	/*font-size: 62.5%;使1em=12px,浏览器默认为1em=16px,ie:_font-size: 63%;*/
+	font-size: 14px;/*调整为默认14px | 0.87em*/
+}
+
+.hide{display:none;}
+
+/**内容溢出控制*/
+.ellipsis {
+	overflow:hidden;
+	text-overflow:ellipsis;
+	-o-text-overflow:ellipsis;
+	-icab-text-overflow: ellipsis;
+	-khtml-text-overflow: ellipsis;
+	-moz-text-overflow: ellipsis;
+	-webkit-text-overflow: ellipsis;
+	white-space:nowrap;
+	-moz-binding: url('ellipsis.xml#ellipsis');
+}
+.text-overflow-ellipsis{
+	text-overflow: ellipsis;
+	white-space:nowrap;
+	overflow:hidden;
+}
+
+
+/**
+ * jquery-ui样式的特殊覆盖或扩展
+ *
+ * @author rongjihuang@gmail.com
+ * @date 2011-04-13
+ */
+/**修改字体*/
+.ui-widget {font-family: "微软雅黑", "宋体", sans-serif;}
+.ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button {font-family: "微软雅黑", "宋体", sans-serif;}
+/**修改对话框*/
+.bc-ui-dialog {padding: 0;}
+.bc-ui-dialog .ui-widget-header {border-width: 0;}
+.bc-ui-dialog .ui-widget-header.ui-corner-all {border-bottom-right-radius: 0;border-bottom-left-radius: 0;}
+.bc-ui-dialog .ui-dialog-content {
+	padding: 0;
+	/*margin: 0 8px 8px 8px;*/
+}
+.bc-ui-dialog.ui-widget-content {
+	border-width: 4px;
+}
+.bc-ui-dialog .bc-toolbar.ui-widget-content  {
+	border-top:0;border-left:0;border-right:0;
+}
+
+.bc-slide {
+	position: absolute;
+	min-width: 200px;
+	min-height: 50px;
+	_height: 50px;
+	z-index: 10000;
+	padding:4px;
+	right:2px;
+	bottom:2px;
+}
+.bc-slide .ui-widget-content {
+	cursor: default;
+}
+.clickToSelect{
+	cursor: pointer;	
+}
+
+
+.bc-page,.bc-page.ui-dialog-content{
+	overflow: hidden;
+}
+.bc-autoScroll{
+	overflow: auto;
+}
+.bc-autoScroll-x{
+	overflow-x: auto;
+	overflow-y: hidden;
+}
+.bc-autoScroll-y{
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
+.bc-toolbar{
+	position:relative;
+	padding:0.2em;
+}
+.bc-buttonGroup,.bc-separatorButton,.bc-searchButton{
+	display: inline-block;	
+}
+.bc-toolbar .ui-button-text{
+	/*padding-top: 0.2em;
+	padding-bottom: 0.2em;*/
+}
+.bc-searchButton{
+	position: absolute;
+	top: 0.4em;
+	right: 0.4em;
+}
+.bc-searchButton a{
+	position: absolute;
+	top: 50%;
+	margin-top: -8px;
+	left: 0.12em;
+}
+.bc-searchButton input{
+	padding-left: 1.4em;
+	width: 180px;
+}
+.w60{width: 60px;}
+.w80{width: 80px;}
+.w100{width: 100px;}
+.w120{width: 20px;}
+.w150{width: 150px;}
+.w200{width: 200px;}
+.w220{width: 220px;}
+.w250{width: 250px;}
+.w300{width: 300px;}
+.w400{width: 400px;}
+.w500{width: 500px;}
+.w600{width: 600px;}
+.m4{margin: 4px;}
+.m6{margin: 6px;}
+.m8{margin: 8px;}
+.m10{margin: 10px;}
+
+/*水平排列li元素的通用样式*/
+ul.horizontal,div.horizontal{overflow:auto;list-style:none;padding:4px;margin:0;}
+li.horizontal{position:relative;margin:2px 4px 2px 0;float:left;padding:2px 4px;}
+li.horizontal span.text{margin-right:16px;cursor:default;}
+li.horizontal span.text2{cursor:default;}
+span.ui-icon.verticalMiddle{position:absolute;top:50%;margin-top:-8px;width:16px;height:16px;right:4px;cursor:pointer;}
+
+/*普通的标题*/
+.title{border-width:0 0 1px 0 !important;padding:0.25em;}
+
+/**
+ * 桌面主题样式
+ *
+ * @author rongjihuang@gmail.com
+ * @date 2011-04-11
+ */
+html,body{
+	overflow: hidden;
+	height: 100%;
+	width: 100%;
+}
+body{
+	/*background: url(images/bg_page.png) repeat top left;
+	background-color: #FAFAFA;*/
+	background-color: #CCD9C8;
+}
+body.ui-widget-content{
+	border-width: 0;
+}
+body .ui-widget-overlay {
+	opacity: .40;
+	filter: Alpha(Opacity=40);
+}
+/*加载动画*/
+#loader {
+	height: 32px;
+	width: auto;
+	overflow: hidden;
+	border: 0;
+	position: absolute;
+	margin: 10px;
+	font-size: 24px;
+	background-image: url(images/loader/loader01_32x32.gif);
+	background-repeat: no-repeat;
+	height: 32px;
+	text-indent: 34px;
+	display: none;
+	line-height: 32px;
+	z-index: 10000;
+}
+
+/*测试用*/
+#heavyControl{
+	position: absolute;
+	border:1px solid #ccc;
+	right:10px;
+	bottom:60px;
+	width:300px;
+	padding:4px;
+}
+
+/*整体布局*/
+#layout {
+	height: 100%;
+	width: 100%;
+	overflow: hidden;
+	border: 0;
+	position: absolute;
+	z-index: 0;
+}
+
+/*桌面区域*/
+#desktop {
+	position: absolute;
+	/*width: 100%;*/
+	top: 40px;
+	overflow: auto;
+}
+
+/**桌面快捷方式*/
+a.shortcut{
+	float: left;
+	/*clear: left; 设置这个就默认竖排了*/
+	margin: 10px 5px 5px 10px;
+	display: inline-block;
+	/*color: #ffffff;*/
+	text-decoration: none;
+	border: 2px solid transparent;
+	border-radius: 8px; 
+	cursor: default;
+	_text-align: center;/*fixed ie6:使内部内容水平居中*/
+	width:5.5em;
+}
+a.shortcut:HOVER{
+	border-color: green;
+}
+a.shortcut .icon{
+	display: block;
+	width:52px;height:52px;
+	background: url(images/shortcuts/shortcuts.png) no-repeat -208px -156px;
+	/*filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/logo48.png', sizingMethod='scale');*/
+	margin: auto;
+	margin-top:2px;
+}
+a.shortcut .text{
+	margin: auto;
+	display: block;
+	width:5em;
+	/*color: white;*/
+	overflow: hidden;
+	text-overflow: ellipsis;
+	cursor: default;
+	text-align: center;
+	padding:2px;
+}
+
+/**快速任务栏*/
+#quickbar {
+	position: absolute;
+	z-index: 10000;
+	height: 40px;/*这个不设置的话会导致元素高度全部计算诡异*/
+	top: 0;
+	background-color: #9EB1A3;
+	width: 100%;
+	/*overflow: hidden;
+	background: url(images/bg_quickbar1.png) repeat-x top left;*/
+	z-index: 10!important;
+	border-width:0 0 1px 0;
+	table-layout: fixed;
+	margin:0;padding:0;
+}
+#quickbar > tbody,#quickbar > tbody > tr{
+	margin:0;padding:0;
+}
+#quickStart {
+	width: 40px;
+	vertical-align: middle;
+}
+#quickStart a {
+	cursor: pointer;
+	height: 32px;
+	width: 32px;
+	background: url(images/browser/chrome32.png) no-repeat;
+	text-decoration: none;
+	display: block;
+}
+#quickStart.ui-state-active{
+	border:0;
+}
+#quickShowHide {
+	width: 12px;
+	vertical-align: top;
+	height:100%;
+}
+#quickShowHide a {
+	background: url(images/showHide.png) repeat-y 0 0;
+	display:block;
+	width:100%;
+	height:100%;
+	text-decoration: none;
+}
+#quickShowHide a:HOVER {
+	background-position: -24px 0;
+}
+#quickLogout {
+	width: 40px;
+	vertical-align: middle;
+	height:100%;
+}
+#quickLogout a {
+	background: url(images/logout.png) repeat-y 0 0;
+	display:block;
+	width:32px;
+	height:32px;
+	text-decoration: none;
+	margin: auto;
+}
+#quickButtons {
+	height: 100%;
+	vertical-align: middle;
+}
+#quickButtons .quickButton {
+	float: left;
+	margin: 2px 0px 2px 2px;
+	padding: 8px;
+	border: 1px solid black;
+	text-decoration: none;
+	cursor: default;
+	position: relative;
+}
+#quickButtons .quickButton .ui-icon{
+	position: absolute;
+	display:block;
+	width:16px;height:16px;
+	top:50%;
+	margin-top: -8px;
+	padding:0;
+	border: 0;
+}
+#quickButtons .quickButton .text{
+	padding-left: 20px;
+	padding-right: 2px;
+}
+#quickButtons .quickButton .loading{
+	background: url(images/loader/loader01_16x16.gif) no-repeat 0 0;
+}
+
+/*设置字体大小*/
+#setting{
+	position: fixed;
+	_position: absolute;
+	top:40px;
+	right:20px;
+	overflow: visible;
+	z-index:100;
+	*width:150px;/*ie6,ie7*/
+	display: none;
+}
+#fontSliderContainer{
+	margin-bottom:10px;
+}
+
+/*版权相关*/
+#copyrightBar {
+	position: absolute;
+	bottom: 0px;
+	left: 0;
+	width: 100%;
+	height: 30px;
+	line-height: 30px;
+	overflow: hidden;
+	overflow: hidden;
+	text-align: center;
+}
+#copyrightBar a {
+	/*display:block;
+	width:100%;height:100%;*/
+	font-size:0.75em;
+	color:#888;
+	text-decoration: none;
+	cursor: pointer;
+	margin: auto;
+}
+#poweredBy {
+	margin:5px; float:right;
+}
+.bc-slide,.bc-slide.ui-state-high {
+	border:2px solid red;
+}
+#poweredBy span{
+	display: block;width:83px;height:34px;
+	background: url(images/poweredBy.png) 0 0 no-repeat;
+}
+#rightPanel{
+	position:absolute;
+	right:0;
+	top:50px;
+}
+#rightPanel .item{
+	margin:4px;
+}
+.imgtest{
+	display:block;
+	background: url(images/shortcuts/shortcuts.png) no-repeat -52px 0;
+	width:52px;height:52px;
+	zoom:0.5;
+}
+.imgtest:HOVER{
+	zoom:1;
+}
+#loginInfo{
+	position: absolute;
+	bottom: 0;
+	left:0;
+	height: 30px;
+	line-height: 30px;
+	font-size:0.75em;
+	color:#888;
+	padding-left:10px;
+}
+/**
+ * 桌面图标
+ * innmm -->nn:行号，mm:列号
+ * @author rongjihuang@gmail.com
+ * @date 2011-04-11
+ */
+a.shortcut .i0000{
+	background-position: 0 0;
+}
+a.shortcut .i0001{
+	background-position: -52px 0;
+}
+a.shortcut .i0002{
+	background-position: -104px 0;
+}
+a.shortcut .i0003{
+	background-position: -156px 0;
+}
+a.shortcut .i0004{
+	background-position: -208px 0;
+}
+a.shortcut .i0005{
+	background-position: -260px 0;
+}
+a.shortcut .i0006{
+	background-position: -312px 0;
+}
+a.shortcut .i0007{
+	background-position: -364px 0;
+}
+a.shortcut .i0008{
+	background-position: -416px 0;
+}
+a.shortcut .i0009{
+	background-position: -468px 0;
+}
+a.shortcut .i0204{
+	background-position: -208px -104px;
+}
+a.shortcut .i0300{
+	background-position: 0 -156px;
+}
+a.shortcut .i0500{
+	background-position: 0 -260px;
+}
+a.shortcut .i0501{
+	background-position: -52px -260px;
+}
+a.shortcut .i0502{
+	background-position: -104px -260px;
+}
+a.shortcut .i0503{
+	background-position: -156px -260px;
+}
+a.shortcut .i0504{
+	background-position: -208px -260px;
+}
+a.shortcut .i0505{
+	background-position: -260px -260px;
+}
+a.shortcut .i0506{
+	background-position: -312px -260px;
+}
+a.shortcut .i0507{
+	background-position: -364px -260px;
+}
+a.shortcut .i0508{
+	background-position: -416px -260px;
+}
+a.shortcut .i0509{
+	background-position: -468px -260px;
+}
+a.shortcut .i0600{
+	background-position: 0 -312px;
+}
+a.shortcut .i0601{
+	background-position: -52px -312px;
+}
+a.shortcut .i0602{
+	background-position: -104px -312px;
+}
+a.shortcut .i0603{
+	background-position: -156px -312px;
+}
+a.shortcut .i0604{
+	background-position: -208px -312px;
+}
+a.shortcut .i0605{
+	background-position: -260px -312px;
+}
+a.shortcut .i0606{
+	background-position: -312px -312px;
+}
+/**
+ * 列表视图样式
+ *
+ * @author rongjihuang@gmail.com
+ * @date 2011-04-24
+ */
+
+/**table重设*/
+table.table{
+	/*width: 100%;
+	height: 100%;*/
+	table-layout: fixed;
+	border-spacing: 0;
+	background: none;
+	padding:0;
+	margin:0;
+	cursor: default;
+	overflow: visible;
+}
+
+/**表格的数据加载动画*/
+#bc-grid-loader{
+	position: absolute;
+	width:32px;height:32px;
+	background: url("images/loader/loader01_32x32.gif") no-repeat;
+	padding:0;margin:0;
+}
+
+/**表格*/
+.bc-grid{
+	padding:0;
+	margin:0;
+}
+
+/**表格头*/
+.bc-grid .header {
+	overflow: hidden;
+}
+/**表格数据列表*/
+.bc-grid .data {
+	position: relative;
+	/*height: 100px;*/
+}
+.bc-grid .header td{
+	text-align: center;
+}
+.bc-grid .header td .wrapper{
+	position: relative;/*用于sortableIcon的定位*/
+}
+.bc-grid .header td .sortableIcon{
+	position: absolute;
+	right:0;
+	top:50%;
+	margin-top: -8px;
+}
+.bc-grid .left{
+	border-right: 1px solid #aaa;
+}
+
+.bc-grid .left,.bc-grid .left table.table,.bc-grid .left table.table td.id{
+	width: 40px;
+	overflow: hidden;
+}
+.bc-grid .left,.bc-grid .right{
+	float: left;
+}
+
+.bc-grid .data .left{
+	/*height: 83px;*/
+}
+.bc-grid .data .right{
+	overflow: auto;
+	/*height: 100px;*/
+	/*width: 200px;*/
+}
+.bc-grid .header .right{
+	overflow: hidden;
+	/*width: 183px;*/
+}
+.bc-grid .header.ui-state-default{
+	border: 0;
+}
+.bc-grid .right table.table{
+	/*width: 300px;*/
+}
+
+.bc-grid td.first,.bc-grid td.middle,.bc-grid td.last,.bc-grid td.id{
+	border-bottom: 1px solid #ccc;
+	padding-left: 0.25em;
+	padding-right: 0.25em;
+	
+	/*内容溢出控制*/
+	overflow:hidden;
+	text-overflow:ellipsis;
+	-o-text-overflow:ellipsis;
+	-icab-text-overflow: ellipsis;
+	-khtml-text-overflow: ellipsis;
+	-moz-text-overflow: ellipsis;
+	-webkit-text-overflow: ellipsis;
+	white-space:nowrap;
+	-moz-binding: url('ellipsis.xml#ellipsis');
+}
+
+.bc-grid .header td.empty{
+	border-bottom: 1px solid #ccc;
+	padding: 0;
+}
+.bc-grid td.middle,.bc-grid td.last{
+	border-left: 1px solid #ccc;
+}
+.bc-grid tr.row{
+	height:1.8em;
+}
+.bc-grid td.id{
+	/*border-right: 1px solid #ccc;*/
+}
+.bc-grid td.id span.ui-icon{
+	display:none;
+}
+.bc-grid td.id span.ui-icon-check,.bc-grid td.id span.ui-icon-notice{
+	display:inline-block;
+	*display:block;/*ie6,ie7*/
+	*float: left;/*ie6,ie7*/
+}
+.bc-grid .header td.id span.ui-icon{
+	margin:auto;/*现代浏览器居中处理*/
+}
+.bc-grid .pager{
+	clear: both;
+	padding: 0.2em;
+}
+.bc-grid .pager.ui-widget-content{
+	border-left-width:0;
+	border-right-width:0;
+	border-bottom-width:0;
+}
+
+.bc-grid .pager {
+	display: block;
+	margin: 0;
+	padding: 0;
+	clear: both;
+}
+.bc-grid .pager li {
+	position: relative;
+	margin: 2px;
+	padding: 4px 0;
+	cursor: pointer;
+	float: left;
+	list-style: none;
+}
+.bc-grid .pager li span.ui-icon {
+	float: left;
+	margin: 0 4px;
+}
+.bc-grid .pager .pagerIconGroup{
+	padding: 2px 2px;
+}
+.bc-grid .pager .pagerIconGroup a.pagerIcon{
+	margin: 0;
+	border: 0;
+}
+.bc-grid .pager .pagerIconGroup span.ui-icon{
+	margin: 2px;
+}
+.bc-grid .pager li span.pageNo,.bc-grid .pager li span.pageSize {
+	float: left;
+	height: 16px;
+	font-size: 12px;
+}
+.bc-grid .pager li span.pageNo {
+	margin: 2px 4px;
+}
+.bc-grid .pager li span.pageSize {
+	margin: 2px 4px;
+}
+.bc-grid .pager li a {
+	float: left;
+	display: block;
+}
+
+/**
+ * 表单样式
+ *
+ * @author rongjihuang@gmail.com
+ * @date 2011-05-20
+ */
+/** 表单*/
+.bc-form {
+	width:100%;
+	height:100%;
+	padding:0;
+	margin:0;
+}
+.bc-form.ui-widget-content{
+	border:0;
+}
+/** 表单右上角信息*/
+.formTopInfo {
+	margin: 8px 8px 0 8px;
+	text-align: right;
+	color: #888;
+	font-size: 0.75em;
+	padding-right: 4px;
+}
+/** 表单底部注释信息*/
+.formComment {
+	margin: 4px 8px;
+	padding:0.25em;
+	color: #888;
+	font-size: 0.75em;
+	text-align: left;
+}
+/** 表单元素容器*/
+div.formFields {
+	margin: 8px;
+}
+/** 表单元素容器*/
+table.formFields {
+	width:100%;
+	border:0;
+}
+/** 表单富文本编辑器容器*/
+div.formEditor {
+	margin: 8px;
+}
+/** 表单附件区容器*/
+div.formAttachs {
+	margin: 8px;
+}
+
+/** 单列(2个td)元素表单的元素容器*/
+.formTable {
+	table-layout: fixed;/**/
+	border-spacing: 0;
+	background: none;
+	padding:0;
+	margin:0;
+	cursor: default;
+	width:98%;
+	height:100%;
+}
+/** 两列(4个td)元素表单的元素容器*/
+.formTable2 {
+	margin: 8px;
+	width:600px;
+}
+
+td.label{
+	text-align: right;
+	vertical-align: middle;
+	min-width: 6em;
+	width: 6em;
+	_width: 6em;
+}
+
+td.topLabel{
+	text-align: right;
+	vertical-align: top;
+	min-width: 6em;
+	_width: 6em;
+}
+
+td.top{
+	vertical-align: top;
+}
+
+td.value{
+	text-align: left;
+}
+
+td.value input,td.value textarea{
+	width: 98%;
+}
+td.value .ui-icon{
+	float: left;
+	margin-top: 4px;
+}
+
+textarea.bc-editor{
+	width: 100%;
+	height: 100%;
+	margin:0;
+	padding:0;
+	border:0;
+	min-height:300px;
+}
+
+
+
+/**
+ * 桌面主题样式
+ *
+ * @author rongjihuang@gmail.com
+ * @date 2011-04-11
+ */
+.boxPointer {
+	position: absolute;
+	min-width: 100px;
+	min-height: 40px;
+	_height: 40px;
+	z-index: 10000;
+	
+	/*border: 2px solid red;
+	background-color: #FFFEDE;
+	border-radius: 5px;
+	box-shadow: 3px 3px 4px #999;*/
+	/*filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#999');*/
+}
+.boxPointer a.close{
+	position:absolute;
+	top:-8px;right:-8px;
+}
+.boxPointer .content {
+	margin: 4px;
+	cursor: default;
+}
+
+.boxPointer .pointerBorder {
+	position: absolute;
+	display: block;
+	height: 0;
+	width: 0;
+	font-size: 0;
+	line-height: 0;
+	background:none;
+	border-width: 10px;
+	/*border-color: transparent transparent red transparent;设为与boxPointer的边框色相同
+	border-style: dashed dashed solid dashed;
+	top: -20px; left: 10px;*/
+}
+
+.boxPointer .pointerColor {
+	position: absolute;
+	display: block;
+	height: 0;
+	width: 0;
+	font-size: 0;
+	line-height: 0;
+	background:none;
+	border-width: 10px;
+	/*border-color: transparent transparent #FFFEDE transparent;设为与boxPointer的背景色相同
+	border-style: dashed dashed solid dashed;
+	top: -9px;left: -10px;*/
+}
+/**
+ * 附件空件样式控制
+ *
+ * @author rongjihuang@gmail.com
+ * @date 2011-06-01
+ */
+
+/** 附件大容器 */
+.attachs {
+	
+}
+.attachs table{
+	table-layout: fixed;
+}
+
+/** 附件的汇总信息容器 */
+.attachs .header {
+	margin: 8px 0 0 5px;
+}
+
+/** 添加附加的input控件的容器 */
+.attachs .header span.uploadFile {
+	position:relative;
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+/** 添加附加的input控件 */
+.attachs .header input.uploadFile {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 5em;
+	height: 1.5em;
+	filter: alpha(opacity = 0);
+	opacity: 0;
+	cursor: pointer;
+}
+
+/** 每个附加的总容器 */
+.attachs .attach {
+	margin: 8px 0 0 5px;
+}
+
+/** 附加的图标 */
+.attachs .attach .icon {
+	padding-right: 4px;
+	vertical-align: middle;
+}
+
+.attachs .header .summary, .attachs .attach .subject {
+	font-weight: bold;
+}
+
+.attachs .header span.uploadFile, .attachs .header .operation, .attachs .attach .operation {
+	margin: 6px;
+	color: #2A5DB0;
+}
+
+.attachs .attach td.operations {
+	vertical-align: middle;
+	padding-right:6px;
+}
+
+.attachs .attach .progressbar.ui-progressbar
+,.attachs .attach .progressbar .ui-progressbar-value{
+	border-radius:0;
+	margin:0;
+}
+.attachs .attach .progressbar{
+	width:15em;
+	height:1em;
+	margin-left:6px;
+}
+
+/**
+ * 文件类型图标
+ * innmm -->nn:行号，mm:列号
+ * @author rongjihuang@gmail.com
+ * @date 2011-06-01
+ */
+span.file-icon {
+	background: url(images/files/files.png) no-repeat 0 0;
+	display: block;
+	text-indent: -99999px;
+	overflow: hidden;
+	width: 32px;
+	height: 32px;
+}
+
+span.file-icon.doc {
+	background-position: -32px 0;
+}
+
+span.file-icon.xls {
+	background-position: -64px 0;
+}
+
+span.file-icon.ppt {
+	background-position: -96px 0;
+}
+
+span.file-icon.txt {
+	background-position: -128px 0;
+}
