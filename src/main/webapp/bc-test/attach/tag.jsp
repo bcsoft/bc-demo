@@ -6,13 +6,17 @@
 	data-initMethod='bc.attachTagDesign.init'
 	data-option='{"width":680,"minWidth":250,"minHeight":100,"modal":false}'>
 	<s:form name="attachTagDesignForm" theme="simple">
-		<div class="formAttachs ui-widget-content attachs" data-ptype="attach.main" data-puid="attach.uid"
-			 data-maxCount="6" data-maxSize="524288000" data-extends="pdf,txt,doc,xls,docx,xlsx,ppt,pptx,png,jpg,jpeg,gif,mp3,mkv,avi,wmv">
+		<div class="formAttachs ui-widget-content attachs" 
+			data-ptype="attach.main" 
+			data-puid="attach.uid"
+			data-maxCount="6" 
+			data-maxSize="524288000" 
+			data-extensions="pdf,txt,doc,xls,docx,xlsx,ppt,pptx,png,jpg,jpeg,gif,mp3,mkv,avi,wmv">
 			<div class="header">
 				<span class="summary"><span id="totalCount">0</span> 个附件共 <span id="totalSize" data-size="0">0</span></span>
 				<span class="uploadFile">添加附件<input type="file" class="uploadFile" name="uploadFile" multiple/></span>
 				<a href="#" class="operation" data-action="downloadAll">打包下载</a>
-				<a href="#" class="operation" data-action="deleteAll">删除所有附件</a>
+				<a href="#" class="operation" data-action="deleteAll">全部删除</a>
 			</div>
 			<table class="attach" cellpadding="0" cellspacing="0" data-size="32768">
 				<tr>

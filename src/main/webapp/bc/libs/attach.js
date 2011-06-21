@@ -31,32 +31,36 @@ bc.attach={
 	    
 	    //检测文件数量的限制
 	    var maxCount = parseInt($atm.attr("data-maxCount"));
-	    if(!isNaN(maxCount) && files.length > maxCount){
-	    	alert("请不要一次上传超过" + maxCount + "个文件！");
+	    var curCount = parseInt($atm.find("#totalCount"));
+	    if(!isNaN(maxCount) && files.length + curCount > maxCount){
+	    	alert("上传附件总数已限制为最多" + maxCount + "个，已超出上限了！");
 	    	bc.attach.clearFileSelect($atm);
 	    	return;
 	    }
 	    
 	    //检测文件大小的限制
 	    var maxSize = parseInt($atm.attr("data-maxSize"));
+	    var curSize = parseInt($atm.find("#totalSize").attr("data-size"));
 	    if(!isNaN(maxSize)){
+	    	var nowSize = curSize;
 	    	for(var i=0;i<files.length;i++){
-	    		if(files[i].fileSize > maxSize){
-		    		alert("请不要上传大小超过" + bc.attach.getSizeInfo(maxSize) + "的文件！");
-			    	bc.attach.clearFileSelect($atm);
-		    		return;
-	    		}
+	    		nowSize += files[i].fileSize;
 	    	}
+    		if(nowSize > maxSize){
+	    		alert("上传附件总容量已限制为最大" + bc.attach.getSizeInfo(maxSize) + "，已超出上限了！");
+		    	bc.attach.clearFileSelect($atm);
+	    		return;
+    		}
 	    }
 	    
 	    //检测文件类型的限制
-	    var _extends = $atm.attr("data-extends");//用逗号连接的扩展名列表
+	    var _extensions = $atm.attr("data-extensions");//用逗号连接的扩展名列表
 	    var fileName;
-	    if(_extends && _extends.length > 0){
+	    if(_extensions && _extensions.length > 0){
 	    	for(var i=0;i<files.length;i++){
 	    		fileName = files[i].fileName;
-	    		if(_extends.indexOf(fileName.substr(fileName.lastIndexOf(".") + 1)) == -1){
-		    		alert("只能上传扩展名为\"" + _extends.replace(/,/g,"、") + "\"的文件！");
+	    		if(_extensions.indexOf(fileName.substr(fileName.lastIndexOf(".") + 1)) == -1){
+		    		alert("只能上传扩展名为\"" + _extensions.replace(/,/g,"、") + "\"的文件！");
 			    	bc.attach.clearFileSelect($atm);
 		    		return;
 	    		}
@@ -100,8 +104,10 @@ bc.attach={
 		
 	    //逐一上传文件
 		function uploadNext(){
-	    	if(i >= files.length)
+	    	if(i >= files.length){
+		    	bc.attach.clearFileSelect($atm);
 	    		return;//全部上传完毕
+	    	}
 	    	
 	    	var key = batchNo + i;
 			logger.info("uploading:i=" + i);

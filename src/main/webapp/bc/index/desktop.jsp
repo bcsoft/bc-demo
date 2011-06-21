@@ -61,7 +61,7 @@
 		<!-- 桌面图标 -->
 		<div id="desktop">
 			<s:iterator value="shortcuts" status="stuts">
-			<s:if test="module == null">
+			<s:if test="resource == null">
 				<a class="shortcut" data-m="false"
 					data-id='<s:property value="id" />'
 					data-standalone='<s:property value="standalone" />'
@@ -80,15 +80,15 @@
 				<a class="shortcut" data-m="true"
 					data-id='<s:property value="id" />'
 					data-standalone='<s:property value="standalone" />'
-					data-type='<s:property value="module.type" />' 
-	 				data-mid='<s:property value="module.id" />'
-					data-option='<s:property value="module.option" />' 
+					data-type='<s:property value="resource.type" />' 
+	 				data-mid='<s:property value="resource.id" />'
+					data-option='<s:property value="resource.option" />' 
 					data-order='<s:property value="order" />'
-					data-iconClass='<s:property value="module.iconClass" />'
-					data-name='<s:property value="module.name" />'
-					data-url='<s:url value="%{module.url}" />'>
-					<span class='icon <s:property value="module.iconClass" />'></span>
-					<span class="text"><s:property value="module.name" /></span>
+					data-iconClass='<s:property value="resource.iconClass" />'
+					data-name='<s:property value="resource.name" />'
+					data-url='<s:url value="%{resource.url}" />'>
+					<span class='icon <s:property value="resource.iconClass" />'></span>
+					<span class="text"><s:property value="resource.name" /></span>
 				</a>
             </s:else>
 			</s:iterator>

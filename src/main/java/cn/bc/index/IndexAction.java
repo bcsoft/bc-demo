@@ -27,8 +27,9 @@ import cn.bc.desktop.domain.Shortcut;
 import cn.bc.desktop.service.PersonalService;
 import cn.bc.desktop.service.ShortcutService;
 import cn.bc.identity.domain.Actor;
+import cn.bc.identity.domain.Resource;
+import cn.bc.identity.domain.Role;
 import cn.bc.identity.web.SystemContext;
-import cn.bc.security.domain.Module;
 import cn.bc.web.ui.html.menu.Menu;
 import cn.bc.web.ui.html.menu.MenuItem;
 
@@ -122,41 +123,42 @@ public class IndexAction extends ActionSupport implements SessionAware {
 			throw new CoreException("缺少配置信息！");
 
 		// 快捷方式
-		Set<Module> modules = new LinkedHashSet<Module>();// 有权限使用的模块
+		Set<Resource> resources = new LinkedHashSet<Resource>();// 有权限使用的资源
+		Set<Role> roles = new LinkedHashSet<Role>();// 可用的角色
 		this.shortcuts = this.shortcutService.findByActor(user.getId(), null,
-				null, modules);
+				roles, resources);
 		if (logger.isDebugEnabled()) {
 			logger.debug("shortcuts=" + shortcuts.size());
 			int i = 0;
-			for (Module m : modules) {
+			for (Resource m : resources) {
 				logger.debug(++i + ") " + m);
 			}
 		}
 
-		// 将有权限使用的模块记录到上下文
-		List<String> ms = new ArrayList<String>();
-		for (Module m : modules) {
-			ms.add(m.getCode());
-		}
-		context.setAttr(SystemContext.KEY_MODULES, ms);
+		// 将可用的角色记录到上下文
+//		List<String> roleCodes = new ArrayList<String>();
+//		for (Role role : roles) {
+//			roleCodes.add(role.getCode());
+//		}
+//		context.setAttr(SystemContext.KEY_ROLES, roleCodes);
 
 		// 找到顶层模块
-		Map<Module, Set<Module>> parentChildren = new LinkedHashMap<Module, Set<Module>>();
-		Set<Module> topModules = this.findTopModules(modules, parentChildren);
+		Map<Resource, Set<Resource>> parentChildren = new LinkedHashMap<Resource, Set<Resource>>();
+		Set<Resource> topResources = this.findTopResources(resources, parentChildren);
 		if (logger.isDebugEnabled()) {
 			int i = 0;
-			for (Module m : topModules) {
+			for (Resource m : topResources) {
 				logger.debug(++i + ") " + m);
 			}
 			i = 0;
-			for (Entry<Module, Set<Module>> m : parentChildren.entrySet()) {
+			for (Entry<Resource, Set<Resource>> m : parentChildren.entrySet()) {
 				logger.debug(++i + ") " + m.getKey() + " "
 						+ m.getValue().size());
 			}
 		}
 
 		// 循环顶层模块生成菜单
-		Menu menu = this.buildMenu4Modules(topModules, parentChildren);
+		Menu menu = this.buildMenu4Resources(topResources, parentChildren);
 		menu.addClazz("startMenu");
 
 		this.startMenu = menu.toString();
@@ -165,65 +167,65 @@ public class IndexAction extends ActionSupport implements SessionAware {
 		return SUCCESS;
 	}
 
-	private Set<Module> findTopModules(Set<Module> modules,
-			Map<Module, Set<Module>> parentChildren) {
-		Set<Module> topModules = new LinkedHashSet<Module>();
-		for (Module m : modules) {
-			this.dealParentChildren(m, parentChildren, topModules);
+	private Set<Resource> findTopResources(Set<Resource> resources,
+			Map<Resource, Set<Resource>> parentChildren) {
+		Set<Resource> topResources = new LinkedHashSet<Resource>();
+		for (Resource m : resources) {
+			this.dealParentChildren(m, parentChildren, topResources);
 		}
-		return topModules;
+		return topResources;
 	}
 
-	private void dealParentChildren(Module m,
-			Map<Module, Set<Module>> parentChildren, Set<Module> topModules) {
-		Module parent = m.getBelong();
+	private void dealParentChildren(Resource m,
+			Map<Resource, Set<Resource>> parentChildren, Set<Resource> topResources) {
+		Resource parent = m.getBelong();
 		if (parent != null) {// 有隶属的父模块
-			Set<Module> childModules = parentChildren.get(parent);
-			if (childModules == null) {
-				childModules = new LinkedHashSet<Module>();
-				parentChildren.put(parent, childModules);
+			Set<Resource> childResources = parentChildren.get(parent);
+			if (childResources == null) {
+				childResources = new LinkedHashSet<Resource>();
+				parentChildren.put(parent, childResources);
 			}
-			childModules.add(m);
+			childResources.add(m);
 
-			this.dealParentChildren(parent, parentChildren, topModules);
+			this.dealParentChildren(parent, parentChildren, topResources);
 		} else {// 顶层模块
-			topModules.add(m);
+			topResources.add(m);
 		}
 	}
 
-	private Menu buildMenu4Modules(Set<Module> modules,
-			Map<Module, Set<Module>> parentChildren) {
+	private Menu buildMenu4Resources(Set<Resource> resources,
+			Map<Resource, Set<Resource>> parentChildren) {
 		Menu menu = new Menu();
 		MenuItem menuItem;
-		for (Module m : modules) {
-			menuItem = buildMenuItem4Module(m, parentChildren);
+		for (Resource m : resources) {
+			menuItem = buildMenuItem4Resource(m, parentChildren);
 			menu.addMenuItem(menuItem);
 		}
 		return menu;
 	}
 
-	private MenuItem buildMenuItem4Module(Module m,
-			Map<Module, Set<Module>> parentChildren) {
+	private MenuItem buildMenuItem4Resource(Resource m,
+			Map<Resource, Set<Resource>> parentChildren) {
 		MenuItem menuItem;
 		menuItem = new MenuItem();
 		menuItem.setUrl(buildMenuItemUrl(m)).setLabel(m.getName())
 				.setType(String.valueOf(m.getType())).setAction("menuItem")
 				.setAttr("data-mid", m.getId().toString());// .addStyle("z-index",
 															// "10000");
-		if (m.getType() == Module.TYPE_FOLDER) {// 文件夹
-			Set<Module> childModules = parentChildren.get(m);// 模块下的子模块
-			if (childModules != null && !childModules.isEmpty()) {
-				menuItem.setChildMenu(buildMenu4Modules(childModules,
+		if (m.getType() == Resource.TYPE_FOLDER) {// 文件夹
+			Set<Resource> childResources = parentChildren.get(m);// 模块下的子模块
+			if (childResources != null && !childResources.isEmpty()) {
+				menuItem.setChildMenu(buildMenu4Resources(childResources,
 						parentChildren));
 			}
 		}
 		return menuItem;
 	}
 
-	private String buildMenuItemUrl(Module m) {
+	private String buildMenuItemUrl(Resource m) {
 		String url = m.getUrl();
 		if (url != null && url.length() > 0) {
-			if (m.getType() == Module.TYPE_OUTER_LINK) {// 不处理外部链接
+			if (m.getType() == Resource.TYPE_OUTER_LINK) {// 不处理外部链接
 				return url;
 			} else {
 				return contextPath + url;// 内部的url需要附加部署路路径

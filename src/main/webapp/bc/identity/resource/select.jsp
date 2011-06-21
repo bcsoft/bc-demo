@@ -1,10 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<div class="bc-page" title='<s:text name="module.title.select"/>'
-	data-type='dialog' data-initMethod='bc.selectModule.init'
-	data-js='<s:url value="/bc/security/module/select.js" />'
+<div class="bc-page" title='<s:text name="resource.title.select"/>'
+	data-type='dialog' data-initMethod='bc.selectResource.init'
+	data-js='<s:url value="/bc/identity/resource/select.js" />'
 	data-option='{
-		"buttons":[{"text":"<s:text name="label.ok"/>","click":"bc.selectModule.clickOk"}],
+		"buttons":[{"text":"<s:text name="label.ok"/>","click":"bc.selectResource.clickOk"}],
 		"width":300,"modal":true
 	}'>
 	<div style="margin:4px;">

@@ -2,7 +2,7 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <div class="bc-page" title='<s:text name="role.title.select"/>'
 	data-type='dialog' data-initMethod='bc.selectRole.init'
-	data-js='<s:url value="/bc/security/role/select.js" />'
+	data-js='<s:url value="/bc/identity/role/select.js" />'
 	data-option='{
 		"buttons":[{"text":"<s:text name="label.ok"/>","click":"bc.selectRole.clickOk"}],
 		"width":300,"height":320,"modal":true

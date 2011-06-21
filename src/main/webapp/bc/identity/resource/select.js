@@ -1,16 +1,16 @@
-bc.selectModule = {
+bc.selectResource = {
 	init : function() {
 		var $page = $(this);
 		//绑定双击事件
 		$page.find("select").dblclick(function(){
-			bc.selectModule.clickOk.call($page[0]);
+			bc.selectResource.clickOk.call($page[0]);
 		});
 	},
 	clickOk : function() {
 		var $page = $(this);
 		var select = $page.find("select")[0];
 		if(select.selectedIndex == -1){
-			alert("必须先选择模块信息！");
+			alert("必须先选择资源信息！");
 			return false;
 		}
 		var item;

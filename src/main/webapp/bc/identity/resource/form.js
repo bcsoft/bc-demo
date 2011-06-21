@@ -1,4 +1,4 @@
-bc.moduleForm = {
+bc.resourceForm = {
 	init : function() {
 		var $form = $(this);
 		//绑定选择隶属模块的按钮事件处理
@@ -13,12 +13,12 @@ bc.moduleForm = {
 			
 			bc.identity.selectModule({
 				data: data,
-				onOk: function(module){
-					if(myId != module.id){
-						$form.find(":input[name='e.belong.name']").val(module.name);
-						$form.find(":input[name='e.belong.id']").val(module.id);
+				onOk: function(resource){
+					if(myId != resource.id){
+						$form.find(":input[name='e.belong.name']").val(resource.name);
+						$form.find(":input[name='e.belong.id']").val(resource.id);
 					}else{
-						alert("不能选择自己作为自己的所属模块！");
+						alert("不能选择自己作为自己的所属资源！");
 					}
 				}
 			});

@@ -45,8 +45,6 @@
 
 	<!-- bc-identity包的配置 -->
 	<import resource="classpath:cn/bc/identity/spring.xml" />
-	<!-- bc-security包的配置 -->
-	<import resource="classpath:cn/bc/security/spring.xml"/>
 	<!-- bc-desktop包的配置 -->
 	<import resource="classpath:cn/bc/desktop/spring.xml"/>
 	<!-- bc-message包的配置 -->

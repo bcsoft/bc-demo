@@ -5,8 +5,10 @@ package cn.bc.login;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -19,11 +21,13 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.DigestUtils;
+import org.springframework.util.StringUtils;
 
 import cn.bc.Context;
 import cn.bc.identity.domain.Actor;
 import cn.bc.identity.domain.ActorRelation;
 import cn.bc.identity.domain.AuthData;
+import cn.bc.identity.domain.Role;
 import cn.bc.identity.service.UserService;
 import cn.bc.identity.web.SystemContext;
 import cn.bc.identity.web.SystemContextImpl;
@@ -132,7 +136,24 @@ public class LoginAction extends ActionSupport implements SessionAware {
 					}
 					context.setAttr(SystemContext.KEY_GROUPS, gcs);
 
-					// 用户的角色
+					// 用户的角色（包含继承自上级组织和隶属岗位的角色）
+					Set<Role> roles = new LinkedHashSet<Role>();// 可用的角色
+					List<Actor> ancestors = this.userService
+							.findAncestorOrganization(user.getId());
+					for (Actor ancestor : ancestors) {
+						roles.addAll(ancestor.getRoles());
+					}
+					List<String> rcs = new ArrayList<String>();
+					for (Role role : roles) {
+						rcs.add(role.getCode());
+					}
+					context.setAttr(SystemContext.KEY_ROLES, rcs);
+					
+					//debug
+					if(logger.isDebugEnabled()){
+						logger.debug("groups=" + StringUtils.collectionToCommaDelimitedString(gcs));
+						logger.debug("roles=" + StringUtils.collectionToCommaDelimitedString(rcs));
+					}
 
 					// 用户的权限
 

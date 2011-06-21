@@ -28,7 +28,6 @@
 	<!-- 平台基础模块的配置文件 -->
 	<include file="cn/bc/web/struts2/struts.xml" />
 	<include file="cn/bc/identity/web/struts2/struts.xml" />
-	<include file="cn/bc/security/web/struts2/struts.xml" />
 	<include file="cn/bc/desktop/web/struts2/struts.xml" />
 	<include file="cn/bc/report/web/struts2/struts.xml" />
 	<include file="cn/bc/message/web/struts2/struts.xml" />

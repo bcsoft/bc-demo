@@ -130,6 +130,7 @@
 			</ul>
 			</s:if>	
 		</div>
+		<s:hidden name="e.pinYin"/>
 		<s:hidden name="e.type"/>
 		<s:hidden name="e.inner" />
 		<s:hidden name="e.uid" />

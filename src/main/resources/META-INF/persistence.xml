@@ -9,8 +9,8 @@
 		<class>cn.bc.identity.domain.IdGenerator</class>
 		
 		<!-- security -->
-		<class>cn.bc.security.domain.Module</class>
-		<class>cn.bc.security.domain.Role</class>
+		<class>cn.bc.identity.domain.Resource</class>
+		<class>cn.bc.identity.domain.Role</class>
 		
 		<!-- actor -->
 		<class>cn.bc.identity.domain.Actor</class>

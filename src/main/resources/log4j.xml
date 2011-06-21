@@ -63,10 +63,15 @@
 
 	<!-- bc -->
 	<category name="cn.bc">
-	  <priority value="DEBUG" />
+	  <priority value="WARN" />
 	</category>
 	<category name="cn.bc.web.ui.AbstractComponent">
 	  <priority value="ERROR" />
+	</category>
+ 
+	<!-- bc -->
+	<category name="cn.bc.login.LoginAction">
+	  <priority value="DEBUG" />
 	</category>
     	
   	<!-- 设置默认的日志级别(该设置必须放在最后,否则加载会解析出错) -->
