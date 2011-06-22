@@ -106,18 +106,18 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 
-	<!-- 缓存过滤器:js、css、图片等文件添加永久缓存(设为10年) -->
+	<!-- 缓存过滤器:js、css、图片等文件添加永久缓存(设为30天) -->
 	<filter>
 		<filter-name>foreverCacheFilter</filter-name>
 		<filter-class>cn.bc.web.filter.CacheFilter</filter-class>
 		<init-param>
 			<param-name>expires</param-name>
 			<!--缓存时间配置 ,单位为分钟,配为-1代表永久的缓存 -->
-			<param-value>-1</param-value>
+			<param-value>43200</param-value>
 		</init-param>
 		<init-param>
 			<param-name>excludePaths</param-name>
-			<param-value>/attachment/*</param-value>
+			<param-value>/bc/attach/*</param-value>
 		</init-param>
 	</filter>
 	<filter-mapping>

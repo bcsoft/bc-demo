@@ -65,12 +65,21 @@ bc.page = {
 						if(option.beforeClose) 
 							return option.beforeClose(status);
 					}).bind("dialogclose",function(event,ui){
+						var $this = $(this);
 						var status = $dom.data("data-status");
 						//调用回调函数
 						if(option.afterClose) option.afterClose(status);
 						
+						//在ie9，如果内涵<object>,$this.remove()会报错,故先处理掉object
+						//ie8试过没问题
+						if(jQuery.browser.msie && jQuery.browser.version >= 9){
+							logger.info("IE9坑爹啊");
+							$this.find("object").each(function(){
+								this.parentNode.innerHTML="";
+							});
+						}
 						//彻底删除所有相关的dom元素
-						$(this).dialog("destroy").remove();
+						$this.dialog("destroy").remove();
 						//删除任务栏对应的dom元素
 						$(bc.page.quickbar.id).find(">a.quickButton[data-mid='" + option.mid + "']").unbind().remove();
 					}).attr("data-src",option.url).attr("data-mid",option.mid)

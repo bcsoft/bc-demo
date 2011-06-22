@@ -8,8 +8,9 @@
 bc.attach={
 	clearFileSelect:function($attachs){
 		//清空file控件:file.outerHTML=file.outerHTML; 
-		var file = $attachs.find(":file")[0];
-		file.outerHTML=file.outerHTML
+		var file = $attachs.find(":file.uploadFile");
+		if(file.size())
+			file[0].outerHTML=file[0].outerHTML;
 	},
 	/** 在线打开附件 */
 	inline: function(attachEl,callback){
@@ -122,7 +123,7 @@ bc.attach={
     },
     /**单个附件容器的模板*/
     tabelTpl:[
-		'<table class="attach" cellpadding="0" cellspacing="0" data-size="{0}"',
+		'<table class="attach" cellpadding="0" cellspacing="0" data-size="{0}">',
 			'<tr>',
 				'<td class="icon"><span class="file-icon {2}"></span></td>',
 				'<td class="info">',
@@ -145,8 +146,9 @@ bc.attach={
 		'<a href="#" class="operation" data-action="delete">删除</a>'
 	].join(""),
     /**判断浏览器是否可使用html5上传文件*/
-	isHtml5Upload: function(){
-		return $.browser.safari || $.browser.mozilla;//Chrome12、Safari5、Firefox4
+	isHtml5Upload: function(attachEl){
+		//return $.browser.safari || $.browser.mozilla;//Chrome12、Safari5、Firefox4
+		return $(attachEl).filter("[data-flash]").size() == 0;
 	}
 };
 
@@ -183,7 +185,7 @@ $(".attachs .operation").live("click",function(e){
 	$attach = $this.parents(".attach");
 	switch (action){
 	case "abort"://取消附件的上传
-		if(bc.attach.isHtml5Upload()){
+		if(bc.attach.isHtml5Upload($attach[0])){
 			bc.attach.html5.abortUpload($attach[0],callback);
 		}else{
 			bc.attach.flash.abortUpload($attach[0],callback);

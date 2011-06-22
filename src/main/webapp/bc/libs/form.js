@@ -10,12 +10,18 @@ bc.form = {
 	 * 函数的第一参数为表单元素的容器对象
 	 */
 	init : function($form) {
+		logger.info("bc.form.init");
 		//选择日期
 		$form.find('.bc-date[readonly!="readonly"]').datepicker({
 			showWeek: true,
 			//showButtonPanel: true,//现时今天按钮
 			firstDay: 7,
 			dateFormat:"yy-mm-dd"//yy4位年份、MM-大写的月份
+		});
+		
+		//flash上传附件
+		$form.find(".attachs.flashUpload").has(":file.uploadFile").each(function(){
+			bc.attach.flash.init.call(this);
 		});
 	}
 };
