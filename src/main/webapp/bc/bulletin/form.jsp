@@ -5,10 +5,7 @@
 	data-saveUrl='<s:url value="/bc/bulletin/save" />'
 	data-js='<s:url value="/ui-libs/xheditor/1.1.7/xheditor-zh-cn.min.js?ts=0" />,<s:url value="/bc/bulletin/form.js" />'
 	data-initMethod='bc.bulletinForm.init'
-	data-option='{
-		"buttons":[{"text":"<s:text name="label.save"/>","action":"save"}],
-		"width":680,"minWidth":250,"minHeight":250,"modal":false
-	}'>
+	data-option='<s:property value="%{formPageOption}"/>' style="overflow-y:auto;">
 	<s:form name="bulletinForm" theme="simple">
 		<div class="formTopInfo">
 			<s:if test="%{e.issuerName == null}">
@@ -44,7 +41,12 @@
 		</table>
 		</div>
 		<div class="formEditor">
+			<s:if test="%{isManager}">
 			<s:textarea name="e.content" cssClass="bc-editor" data-validate="required"></s:textarea>
+			</s:if>
+			<s:else>
+			<div class="bc-editor"><s:property value="%{e.content}" escapeHtml="false"/></div>
+			</s:else>
 		</div>
 		<s:property value="%{attachsUI}" escapeHtml="false"/>
 		<s:hidden name="e.inner" />

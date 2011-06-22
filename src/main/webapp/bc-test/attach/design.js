@@ -1,6 +1,6 @@
 bc.attachTagDesign = {
 	init : function() {
 		var $form = $(this);
-		$form.find(".progressbar").progressbar({value: 50});
+		$form.find(".progressbar:first").progressbar({value: 50});
 	}
 };

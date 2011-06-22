@@ -160,6 +160,8 @@ bc.page = {
 					btn.click = bc.page.delete_;
 				}else if(btn.action == "edit"){//编辑
 					btn.click = bc.page.edit;
+				}else if(btn.action == "preview"){//预览xheditor的内容
+					btn.click = bc.page.preview;
 				}else if(btn.fn){//调用自定义函数
 					btn.click = bc.getNested(btn.fn);
 				}
@@ -286,6 +288,10 @@ bc.page = {
 			bc.msg.slide(!readOnly ? "请先选择要编辑的信息！" : "请先选择要查看的信息！");
 			return;
 		}
+	},
+	/**预览xheditor的内容*/
+	preview: function(){
+		$(this).find(".bc-editor").xheditor({tools:'mini'}).exec("Preview");
 	}
 };
 

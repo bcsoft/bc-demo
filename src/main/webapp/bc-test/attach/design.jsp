@@ -2,13 +2,14 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <%-- <%@ taglib prefix="bc" uri="/bc-tags"%> --%>
 <div title='附件控件设计' data-type='form' class="bc-page"
-	data-js='<s:url value="/bc-test/attach/tag.js" />'
+	data-js='<s:url value="/bc-test/attach/design.js" />'
 	data-initMethod='bc.attachTagDesign.init'
-	data-option='{"width":680,"minWidth":250,"minHeight":100,"modal":false}'>
+	data-option='{"width":680,"minWidth":250,"minHeight":100,"modal":false}'
+	style="overflow-y:auto;">
 	<s:form name="attachTagDesignForm" theme="simple">
 		<div class="formAttachs ui-widget-content attachs" 
-			data-ptype="attach.main" 
-			data-puid="attach.uid"
+			data-ptype="test.main" 
+			data-puid="test.uid.1"
 			data-maxCount="6" 
 			data-maxSize="524288000" 
 			data-extensions="pdf,txt,doc,xls,docx,xlsx,ppt,pptx,png,jpg,jpeg,gif,mp3,mkv,avi,wmv">
@@ -52,6 +53,8 @@
 				</tr>
 			</table>
 		</div>
-		<input type="hidden" name="e.uid" value='attach.uid'/>
+		<s:property value="%{editableAttachsUI}" escapeHtml="false"/>
+		<s:property value="%{readonlyAttachsUI}" escapeHtml="false"/>
+		<input type="hidden" name="e.uid" value='test.uid.1'/>
 	</s:form>
 </div>

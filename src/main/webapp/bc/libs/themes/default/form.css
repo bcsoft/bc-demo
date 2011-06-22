@@ -105,4 +105,13 @@ textarea.bc-editor{
 	min-height:300px;
 }
 
+div.bc-editor{
+	width: 100%;
+	margin:0;
+	padding:0;
+	border:0;
+	max-height:300px;
+	overflow: auto;
+}
+
 
