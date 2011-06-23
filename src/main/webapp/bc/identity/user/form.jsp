@@ -28,7 +28,7 @@
 				</tr>
 				<tr>
 					<td class="label">* <s:text name="label.order"/>:</td>
-					<td class="value"><s:textfield name="e.order" data-validate='required'/></td>
+					<td class="value"><s:textfield name="e.orderNo" data-validate='required'/></td>
 					<td class="label"><s:text name="label.phone"/>:</td>
 					<td class="value"><s:textfield name="e.phone" data-validate='{"type":"phone","required":false}'/></td>
 				</tr>

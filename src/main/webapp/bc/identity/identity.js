@@ -97,11 +97,11 @@ bc.identity = {
 	 * @option {Number} type 选择的资源类型
 	 * @option {Function} onOk 选择完毕后的回调函数，函数第一个参数为选中的角色信息(数组)
 	 */
-	selectModule : function(option) {
+	selectResource : function(option) {
 		option = jQuery.extend({
-			url: bc.root + "/bc/selectModule",
-			name: "选择模块信息",
-			mid: "selectModule",
+			url: bc.root + "/bc/selectResource",
+			name: "选择资源信息",
+			mid: "selectResource",
 			afterClose: function(status){
 				if(status && typeof(option.onOk) == "function"){
 					option.onOk(status);
@@ -124,7 +124,7 @@ bc.identity = {
 		option = jQuery.extend({
 			url: bc.root + "/bc/selectUser",
 			name: "选择用户信息",
-			mid: "selectModule",
+			mid: "selectUser",
 			afterClose: function(status){
 				if(status && typeof(option.onOk) == "function"){
 					option.onOk(status);

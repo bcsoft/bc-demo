@@ -78,6 +78,12 @@
 				<include name="attach.js" />
 			</fileset>
 			<fileset dir="${bclibs.dir}">
+				<include name="attach.html5.js" />
+			</fileset>
+			<fileset dir="${bclibs.dir}">
+				<include name="attach.flash.js" />
+			</fileset>
+			<fileset dir="${bclibs.dir}">
 				<include name="desktop.js" />
 			</fileset>
 		</concat>

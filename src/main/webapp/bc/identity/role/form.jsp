@@ -19,7 +19,7 @@
 				</tr>
 				<tr>
 					<td class="label">* <s:text name="label.order"/>:</td>
-					<td class="value" colspan="3"><s:textfield name="e.order" data-validate="required"/></td>
+					<td class="value" colspan="3"><s:textfield name="e.orderNo" data-validate="required"/></td>
 				</tr>
 			</tbody>
 		</table>

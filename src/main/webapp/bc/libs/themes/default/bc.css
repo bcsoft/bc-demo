@@ -54,7 +54,10 @@ body {
 /**修改对话框*/
 .bc-ui-dialog {padding: 0;}
 .bc-ui-dialog .ui-widget-header {border-width: 0;}
-.bc-ui-dialog .ui-widget-header.ui-corner-all {border-bottom-right-radius: 0;border-bottom-left-radius: 0;}
+.bc-ui-dialog .ui-widget-header.ui-corner-all {
+	border-top-right-radius: 0;border-top-left-radius: 0;
+	border-bottom-right-radius: 0;border-bottom-left-radius: 0;
+}
 .bc-ui-dialog .ui-dialog-content {
 	padding: 0;
 	/*margin: 0 8px 8px 8px;*/
@@ -803,6 +806,15 @@ textarea.bc-editor{
 	min-height:300px;
 }
 
+div.bc-editor{
+	width: 100%;
+	margin:0;
+	padding:0;
+	border:0;
+	max-height:300px;
+	overflow: auto;
+}
+
 
 
 /**
@@ -871,7 +883,8 @@ textarea.bc-editor{
 .attachs {
 	
 }
-.attachs table{
+
+.attachs table {
 	table-layout: fixed;
 }
 
@@ -881,10 +894,13 @@ textarea.bc-editor{
 }
 
 /** 添加附加的input控件的容器 */
-.attachs .header span.uploadFile {
-	position:relative;
+.attachs .header td.uploadFile {
+	position: relative;
 	text-decoration: underline;
-	cursor: pointer;
+	color: #2A5DB0;
+}
+.attachs .header td {
+	vertical-align: middle;
 }
 
 /** 添加附加的input控件 */
@@ -894,9 +910,10 @@ textarea.bc-editor{
 	top: 0;
 	width: 5em;
 	height: 1.5em;
-	filter: alpha(opacity = 0);
+	filter: alpha(opacity =     10);
 	opacity: 0;
 	cursor: pointer;
+	-moz-margin-start: -165px; /*Firefox的input:file宽度无法控制的处理*/
 }
 
 /** 每个附加的总容器 */
@@ -905,34 +922,41 @@ textarea.bc-editor{
 }
 
 /** 附加的图标 */
-.attachs .attach .icon {
-	padding-right: 4px;
+.attachs .attach .icon,.attachs .header .summary {
+	padding-right: 6px;
 	vertical-align: middle;
 }
 
-.attachs .header .summary, .attachs .attach .subject {
+/** 附加的图标 */
+.attachs .attach td.size {
+	min-width: 4em;
+}
+
+.attachs .header .summary,.attachs .attach .subject {
 	font-weight: bold;
 }
 
-.attachs .header span.uploadFile, .attachs .header .operation, .attachs .attach .operation {
+.attachs .header span.uploadFile,.attachs .header .operation,.attachs .attach .operation
+	{
 	margin: 6px;
 	color: #2A5DB0;
 }
 
 .attachs .attach td.operations {
 	vertical-align: middle;
-	padding-right:6px;
+	padding-right: 6px;
 }
 
-.attachs .attach .progressbar.ui-progressbar
-,.attachs .attach .progressbar .ui-progressbar-value{
-	border-radius:0;
-	margin:0;
+.attachs .attach .progressbar.ui-progressbar,.attachs .attach .progressbar .ui-progressbar-value
+	{
+	border-radius: 0;
+	margin: 0;
 }
-.attachs .attach .progressbar{
-	width:15em;
-	height:1em;
-	margin-left:6px;
+
+.attachs .attach .progressbar {
+	width: 15em;
+	height: 1em;
+	margin-left: 6px;
 }
 
 /**
@@ -950,18 +974,126 @@ span.file-icon {
 	height: 32px;
 }
 
-span.file-icon.doc {
+span.file-icon.txt {
 	background-position: -32px 0;
 }
 
-span.file-icon.xls {
+span.file-icon.pdf {
 	background-position: -64px 0;
 }
 
-span.file-icon.ppt {
+/**Office文档*/
+span.file-icon.doc {
 	background-position: -96px 0;
 }
 
-span.file-icon.txt {
+span.file-icon.docx {
 	background-position: -128px 0;
+}
+
+span.file-icon.xls {
+	background-position: -160px 0;
+}
+
+span.file-icon.xlsx {
+	background-position: -192px 0;
+}
+
+span.file-icon.ppt {
+	background-position: -224px 0;
+}
+
+span.file-icon.pptx {
+	background-position: -256px 0;
+}
+
+/**其他文档*/
+span.file-icon.bat {
+	background-position: 0 -32px;
+}
+span.file-icon.rar {
+	background-position: -32px -32px;
+}
+span.file-icon.zip {
+	background-position: -64px -32px;
+}
+span.file-icon.7z {
+	background-position: -96px -32px;
+}
+span.file-icon.gz {
+	background-position: -128px -32px;
+}
+span.file-icon.tar {
+	background-position: -160px -32px;
+}
+
+/**图片*/
+span.file-icon.pic {
+	background-position: 0 -64px;
+}
+
+span.file-icon.psd {
+	background-position: -32px -64px;
+}
+
+span.file-icon.png {
+	background-position: -64px -64px;
+}
+
+span.file-icon.jpg {
+	background-position: -96px -64px;
+}
+
+span.file-icon.jpeg {
+	background-position: -96px -64px;
+}
+
+span.file-icon.gif {
+	background-position: -128px -64px;
+}
+
+span.file-icon.tif {
+	background-position: -160px -64px;
+}
+
+span.file-icon.tiff {
+	background-position: -160px -64px;
+}
+
+span.file-icon.ico {
+	background-position: -192px -64px;
+}
+
+/**音乐*/
+span.file-icon.mp3 {
+	background-position: -0px -96px;
+}
+
+span.file-icon.mid {
+	background-position: -32px -96px;
+}
+
+span.file-icon.wma {
+	background-position: -64px -96px;
+}
+
+/**视频*/
+span.file-icon.avi {
+	background-position: -0px -128px;
+}
+
+span.file-icon.wmv {
+	background-position: -32px -128px;
+}
+
+span.file-icon.mpg {
+	background-position: -64px -128px;
+}
+
+span.file-icon.mpeg {
+	background-position: -64px -128px;
+}
+
+span.file-icon.mkv {
+	background-position: 0 0;
 }

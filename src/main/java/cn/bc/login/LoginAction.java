@@ -107,7 +107,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
 							.getRequest();
 					info += request.getRemoteAddr();
 					info += ",host=" + request.getRemoteHost();
-					logger.fatal(info);
+					logger.info(info);
 					msg = "登录成功，跳转到系统主页！";
 
 					// 创建默认的上下文实现并保存到session中

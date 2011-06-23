@@ -25,7 +25,7 @@
 				</tr>
 				<tr>
 					<td class="label">* <s:text name="label.order"/>：</td>
-					<td class="value"><s:textfield name="e.order" data-validate="required"/></td>
+					<td class="value"><s:textfield name="e.orderNo" data-validate="required"/></td>
 					<td data-name="iconClass" class="label"><s:text name="resource.iconClass"/>:</td>
 					<td data-name="iconClass" class="value"><s:textfield name="e.iconClass" 
 						readonly="true"  title='%{getText("resource.title.click2selectIconClass")}'/></td>

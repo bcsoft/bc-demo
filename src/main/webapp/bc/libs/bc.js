@@ -94,6 +94,76 @@ bc.addParamToUrl=function(url,keyValue){
     }
 };
 
+/** 
+ * 格式化数字显示方式  
+ * 用法 
+ * bc.formatNumber(12345.999,'#,##0.00'); 
+ * bc.formatNumber(12345.999,'#,##0.##'); 
+ * bc.formatNumber(123,'000000'); 
+ * @param num 
+ * @param pattern 
+ */  
+bc.formatNumber = function(num, pattern) {
+	var strarr = num ? num.toString().split('.') : [ '0' ];
+	var fmtarr = pattern ? pattern.split('.') : [ '' ];
+	var retstr = '';
+
+	// 整数部分  
+	var str = strarr[0];
+	var fmt = fmtarr[0];
+	var i = str.length - 1;
+	var comma = false;
+	for ( var f = fmt.length - 1; f >= 0; f--) {
+		switch (fmt.substr(f, 1)) {
+		case '#':
+			if (i >= 0)
+				retstr = str.substr(i--, 1) + retstr;
+			break;
+		case '0':
+			if (i >= 0)
+				retstr = str.substr(i--, 1) + retstr;
+			else
+				retstr = '0' + retstr;
+			break;
+		case ',':
+			comma = true;
+			retstr = ',' + retstr;
+			break;
+		}
+	}
+	if (i >= 0) {
+		if (comma) {
+			var l = str.length;
+			for (; i >= 0; i--) {
+				retstr = str.substr(i, 1) + retstr;
+				if (i > 0 && ((l - i) % 3) == 0)
+					retstr = ',' + retstr;
+			}
+		} else
+			retstr = str.substr(0, i + 1) + retstr;
+	}
+
+	retstr = retstr + '.';
+	// 处理小数部分  
+	str = strarr.length > 1 ? strarr[1] : '';
+	fmt = fmtarr.length > 1 ? fmtarr[1] : '';
+	i = 0;
+	for ( var f = 0; f < fmt.length; f++) {
+		switch (fmt.substr(f, 1)) {
+		case '#':
+			if (i < str.length)
+				retstr += str.substr(i++, 1);
+			break;
+		case '0':
+			if (i < str.length)
+				retstr += str.substr(i++, 1);
+			else
+				retstr += '0';
+			break;
+		}
+	}
+	return retstr.replace(/^,+/, '').replace(/\.$/, '');
+}
 /**
  * 对$.ajax的通用封装
  * 
@@ -445,12 +515,21 @@ bc.page = {
 						if(option.beforeClose) 
 							return option.beforeClose(status);
 					}).bind("dialogclose",function(event,ui){
+						var $this = $(this);
 						var status = $dom.data("data-status");
 						//调用回调函数
 						if(option.afterClose) option.afterClose(status);
 						
+						//在ie9，如果内涵<object>,$this.remove()会报错,故先处理掉object
+						//ie8试过没问题
+						if(jQuery.browser.msie && jQuery.browser.version >= 9){
+							logger.info("IE9坑爹啊");
+							$this.find("object").each(function(){
+								this.parentNode.innerHTML="";
+							});
+						}
 						//彻底删除所有相关的dom元素
-						$(this).dialog("destroy").remove();
+						$this.dialog("destroy").remove();
 						//删除任务栏对应的dom元素
 						$(bc.page.quickbar.id).find(">a.quickButton[data-mid='" + option.mid + "']").unbind().remove();
 					}).attr("data-src",option.url).attr("data-mid",option.mid)
@@ -540,6 +619,8 @@ bc.page = {
 					btn.click = bc.page.delete_;
 				}else if(btn.action == "edit"){//编辑
 					btn.click = bc.page.edit;
+				}else if(btn.action == "preview"){//预览xheditor的内容
+					btn.click = bc.page.preview;
 				}else if(btn.fn){//调用自定义函数
 					btn.click = bc.getNested(btn.fn);
 				}
@@ -666,6 +747,10 @@ bc.page = {
 			bc.msg.slide(!readOnly ? "请先选择要编辑的信息！" : "请先选择要查看的信息！");
 			return;
 		}
+	},
+	/**预览xheditor的内容*/
+	preview: function(){
+		$(this).find(".bc-editor").xheditor({tools:'mini'}).exec("Preview");
 	}
 };
 
@@ -1388,12 +1473,18 @@ bc.form = {
 	 * 函数的第一参数为表单元素的容器对象
 	 */
 	init : function($form) {
+		logger.info("bc.form.init");
 		//选择日期
 		$form.find('.bc-date[readonly!="readonly"]').datepicker({
 			showWeek: true,
 			//showButtonPanel: true,//现时今天按钮
 			firstDay: 7,
 			dateFormat:"yy-mm-dd"//yy4位年份、MM-大写的月份
+		});
+		
+		//flash上传附件
+		$form.find(".attachs.flashUpload").has(":file.uploadFile").each(function(){
+			bc.attach.flash.init.call(this);
 		});
 	}
 };
@@ -1830,6 +1921,232 @@ bc.editor={
  * @depend attach.css
  */
 bc.attach={
+	clearFileSelect:function($attachs){
+		//清空file控件:file.outerHTML=file.outerHTML; 
+		var file = $attachs.find(":file.uploadFile");
+		if(file.size())
+			file[0].outerHTML=file[0].outerHTML;
+	},
+	/** 在线打开附件 */
+	inline: function(attachEl,callback){
+		//在新窗口中打开文件
+		var url = bc.root + "/bc/attach/inline?id=" + $(attachEl).attr("data-id");
+		var to = $(attachEl).attr("data-to");
+		if(to && to.length > 0)
+			url += "&to=" + to;
+		window.open(url, "_blank");
+	},
+	/** 下载附件 */
+	download: function(attachEl,callback){
+		window.open(bc.root + "/bc/attach/download?id=" + $(attachEl).attr("data-id"), "blank");
+	},
+	/** 打包下载所有附件 */
+	downloadAll: function(attachsEl,callback){
+		var $attachs = $(attachsEl);
+		if($attachs.find(".attach").size()){
+			window.open(bc.root + "/bc/attach/downloadAll?ptype=" + $attachs.attr("data-ptype"), "blank");
+		}else{
+			bc.msg.slide("当前没有可下载的附件！");
+		}
+	},
+	/** 删除附件 */
+	delete_: function(attachEl,callback){
+		var $attach = $(attachEl);
+		var fileName = $attach.find(".subject").text();
+		bc.msg.confirm("确定要删除附件<b>《"+fileName+"》</b>吗？",function(){
+			bc.ajax({
+				url: bc.root + "/bc/attach/delete?id=" + $attach.attr("data-id"),
+				type: "GET",dataType:"json",
+				success: function(json){
+					//json:{success:true,msg:"..."}
+					if(typeof(json) != "object"){
+						alert("删除操作异常！");
+						return;
+					}
+					
+					if(json.success == false){
+						alert(json.msg);//删除失败了
+					}else{
+						//附件总数减一
+						var $totalCount = $attach.parent().find("#totalCount");
+						$totalCount.text(parseInt($totalCount.text()) - 1);
+						
+						//附件总大小减去该附件的部分
+						var $totalSize = $attach.parent().find("#totalSize");
+						var newSize = parseInt($totalSize.attr("data-size")) - parseInt($attach.attr("data-size"));
+						$totalSize.attr("data-size",newSize).text(bc.attach.getSizeInfo(newSize));
+						
+						//删除该附件的dom
+						$attach.remove();
+						
+						//提示用户已删除
+						bc.msg.slide("已删除附件<b>《"+fileName+"》</b>！");
+					}
+				}
+			});
+		});
+	},
+	/** 删除所有附件 */
+	deleteAll: function(attachsEl,callback){
+		var $attachs = $(attachsEl);
+		if($attachs.find(".attach").size()){
+			bc.msg.confirm("确定要将全部附件删除吗？",function(){
+				bc.ajax({
+					url: bc.root + "/bc/attach/deleteAll?ptype=" + $attachs.attr("data-ptype"),
+					type: "GET",dataType:"json",
+					success: function(json){
+						//json:{success:true,msg:"..."}
+						if(typeof(json) != "object"){
+							alert("删除操作异常！");
+							return;
+						}
+						
+						if(json.success == false){
+							alert(json.msg);//删除失败了
+						}else{
+							//附件总数清零
+							$attachs.find("#totalCount").text("0");
+							
+							//附件总大小清零
+							$attachs.find("#totalSize").text("0Bytes").attr("data-size","0");
+							
+							//清空file控件
+					    	bc.attach.clearFileSelect($attachs);
+							
+							//删除附件的dom
+							$attachs.find(".attach").remove();
+							
+							//提示用户已删除
+							bc.msg.slide("已删除全部附件！");
+						}
+					}
+				});
+			});
+		}else{
+			bc.msg.slide("当前没有可删除的附件！");
+		}
+	},
+    /**将字节单位的数值转换为较好看的文字*/
+	getSizeInfo: function(size){
+		if (size < 1024)
+			return bc.formatNumber(size,"#.#") + "Bytes";
+		else if (size < 1024 * 1024)
+			return bc.formatNumber(size/1024,"#.#") + "KB";
+		else
+			return bc.formatNumber(size/1024/1024,"#.#") + "MB";
+		
+    },
+    /**单个附件容器的模板*/
+    tabelTpl:[
+		'<table class="attach" cellpadding="0" cellspacing="0" data-size="{0}">',
+			'<tr>',
+				'<td class="icon"><span class="file-icon {2}"></span></td>',
+				'<td class="info">',
+					'<div class="subject">{3}</div>',
+					'<table class="operations" cellpadding="0" cellspacing="0">',
+						'<tr>',
+						'<td class="size">{1}</td>',
+						'<td><div class="progressbar"></div></td>',
+						'<td><a href="#" class="operation" data-action="abort">取消</a></td>',
+						'</tr>',
+					'</table>',
+				'</td>',
+			'</tr>',
+		'</table>'
+    ].join(""),
+    /**单个附件操作按钮的模板*/
+    operationsTpl:[
+		'<a href="#" class="operation" data-action="inline">在线查看</a>',
+		'<a href="#" class="operation" data-action="download">下载</a>',
+		'<a href="#" class="operation" data-action="delete">删除</a>'
+	].join(""),
+    /**判断浏览器是否可使用html5上传文件*/
+	isHtml5Upload: function(attachEl){
+		//return $.browser.safari || $.browser.mozilla;//Chrome12、Safari5、Firefox4
+		return $(attachEl).filter("[data-flash]").size() == 0;
+	}
+};
+
+(function($){
+
+//初始化文件控件的选择事件
+if(bc.attach.isHtml5Upload()){
+	$(":file.uploadFile").live("change",function(e){
+		var $atm = $(this).parents(".attachs");
+		if(bc.attach.isHtml5Upload()){
+			logger.info("uploadFile with html5");
+			bc.attach.html5.upload.call($atm[0],e.target.files,{
+				ptype: $atm.attr("data-ptype")
+				,puid: $atm.attr("data-puid") || $atm.parents("form").find(":input:hidden[name='e.uid']").val()
+			});
+		}else{//Opera、IE等其他
+			logger.info("uploadFile with html4");
+			bc.attach.flash.upload.call($atm[0],e.target.files,{
+				ptype: $atm.attr("data-ptype")
+				,puid: $atm.attr("data-puid") || $atm.parents("form").find(":input:hidden[name='e.uid']").val()
+			});
+		}
+	});
+}else{
+	
+}
+
+//单个附件的操作按钮
+$(".attachs .operation").live("click",function(e){
+	$this = $(this);
+	var action = $this.attr("data-action");//内定的操作
+	var callback = $this.attr("data-callback");//回调函数
+	callback = callback ? bc.getNested(callback) : undefined;//转换为函数
+	$attach = $this.parents(".attach");
+	switch (action){
+	case "abort"://取消附件的上传
+		if(bc.attach.isHtml5Upload($attach[0])){
+			bc.attach.html5.abortUpload($attach[0],callback);
+		}else{
+			bc.attach.flash.abortUpload($attach[0],callback);
+		}
+		break;
+	case "inline"://在线打开附件
+		bc.attach.inline($attach[0],callback);
+		break;
+	case "delete"://删除附件
+		bc.attach.delete_($attach[0],callback);
+		break;
+	case "download"://下载附件
+		bc.attach.download($attach[0],callback);
+		break;
+	case "downloadAll"://打包下载所有附件
+		bc.attach.downloadAll($this.parents(".attachs")[0],callback);
+		break;
+	case "deleteAll"://删除所有附件
+		bc.attach.deleteAll($this.parents(".attachs")[0],callback);
+		break;
+	default ://调用自定义的函数
+		var click = $this.attr("data-click");
+		if(typeof click == "string"){
+			var clickFn = bc.getNested(click);//将函数名称转换为函数
+			if(typeof clickFn == "function")
+				clickFn.call($attach[0],callback);
+			else
+				alert("没有定义'" + click + "'函数");
+		}else{
+			alert("没有定义的action：" + action);
+		}
+		break;
+	}
+	
+	return false;
+});
+
+})(jQuery);
+/**
+ * html5附件上传
+ * 
+ * @author rongjihuang@gmail.com
+ * @date 2011-06-01
+ * @depend attach.js,attach.css
+ */
+bc.attach.html5={
 	xhrs:{},
 	/**
 	 * 基于html5的文件上传处理
@@ -1840,7 +2157,7 @@ bc.attach={
 	 * @option {String} puid 
 	 * @option {String} url 
 	 */
-	html5upload:function(files,option){
+	upload:function(files,option){
 		var $atm = $(this);
 	    //html5上传文件(不要批量异步上传，实测会乱，如Chrome后台合并为一个文件等，需逐个上传)
 		//用户选择的文件(name、fileName、type、size、fileSize、lastModifiedDate)
@@ -1850,75 +2167,83 @@ bc.attach={
 	    
 	    //检测文件数量的限制
 	    var maxCount = parseInt($atm.attr("data-maxCount"));
-	    if(!isNaN(maxCount) && files.length > maxCount){
-	    	alert("请不要一次上传超过" + maxCount + "个文件！");
+	    var curCount = parseInt($atm.find("#totalCount").text());
+	    logger.info("maxCount=" + maxCount + ",curCount=" + curCount);
+	    if(!isNaN(maxCount) && files.length + curCount > maxCount){
+	    	alert("上传附件总数已限制为最多" + maxCount + "个，已超出上限了！");
+	    	bc.attach.clearFileSelect($atm);
 	    	return;
 	    }
 	    
 	    //检测文件大小的限制
 	    var maxSize = parseInt($atm.attr("data-maxSize"));
+	    var curSize = parseInt($atm.find("#totalSize").attr("data-size"));
+	    logger.info("maxSize=" + maxSize + ",curSize=" + curSize);
 	    if(!isNaN(maxSize)){
+	    	var nowSize = curSize;
 	    	for(var i=0;i<files.length;i++){
-	    		if(files[i].fileSize > maxSize){
-		    		alert("请不要上传大小超过" + getSizeInfo(maxSize) + "的文件！");
+	    		nowSize += files[i].fileSize;
+	    	}
+    		if(nowSize > maxSize){
+	    		alert("上传附件总容量已限制为最大" + bc.attach.getSizeInfo(maxSize) + "，已超出上限了！");
+		    	bc.attach.clearFileSelect($atm);
+	    		return;
+    		}
+	    }
+	    
+	    //检测文件类型的限制
+	    var _extensions = $atm.attr("data-extensions");//用逗号连接的扩展名列表
+	    var fileName;
+	    if(_extensions && _extensions.length > 0){
+	    	for(var i=0;i<files.length;i++){
+	    		fileName = files[i].fileName;
+	    		if(_extensions.indexOf(fileName.substr(fileName.lastIndexOf(".") + 1)) == -1){
+		    		alert("只能上传扩展名为\"" + _extensions.replace(/,/g,"、") + "\"的文件！");
+			    	bc.attach.clearFileSelect($atm);
 		    		return;
 	    		}
 	    	}
 	    }
 	    
-	    //检测文件类型的限制
-	    var _extends = $atm.attr("data-extends");//用逗号连接的扩展名列表
-	    var fileName;
-	    if(_extends && _extends.length > 0){
-	    	for(var i=0;i<files.length;i++){
-	    		fileName = files[i].fileName;
-	    		if(_extends.indexOf(fileName.substr(fileName.lastIndexOf(".") + 1)) == -1){
-		    		alert("只能上传扩展名为\"" + _extends.replace(/,/g,"、") + "\"的文件！");
-		    		return;
-	    		}
-	    	}
-	    }
-
-	    //开始上传
-	    var i = 0;
-	    uploadNext();
-		
-	    //逐一上传文件
-		function uploadNext(){
-	    	if(i >= files.length)
-	    		return;//全部上传完毕
-	    	
-			logger.info("uploading:i=" + i);
-			//继续上传下一个附件
-			uploadOneFile(files[i],url,uploadNext);
-		}
-	   
-		//上传一个文件
-	    function uploadOneFile(f,url,callback){
-	    	var xhr = new XMLHttpRequest();
-	    	var key = "k" + new Date().getTime();
-	    	bc.attach.xhrs[key] = xhr;
+	    //显示所有要上传的文件
+	    var f;
+	    var batchNo = "k" + new Date().getTime() + "-";//批号
+	    for(var i=0;i<files.length;i++){
+	    	f=files[i];
+	    	var key = batchNo + i;
 			//上传进度显示
 			var fileName = f.fileName;
 			var extend = fileName.substr(fileName.lastIndexOf(".")+1);
-			var attach = ''+
-				'<table class="attach" cellpadding="0" cellspacing="0" data-xhr=' + key + '>'+
-					'<tr>'+
-						'<td class="icon"><span class="file-icon ' + extend + '"></span></td>'+
-						'<td class="info">'+
-							'<div class="subject">' + fileName + '</div>'+
-							'<table class="operations" cellpadding="0" cellspacing="0">'+
-								'<tr>'+
-								'<td class="size">' + getSizeInfo(f.fileSize) + '</td>'+
-								'<td><div class="progressbar"></div></td>'+
-								'<td><a href="#" class="operation" data-action="abort">取消</a></td>'+
-								'</tr>'+
-							'</table>'+
-						'</td>'+
-					'</tr>'+
-				'</table>';
-			var $attach = $(attach).appendTo($atm);
-			var $progressbar = $attach.find(".progressbar").progressbar();
+			var attach = bc.attach.tabelTpl.format(f.fileSize,bc.attach.getSizeInfo(f.fileSize),extend,fileName);
+			$(attach).attr("data-xhr",key).insertAfter($atm.find(".header")).find(".progressbar").progressbar();
+	    }
+
+	    //开始上传
+	    var $newAttachs = $atm.find(".attach[data-xhr]");//含有data-xhr属性的代表还没上传
+	    var i = 0;
+	    setTimeout(function(){
+	    	uploadNext();
+	    },500);//延时小许时间再上传，避免太快看不到效果
+		
+	    //逐一上传文件
+		function uploadNext(){
+	    	if(i >= files.length){
+		    	bc.attach.clearFileSelect($atm);
+	    		return;//全部上传完毕
+	    	}
+	    	
+	    	var key = batchNo + i;
+			logger.info("uploading:i=" + i);
+			//继续上传下一个附件
+			uploadOneFile(key,files[i],url,uploadNext);
+		}
+	   
+		//上传一个文件
+	    function uploadOneFile(key,f,url,callback){
+	    	var xhr = new XMLHttpRequest();
+	    	bc.attach.html5.xhrs[key] = xhr;
+	    	var $attach = $newAttachs.filter("[data-xhr='" + key + "']");
+	    	var $progressbar = $attach.find(".progressbar");
 			if($.browser.safari){//Chrome12、Safari5
 				xhr.upload.onprogress=function(e){
 					var progressbarValue = Math.round((e.loaded / e.total) * 100);
@@ -1936,31 +2261,37 @@ bc.attach={
 			//上传完毕的处理
 			xhr.onreadystatechange=function(){
 				if(xhr.readyState===4){
-					bc.attach.xhrs[key] = null;
+					bc.attach.html5.xhrs[key] = null;
 					//累计上传的文件数
 					i++;
 					logger.info(i + ":" + xhr.responseText);
 					var json = eval("(" + xhr.responseText + ")");
 					
-					//删除进度条显示附件操作按钮（延时2秒后执行）
+					//附件总数加一
+					var $totalCount = $atm.find("#totalCount");
+					$totalCount.text(parseInt($totalCount.text()) + 1);
+					
+					//附件总大小添加该附件的部分
+					var $totalSize = $atm.find("#totalSize");
+					var newSize = parseInt($totalSize.attr("data-size")) + f.fileSize;
+					$totalSize.attr("data-size",newSize).text(bc.attach.getSizeInfo(newSize));
+					
+					//删除进度条、显示附件操作按钮（延时1秒后执行）
 					setTimeout(function(){
 						var tds = $progressbar.parent();
 						var $operations = tds.next();
 						tds.remove();
-						$operations.empty().append('<a href="#" class="operation" data-action="open">查看</a>'+
-							'<a href="#" class="operation" data-action="download">下载</a>'+
-							'<a href="#" class="operation" data-action="delete">删除</a>');
+						$operations.empty().append(bc.attach.operationsTpl);
 						
 						$attach.attr("data-id",json.msg.id)
 							.attr("data-name",json.msg.localfile)
-							.attr("data-url",json.msg.url);
-					},2000000000);
+							.attr("data-url",json.msg.url)
+							.removeAttr("data-xhr");
+					},1000);
 					
 					//调用回调函数
 					if(typeof callback == "function")
-						callback();
-				}else{
-					//alert("upload error!");
+						callback(json);
 				}
 			};
 			
@@ -1981,100 +2312,309 @@ bc.attach={
 			else //Chrome12
 				xhr.send(f);
 	    }
-	    
-	    function getSizeInfo(size){
-			if (size < 1024)
-				return size + "Bytes";
-			else if (size < 1024 * 1024)
-				return size/1024 + "KB";
-			else
-				return size/1024/1024 + "MB";
-	    }
 	},
-	/** 删除正在上传的附件 */
-	abortHtml5Upload: function(attachEl,callback){
+	/** 取消正在上传的附件 */
+	abortUpload: function(attachEl,callback){
 		var $attach = $(attachEl);
 		var key = $attach.attr("data-xhr");
 		logger.info("key=" + key);
-		var xhr = bc.attach.xhrs[key];
+		var xhr = bc.attach.html5.xhrs[key];
 		if(xhr){
 			logger.info("xhr.abort");
 			xhr.abort();
 			xhr = null;
 		}
-	},
-	/** 在线打开附件 */
-	open: function(attachEl,callback){
-		
-	},
-	/** 下载附件 */
-	download: function(attachEl,callback){
-		
-	},
-	/** 删除附件 */
-	delete_: function(attachEl,callback){
-		
-	},
-	/**
-	 * 经典的文件上传处理
-	 * @param {Object} option 配置参数
-	 * @option {String} ptype 
-	 */
-	html4upload:function(option){
-		
 	}
 };
 
 (function($){
 
-//初始化文件控件的选择事件
-$(":file.uploadFile").live("change",function(e){
-	var $atm = $(this).parents(".attachs");
-	if($.browser.safari || $.browser.mozilla){//Chrome12、Safari5、Firefox4
-		logger.info("uploadFile with html5");
-		bc.attach.html5upload.call($atm[0],e.target.files,{
-			ptype: $atm.attr("data-ptype")
-			,puid: $atm.attr("data-puid") || $atm.parents("form").find(":input:hidden[name='e.uid']").val()
-		});
-	}else{//Opera、IE等其他
-		logger.info("uploadFile with html4");
-	}
-});
-
-//单个附件的操作按钮
-$(".attach .operation").live("click",function(e){
-	$this = $(this);
-	var action = $this.attr("data-action");//内定的操作
-	var callback = $this.attr("data-callback");//回调函数
-	callback = callback ? bc.getNested(callback) : undefined;//转换为函数
-	$attach = $this.parents(".attach");
-	switch (action){
-	case "abort"://取消附件的上传
-		bc.attach.abortHtml5Upload($attach[0],callback);
-		break;
-	case "open"://打开附件
-		bc.attach.open($attach[0],callback);
-		break;
-	case "delete"://删除附件
-		bc.attach.delete_($attach[0],callback);
-		break;
-	case "download"://下载附件
-		bc.attach.download($attach[0],callback);
-		break;
-	default ://调用自定义的函数
-		var click = $this.attr("data-click");
-		if(typeof click == "string"){
-			var clickFn = bc.getNested(click);//将函数名称转换为函数
-			if(typeof clickFn == "function")
-				clickFn.call($attach[0],callback);
-			else
-				alert("没有定义'" + click + "'函数");
+})(jQuery);
+/**
+ * flash附件上传
+ * 
+ * @author rongjihuang@gmail.com
+ * @date 2011-06-01
+ * @depend attach.js,attach.css
+ */
+bc.attach.flash={
+	init:function(){
+		var $atm = $(this);
+		var fileId = $atm.find(":file.uploadFile").attr("id");
+		logger.info("bc.attach.flash.init:file.id=" + fileId);
+		//,bc.root + "/ui-libs/swfupload/2.2.0.1/plugins/swfupload.cookies.js?ts=0"
+		bc.load([bc.root + "/ui-libs/swfupload/2.2.0.1/swfupload.js?ts=0",function(){
+		    var url = bc.root+"/upload4xhEditor/?type=img";
+		    url += "&ptype=" + $atm.attr("data-ptype");
+		    url += "&puid=" + $atm.attr("data-puid") || $atm.parents("form").find(":input:hidden[name='e.uid']").val();
+			var swfuCfg = {
+				upload_url : url,
+				prevent_swf_caching: false,
+				flash_url : bc.root+"/ui-libs/swfupload/2.2.0.1/swfupload.swf",
+				file_post_name : "filedata",
+				file_types : "*.*",
+				file_types_description: "所有文件",
+				//button_image_url : bc.root + "/bc/libs/themes/default/images/swfuploadButton.png", 
+				button_width: "60",
+				button_height: "22",
+				button_placeholder_id: fileId,
+				button_text: '<span class="theFont">添加附件</span>',
+				button_text_style: '.theFont{font-size:13px;color:#2A5DB0;text-decoration:underline;font-family:"微软雅黑","宋体",sans-serif;}',
+				button_text_left_padding: 0,
+				button_text_top_padding: 1,
+				button_action : SWFUpload.BUTTON_ACTION.SELECT_FILES, 
+				button_disabled : false, 
+				button_cursor : SWFUpload.CURSOR.HAND, 
+				button_window_mode : SWFUpload.WINDOW_MODE.TRANSPARENT,
+				debug:false,
+				custom_settings : {
+					totalSize: 0,//已上传文件的大小累计
+					fileCount: 0,//用户选中的文件数量
+					finishedSize: 0,//当前已上传完毕的文件数量
+					fileNames: []//用户选中的文件名称
+				},
+			
+				// The event handler functions
+				file_dialog_complete_handler : bc.attach.flash.handlers.fileDialogComplete,
+				file_queued_handler : bc.attach.flash.handlers.fileQueued,
+				file_queue_error_handler : bc.attach.flash.handlers.fileQueueError,
+				upload_start_handler : bc.attach.flash.handlers.uploadStart,
+				upload_progress_handler : bc.attach.flash.handlers.uploadProgress,
+				upload_error_handler : bc.attach.flash.handlers.uploadError,
+				upload_success_handler : bc.attach.flash.handlers.uploadSuccess,
+				upload_complete_handler : bc.attach.flash.handlers.uploadComplete,
+				
+				// 浏览器flash插件的控制：需要swfupload.swfobject.js插件的支持
+				//minimum_flash_version: "9.0.28",
+				swfupload_pre_load_handler: bc.attach.flash.handlers.swfuploadPreLoad,
+				swfupload_load_failed_handler: bc.attach.flash.handlers.swfuploadLoadFailed
+			};
+			logger.info("upload_url=" + swfuCfg.upload_url);
+			
+			//文件大小限制
+			var maxSize = parseInt($atm.attr("data-maxSize"));
+			if(maxSize > 0){
+				logger.info("maxSize=" + maxSize);
+				swfuCfg.file_size_limit = maxSize/1024;
+			}
+			
+			//文件过滤控制
+			var extensions = $atm.attr("data-extensions");
+			if(extensions.length > 0){
+				logger.info("extensions=" + extensions);
+				//var all = $atm.attr("filter").split("|");
+				//swfuCfg.file_types=all[0];
+				//if(all.length >1)swfuCfg.file_types_description=all[1];
+			}
+			
+			new SWFUpload(swfuCfg);
+		}]);
+	},
+	/** 取消正在上传的附件 */
+	abortUpload: function(attachEl,callback){
+		var $attach = $(attachEl);
+		var fileId = $attach.attr("data-flash");
+		var swfId = $attach.parents(".attachs").find("object").attr("id");
+		logger.info("abortUpload:swfId=" + swfId + ",fileId=" + fileId);
+		//取消上传中的文件
+		var swf = SWFUpload.instances[swfId];
+		if(swf){
+			swf.cancelUpload(fileId);
 		}
-		break;
+		
+		//删除dom
+		$attach.remove();
 	}
-	
-	return false;
-});
+};
+bc.attach.flash.handlers={
+	/**file_queued_handler
+	 * 当文件选择对话框关闭消失时，如果选择的文件成功加入上传队列，那么针对每个成功加入的文件都会
+	 * 触发一次该事件（N个文件成功加入队列，就触发N次此事件）。
+	 */
+	fileQueued:function(file){
+		this.customSettings.totalSize += file.size;
+		this.customSettings.fileCount += 1;
+		this.customSettings.fileNames.push(file.name);
+	},
+	/**file_queue_error_handler
+	 * 当选择文件对话框关闭消失时，如果选择的文件加入到上传队列中失败，那么针对每个出错的文件都会触发一次该事件
+	 * (此事件和fileQueued事件是二选一触发，文件添加到队列只有两种可能，成功和失败)。
+	 * 文件添加队列出错的原因可能有：超过了上传大小限制，文件为零字节，超过文件队列数量限制，设置之外的无效文件类型。
+	 * 具体的出错原因可由error code参数来获取，error code的类型可以查看SWFUpload.QUEUE_ERROR中的定义。
+	 */
+	fileQueueError:function(file, errorCode, message){
+		logger.info("fileQueueError:errorCode=" + errorCode + ",message=" + message + ",file=" + file.name);
+		bc.msg.slide("您选择的文件《" + file.name + "》为空文件！");
+	},
+	/**file_dialog_complete_handler
+	 * 当选择文件对话框关闭，并且所有选择文件已经处理完成（加入上传队列成功或者失败）时，此事件被触发，
+	 * number of files selected是选择的文件数目，number of files queued是此次选择的文件中成功加入队列的文件数目。
+	 * totalNumber:total number of files in the queued
+	 */
+	fileDialogComplete:function(numberOfFilesSelected, numberOfFilesQueued, totalNumber){
+		logger.info("selected:" + numberOfFilesSelected + ";queued:" + numberOfFilesQueued + ";totalNumber:" + totalNumber+";totalSize:" + this.customSettings.totalSize);
+		try {
+			if (numberOfFilesSelected > 0 && numberOfFilesSelected != numberOfFilesQueued) {
+		    	alert("无法上传所选择的文件，可能的原因为：空文件、文件大小超出上限或文件类型超出限制！");
+		    	this.cancelUpload();
+	    		return false;
+			}
+			if (numberOfFilesQueued > 0) {
+				var $atm = $("#" + this.movieName).parents(".attachs");
+			    //检测文件数量的限制
+			    var maxCount = parseInt($atm.attr("data-maxCount"));
+			    var curCount = parseInt($atm.find("#totalCount").text());
+			    logger.info("maxCount=" + maxCount + ",curCount=" + curCount);
+			    if(!isNaN(maxCount) && numberOfFilesSelected + curCount > maxCount){
+			    	alert("上传附件总数已限制为最多" + maxCount + "个，已超出上限了！");
+			    	this.cancelUpload();
+			    	return false;
+			    }
+			    
+			    //检测文件大小的限制
+			    var maxSize = parseInt($atm.attr("data-maxSize"));
+			    var curSize = parseInt($atm.find("#totalSize").attr("data-size"));
+			    logger.info("maxSize=" + maxSize + ",curSize=" + curSize);
+			    if(!isNaN(maxSize)){
+			    	var nowSize = curSize + this.customSettings.totalSize;
+		    		if(nowSize > maxSize){
+			    		alert("上传附件总容量已限制为最大" + bc.attach.getSizeInfo(maxSize) + "，已超出上限了！");
+				    	this.cancelUpload();
+			    		return false;
+		    		}
+			    }
+			    
+			    // 检测文件类型的限制
+			    var _extensions = $atm.attr("data-extensions");//用逗号连接的扩展名列表
+			    logger.info("_extensions=" + _extensions);
+			    if(_extensions && _extensions.length > 0){
+			    	var fileNames = this.customSettings.fileNames;
+				    var fileName;
+			    	for(var i=0;i<fileNames.length;i++){
+			    		fileName = fileNames[i];
+			    		if(_extensions.indexOf(fileName.substr(fileName.lastIndexOf(".") + 1)) == -1){
+				    		alert("只能上传扩展名为\"" + _extensions.replace(/,/g,"、") + "\"的文件！");
+					    	this.cancelUpload();
+				    		return false;
+			    		}
+			    	}
+			    }
+			    
+			    //显示所有要上传的文件
+			    var f,fileName;
+			    for(var i=0;i<numberOfFilesQueued;i++){
+			    	f=this.getFile(i);
+				    logger.info("f.id=" + f.id + ",f.name=" + f.name);
+					//上传进度显示
+					fileName = f.name;
+				    logger.info("fileName=" + fileName);
+					var extend = fileName.substr(fileName.lastIndexOf(".")+1);
+					var attach = bc.attach.tabelTpl.format(f.size,bc.attach.getSizeInfo(f.size),extend,fileName);
+					$(attach).attr("data-flash", f.id).insertAfter($atm.find(".header"))
+					.find(".progressbar").progressbar();
+			    }
+			    
+//				//绑定取消事件
+//				var othis = this;
+//				infoWraper.find(".btn").click(function(){
+//					logger.warn("cancelUpload");
+//					othis.cancelUpload();
+//					othis.customSettings.cancel = true;
+//				});
+				
+				//自动开始上传:默认只会上传第一个文件，需要在uploadComplete控制继续上传
+				this.startUpload();
+			}
+		} catch(ex){
+	        logger.error(""+ex);
+		}
+	},
+	/**upload_start_handler
+	 * 在文件往服务端上传之前触发此事件，可以在这里完成上传前的最后验证以及其他你需要的操作，例如添加、修改、删除post数据等。
+	 * 在完成最后的操作以后，如果函数返回false，那么这个上传不会被启动，并且触发uploadError事件（code为ERROR_CODE_FILE_VALIDATION_FAILED），
+	 * 如果返回true或者无返回，那么将正式启动上传。
+	 */
+	uploadStart:function(file){
+		logger.info("uploadStart:" + file.name);
+		//document.getElementById(this.customSettings.infoId).innerHTML = OZ.Attachment.Flash.defaults.START_INFO;
+	},
+	/**upload_progress_handler
+	 * 该事件由flash定时触发，提供三个参数分别访问上传文件对象、已上传的字节数，总共的字节数。
+	 * 因此可以在这个事件中来定时更新页面中的UI元素，以达到及时显示上传进度的效果。
+	 * 注意: 在Linux下，Flash Player只在所有文件上传完毕以后才触发一次该事件，官方指出这是
+	 * Linux Flash Player的一个bug，目前SWFpload库无法解决
+	 */
+	uploadProgress:function(file, bytesComplete, totalBytes){
+		var progressbarValue = Math.round((bytesComplete / totalBytes) * 100);
+		logger.info("uploadProgress:" + progressbarValue + "%");
+		var $attach = $("#" + this.movieName).parents(".attachs").find(".attach[data-flash='" + file.id + "']");
+		logger.info("$attach:" + $attach.size());
+		$attach.find(".progressbar").progressbar("option","value",progressbarValue);
+	},
+	/**upload_success_handler
+	 * 当文件上传的处理已经完成（这里的完成只是指向目标处理程序发送了Files信息，只管发，不管是否成功接收），
+	 * 并且服务端返回了200的HTTP状态时，触发此事件。
+	 * 此时文件上传的周期还没有结束，不能在这里开始下一个文件的上传。
+	 */
+	uploadSuccess:function(file, serverData){
+		logger.info("uploadSuccess:" + file.name + ";serverData=" + serverData);
+		this.customSettings.finishedSize+=file.size;//累计已上传的字节数
+		var $attach = $("#" + this.movieName).parents(".attachs").find(".attach[data-flash='" + file.id + "']");
+		//删除进度条、显示附件操作按钮（延时1秒后执行）
+		var json = eval("(" + serverData + ")");
+		if(json.err && json.err.length > 0){
+			alert("上传文件《" + file.name + "》出现异常，" + json.err);
+		}else{
+			setTimeout(function(){
+				var tds = $attach.find(".progressbar").parent();
+				var $operations = tds.next();
+				tds.remove();
+				$operations.empty().append(bc.attach.operationsTpl);
+				$attach.attr("data-id",json.msg.id)
+					.attr("data-name",json.msg.localfile)
+					.attr("data-url",json.msg.url)
+					.removeAttr("data-flash");
+			},1000);
+		}
+	},
+	/**upload_complete_handler
+	 * 当上传队列中的一个文件完成了一个上传周期，无论是成功(uoloadSuccess触发)还是失败(uploadError触发)，此事件都会被触发，
+	 * 这也标志着一个文件的上传完成，可以进行下一个文件的上传了。
+	 */
+	uploadComplete:function(file){
+		logger.info("uploadComplete:" + file.name);
+		var stats = this.getStats();
+		if (stats.files_queued > 0 && !this.customSettings.cancel){
+			this.startUpload();
+		}else{
+			logger.info("all complete");
+			//全部上传完毕后的处理
+			this.customSettings.totalSize=0;
+			this.customSettings.finishedSize=0;
+			if (this.customSettings.cancel){
+				logger.info("cancel");
+			}
+		}
+	},
+	/**upload_error_handler
+	 * SWFUpload.UPLOAD_ERROR
+	 */
+	uploadError:function(file, errorCode, message){
+		logger.error("uploadError:" + file.name + ";errorCode:" + errorCode + ";message:" + message);
+	},
+	/**swfupload_pre_load_handler
+	 */
+	swfuploadPreLoad:function(){
+		logger.info("swfuploadPreLoad");
+	},
+	/**swfupload_load_failed_handler
+	 */
+	swfuploadLoadFailed:function(){
+		logger.error("swfuploadLoadFailed");
+	}
+};
+
+(function($){
 
 })(jQuery);
 /**
