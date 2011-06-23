@@ -3,10 +3,9 @@
 	<parent>
 		<groupId>cn.bc</groupId>
 		<artifactId>bc-parent</artifactId>
-		<version>0.3-SNAPSHOT</version>
+		<version>0.2</version>
 	</parent>
 	<artifactId>bc-demo</artifactId>
-  	<version>0.3-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>bc平台演示</name>
 	

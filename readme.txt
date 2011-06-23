@@ -24,5 +24,9 @@ Chrome11、Firefox4、Safari5、Opera11、IE9、IE8
        >mysql -ubcdemo -pbcdemo bcdemo < db.mysql.data.sql
 4) 编译运行
    >mvn jetty:run
-5) 浏览器访问
-   http://localhost:8082
+5) 安装OpenOffice文档服务
+   到http://www.openoffice.org/下载OpenOffice3，并安装到服务器；
+   如果是Windows操作系统，安装完毕后先行打开openoffice一次并关闭，然后杀掉soffice.bin和soffice.exe两个进程，
+   再打开命令行，进入openoffice安装目录下的program目录，输入如下命令启动openoffice的文档服务：
+   >soffice -headless -accept="socket,port=8100;urp;"
+6) 浏览器访问: http://localhost:[port]/bc
