@@ -70,7 +70,7 @@ bc.page = {
 						//调用回调函数
 						if(option.afterClose) option.afterClose(status);
 						
-						//在ie9，如果内涵<object>,$this.remove()会报错,故先处理掉object
+						//在ie9，如果内含<object>,$this.remove()会报错,故先处理掉object
 						//ie8试过没问题
 						if(jQuery.browser.msie && jQuery.browser.version >= 9){
 							logger.info("IE9坑爹啊");
@@ -161,6 +161,8 @@ bc.page = {
 				btn = _option.buttons[i];
 				if(btn.action == "save"){//内部的表单保存
 					btn.click = bc.page.save;
+				}else if(btn.action == "submit"){//提交表单保存，成功后自动关闭对话框
+					btn.click = bc.page.submit;
 				}else if(btn.action == "cancel"){//关闭对话框
 					btn.click = bc.page.cancel;
 				}else if(btn.action == "create"){//新建
@@ -225,6 +227,22 @@ bc.page = {
 					bc.msg.slide(json.msg);
 			}
 		});
+	},
+	/**提交表单保存数据后自动关闭表单对话框，上下文为dialog的原始dom元素*/
+	submit: function(callback) {
+		$this = $(this);
+		bc.page.save.call(this,function(json){
+			if(typeof callback == "function"){
+				//返回false将禁止提示信息的显示
+				if(callback.call($this[0],json) === false)
+					return false;;
+			}else{
+				bc.msg.slide("提交成功！");
+				$this.data("data-status",true);
+				$this.dialog("close");
+				return false;
+			}
+		})
 	},
 	/**删除*/
 	delete_: function() {

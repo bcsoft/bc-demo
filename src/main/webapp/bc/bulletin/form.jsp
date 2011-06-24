@@ -1,6 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<%-- <%@ taglib prefix="bc" uri="/bc-tags"%> --%>
 <div title='<s:text name="bulletin.title"/>' data-type='form' class="bc-page"
 	data-saveUrl='<s:url value="/bc/bulletin/save" />'
 	data-js='<s:url value="/ui-libs/xheditor/1.1.7/xheditor-zh-cn.min.js?ts=0" />,<s:url value="/bc/bulletin/form.js" />'
@@ -31,7 +30,8 @@
 						value="e.status" cssStyle="width:auto;"/></td>
 					<td class="label"><s:text name="bulletin.overdueDate"/>:</td>
 					<td class="value"><input type="text" name="e.overdueDate" data-validate="date"
-						value='<s:date format="yyyy-MM-dd" name="e.overdueDate" />'/></td>
+						value='<s:date format="yyyy-MM-dd" name="e.overdueDate" />'
+						class="bc-date"/></td>
 				</tr>
 				<tr>
 					<td class="label">* <s:text name="bulletin.subject"/>:</td>
@@ -42,7 +42,8 @@
 		</div>
 		<div class="formEditor">
 			<s:if test="%{isManager}">
-			<s:textarea name="e.content" cssClass="bc-editor" data-validate="required"></s:textarea>
+			<s:textarea name="e.content" cssClass="bc-editor" data-validate="required"
+				 data-ptype="bulletin.editor" data-puid='%{e.uid}'></s:textarea>
 			</s:if>
 			<s:else>
 			<div class="bc-editor"><s:property value="%{e.content}" escapeHtml="false"/></div>

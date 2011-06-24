@@ -40,6 +40,9 @@
 		<!-- bulletin -->
 		<class>cn.bc.bulletin.domain.Bulletin</class>
 
+		<!-- feedback -->
+		<class>cn.bc.feedback.domain.Feedback</class>
+
 		<!-- Test
 		<class>cn.bc.one2onetest.Person</class>
 		<class>cn.bc.one2onetest.Address</class> -->

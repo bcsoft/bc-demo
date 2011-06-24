@@ -111,6 +111,11 @@
 			<artifactId>bc-bulletin</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>cn.bc</groupId>
+			<artifactId>bc-feedback</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 		
 		<!-- for provided -->
 		<dependency>
