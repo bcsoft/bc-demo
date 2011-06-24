@@ -20,7 +20,7 @@ bc.attach.html5={
 		var $atm = $(this);
 	    //html5上传文件(不要批量异步上传，实测会乱，如Chrome后台合并为一个文件等，需逐个上传)
 		//用户选择的文件(name、fileName、type、size、fileSize、lastModifiedDate)
-	    var url = option.url || bc.root+"/upload4xhEditor/?type=img";
+	    var url = option.url || bc.attach.uploadUrl;
 	    if(option.ptype) url+="&ptype=" + option.ptype;
 	    if(option.puid) url+="&puid=" + option.puid;
 	    

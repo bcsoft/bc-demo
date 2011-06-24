@@ -6,6 +6,7 @@
  * @depend attach.css
  */
 bc.attach={
+	uploadUrl: bc.root + "/upload/?a=1",
 	clearFileSelect:function($attachs){
 		//清空file控件:file.outerHTML=file.outerHTML; 
 		var file = $attachs.find(":file.uploadFile");

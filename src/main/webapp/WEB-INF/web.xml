@@ -26,6 +26,41 @@
 		<load-on-startup>0</load-on-startup>
 	</servlet>
 
+	<!-- 上传文件 -->
+	<servlet>
+		<servlet-name>uploadFileServlet</servlet-name>
+		<servlet-class>cn.bc.docs.web.UploadFileServlet</servlet-class>
+		<!-- 上传文件存储的相对路径，相对于应用部署目录下的相对路径，开头及末尾不要带"/"
+			* 务必与global.properties中app.data.subPath的值配置相同
+		-->
+		<init-param>
+			<param-name>appSubDir</param-name>
+			<param-value>uploads</param-value>
+		</init-param>
+		<!-- 上传文件存储的绝对路径，开头带"/"，末尾不要带"/"，通过请求参数a=1启用
+			* 务必与global.properties中app.data.realPath的值配置相同
+		-->
+		<init-param>
+			<param-name>appRealDir</param-name>
+			<param-value>/bcdata</param-value>
+		</init-param>
+		<init-param>
+			<!-- 上传类型限制，如 "jpg,jpeg,bmp,gif,png"，为空代表无限制 -->
+			<param-name>extensions</param-name>
+			<param-value></param-value>
+		</init-param>
+		<init-param>
+			<!-- 上传文件大小限制，单位为字节，默认1G(1M=1048576) -->
+			<param-name>maxSize</param-name>
+			<param-value>104857600</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>uploadFileServlet</servlet-name>
+		<url-pattern>/upload/*</url-pattern>
+	</servlet-mapping>
+
 	<!-- xhEditor上传文件 -->
 	<servlet>
 		<servlet-name>xhEditorUploadFileServlet</servlet-name>

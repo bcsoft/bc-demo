@@ -5,7 +5,7 @@
 <!-- 项目的Struts2全局配置文件，在这里通过include引用其他模块的配置文件 -->
 <struts>
 	<!-- 配置不要被struts2的Filter过滤的url，value值是正则表达式，可以写多个 ，用逗号分隔 -->
-	<constant name="struts.action.excludePattern" value="/upload4xhEditor/*" />
+	<constant name="struts.action.excludePattern" value="/upload/*,/upload4xhEditor/*" />
 	
 	<!-- 配置开发模式：产品环境下必须修改为false -->
 	<constant name="struts.devMode" value="true" />

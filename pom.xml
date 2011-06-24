@@ -17,8 +17,8 @@
 		<hibernate.hbm2ddl.auto>none</hibernate.hbm2ddl.auto>
 		<struts2.jquery.version>2.5.3</struts2.jquery.version>
 		
-		<app.ts>20110623</app.ts>
-		<app.debug>false</app.debug>
+		<app.ts>20110624</app.ts>
+		<app.debug>true</app.debug>
 	</properties>
 
 	<build>
