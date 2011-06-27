@@ -8,7 +8,7 @@
 	<constant name="struts.action.excludePattern" value="/upload/*,/upload4xhEditor/*" />
 
 	<!-- 配置开发模式：产品环境下必须修改为false -->
-	<constant name="struts.devMode" value="true" />
+	<constant name="struts.devMode" value="${app.debug}" />
 
 	<!-- 配置i18n全局配置文件的文件名 ：global.properties -->
 	<constant name="struts.custom.i18n.resources" value="global" />

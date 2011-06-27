@@ -42,7 +42,7 @@
 		-->
 		<init-param>
 			<param-name>appRealDir</param-name>
-			<param-value>/bcdata</param-value>
+			<param-value>/bcdata4framework</param-value>
 		</init-param>
 		<init-param>
 			<!-- 上传类型限制，如 "jpg,jpeg,bmp,gif,png"，为空代表无限制 -->

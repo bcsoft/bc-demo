@@ -1,120 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="bc-demo" basedir="." default="help">
-	<property name="bclibs.dir" value="./src/main/webapp/bc/libs" />
+	<!-- 支持的数据库：mysql,mssql,oracle -->
+	<property name="db" value="mysql" />
+	<property name="src.dir" value="." />
+	<property name="build.dir" value="./build" />
+	<property name="resources.dir" value="./src/main/resources/db" />
+	<property name="force" value="true" />
+	<property name="fixlastline" value="true" />
+	<property name="encoding" value="UTF-8" />
+	<property name="frameworkSql.dir" value="../bc-framework/resources" />
+		
+	<target name="help">
+		<echo message="运行 'ant cleanAll' 删除除源代码之外的所有文件和目录" />
+	</target>
+
 	<target name="cleanAll">
-		<delete verbose="true" includeemptydirs="true">
-			<fileset dir="${basedir}">
-				<include name="**/.classpath" />
-				<include name="**/.project" />
-				<include name="**/*.log" />
-				<include name="**/*.log.*" />
-				<include name="**/target/**" />
-				<include name="**/.settings/**" />
-			</fileset>
+		<delete verbose="true" includeemptydirs="true">  
+			<fileset dir="${basedir}">  
+				<include name="**/.classpath"/>
+				<include name="**/.project"/>
+				<include name="**/*.log"/>
+				<include name="**/*.log.*"/>
+				<include name="**/target/**"/>
+				<include name="**/.settings/**"/>
+			</fileset>  
 		</delete>
 	</target>
 
-	<target name="help">
-		<echo message="运行 'ant cleanAll' 删除除源代码之外的所有文件和目录" />
-		<echo message="运行 'ant copy' 从bc-framework中复制数据库初始化脚本" />
-		<echo message="运行 'ant contatBCJs' 合并分散的js文件" />
-	</target>
-
 	<target name="build">
-		<antcall target="contatBCJs" />
-		<concatBCCss theme="default" />
+		<!-- 建表 -->
+		<concatSql4create db="mysql" />
+		<!-- 删表 -->
+		<concatSql4drop db="mysql" />
 	</target>
 
-	<target name="copy">
-		<copy verbose="true" todir="./src/main/resources/cn/bc/demo" overwrite="true">
-			<fileset dir="../bc-framework/build">
-				<include name="db.*.drop.sql" />
-				<include name="db.*.create.sql" />
-				<include name="db.*.data.sql" />
-			</fileset>
-		</copy>
-	</target>
-
-	<!--合并分散的js文件-->
-	<target name="contatBCJs">
-		<concat destfile="${bclibs.dir}/bc.js" encoding="UTF-8" fixlastline="true" force="true">
-			<fileset dir="${bclibs.dir}">
-				<include name="core.js" />
-			</fileset>
-			<fileset dir="${bclibs.dir}">
-				<include name="ajax.js" />
-			</fileset>
-			<fileset dir="${bclibs.dir}">
-				<include name="msg.js" />
-			</fileset>
-			<fileset dir="${bclibs.dir}">
-				<include name="validate.js" />
-			</fileset>
-			<fileset dir="${bclibs.dir}">
-				<include name="page.js" />
-			</fileset>
-			<fileset dir="${bclibs.dir}">
-				<include name="toolbar.js" />
-			</fileset>
-			<fileset dir="${bclibs.dir}">
-				<include name="list.js" />
-			</fileset>
-			<fileset dir="${bclibs.dir}">
-				<include name="list.export.js" />
-			</fileset>
-			<fileset dir="${bclibs.dir}">
-				<include name="form.js" />
-			</fileset>
-			<fileset dir="${bclibs.dir}">
-				<include name="boxPointer.js" />
-			</fileset>
-			<fileset dir="${bclibs.dir}">
-				<include name="loader.js" />
-			</fileset>
-			<fileset dir="${bclibs.dir}">
-				<include name="editor.js" />
-			</fileset>
-			<fileset dir="${bclibs.dir}">
-				<include name="attach.js" />
-			</fileset>
-			<fileset dir="${bclibs.dir}">
-				<include name="attach.html5.js" />
-			</fileset>
-			<fileset dir="${bclibs.dir}">
-				<include name="attach.flash.js" />
-			</fileset>
-			<fileset dir="${bclibs.dir}">
-				<include name="desktop.js" />
-			</fileset>
-		</concat>
-	</target>
-
-	<!-- 合并指定主题下分散的css文件 -->
-	<macrodef name="concatBCCss">
-		<!-- 主题文件夹的名称 -->
-		<attribute name="theme" />
+	<!-- 合并各个模块中定义的sql建表脚本的宏 -->
+	<macrodef name="concatSql4create">
+		<!-- 数据库类型：如mysql,mssql,oracle -->
+		<attribute name="db" default="mysql"/>
 		<sequential>
-			<concat destfile="${bclibs.dir}/themes/@{theme}/bc.css" encoding="UTF-8" fixlastline="true" force="true">
-				<fileset dir="${bclibs.dir}/themes/@{theme}">
-					<include name="core.css" />
+			<concat destfile="${resources.dir}/db.@{db}.create.sql" encoding="${encoding}" fixlastline="${fixlastline}" force="${force}">
+				<!-- 使用多个fileset的目的是控制合并的顺序 -->
+				<!-- 平台的 -->
+				<fileset dir="${frameworkSql.dir}">
+					<include name="framework.db.@{db}.create.sql" />
 				</fileset>
-				<fileset dir="${bclibs.dir}/themes/@{theme}">
-					<include name="desktop.css" />
-				</fileset>
-				<fileset dir="${bclibs.dir}/themes/@{theme}">
-					<include name="shortcuts.css" />
-				</fileset>
-				<fileset dir="${bclibs.dir}/themes/@{theme}">
-					<include name="list.css" />
-				</fileset>
-				<fileset dir="${bclibs.dir}/themes/@{theme}">
-					<include name="form.css" />
-				</fileset>
-				<fileset dir="${bclibs.dir}/themes/@{theme}">
-					<include name="boxPointer.css" />
-				</fileset>
-				<fileset dir="${bclibs.dir}/themes/@{theme}">
-					<include name="attach.css" />
+			</concat>
+		</sequential>
+	</macrodef>
+	
+	<!-- 合并各个模块中定义的sql脚本文件的宏：drop -->
+	<macrodef name="concatSql4drop">
+		<!-- 数据库类型：如mysql,mssql,oracle -->
+		<attribute name="db" default="mysql"/>
+		<sequential>
+			<concat destfile="${resources.dir}/db.@{db}.drop.sql" encoding="${encoding}" fixlastline="${fixlastline}" force="${force}">
+				<!-- 使用多个fileset的目的是控制合并的顺序 -->
+				<!-- 平台的 -->
+				<fileset dir="${frameworkSql.dir}">
+					<include name="framework.db.@{db}.drop.sql" />
 				</fileset>
 			</concat>
 		</sequential>

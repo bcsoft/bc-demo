@@ -148,11 +148,15 @@ public class LoginAction extends ActionSupport implements SessionAware {
 						rcs.add(role.getCode());
 					}
 					context.setAttr(SystemContext.KEY_ROLES, rcs);
-					
-					//debug
-					if(logger.isDebugEnabled()){
-						logger.debug("groups=" + StringUtils.collectionToCommaDelimitedString(gcs));
-						logger.debug("roles=" + StringUtils.collectionToCommaDelimitedString(rcs));
+
+					// debug
+					if (logger.isDebugEnabled()) {
+						logger.debug("groups="
+								+ StringUtils
+										.collectionToCommaDelimitedString(gcs));
+						logger.debug("roles="
+								+ StringUtils
+										.collectionToCommaDelimitedString(rcs));
 					}
 
 					// 用户的权限
@@ -186,12 +190,16 @@ public class LoginAction extends ActionSupport implements SessionAware {
 
 	// 递归向上查找部门所属的单位
 	private Actor loadUnit(Actor belong) {
-		belong = this.userService.loadBelong(belong.getId(),
-				new Integer[] { Actor.TYPE_UNIT });
-		if (belong.getType() != Actor.TYPE_UNIT) {
-			return loadUnit(belong);
-		} else {
+		Actor parent = this.userService.loadBelong(belong.getId(),
+				new Integer[] { Actor.TYPE_UNIT, Actor.TYPE_DEPARTMENT });
+		if (parent == null) {// 已是顶层单位
 			return belong;
+		} else {
+			if (parent.getType() != Actor.TYPE_UNIT) {
+				return loadUnit(parent);
+			} else {
+				return parent;
+			}
 		}
 	}
 
