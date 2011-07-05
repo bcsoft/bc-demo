@@ -11,8 +11,10 @@
 	<name>bc平台演示</name>
 	
 	<properties>
-		<app.ts>20110624</app.ts>
+		<app.ts>20110708</app.ts>
 		<app.debug>true</app.debug>
+		<app.data.realPath>/bcdata4demo</app.data.realPath>
+		<app.data.subPath>uploads</app.data.subPath>
 		
 		<!-- 数据库连接配置 -->
 		<db>mysql</db>
@@ -21,7 +23,7 @@
 		<db.password>bcdemo</db.password>
 		<db.ip>localhost</db.ip>
 		<jndi.name>${db.name}</jndi.name>
-		<hibernate.show_sql>false</hibernate.show_sql>
+		<hibernate.show_sql>true</hibernate.show_sql>
 		<!-- 警示：update/create-drop/create/validate，如果在classpath中有/import.sql文件， 
 			hibernate3在启动时会执行 -->
 		<hibernate.hbm2ddl.auto>none</hibernate.hbm2ddl.auto>

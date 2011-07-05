@@ -36,6 +36,7 @@
 
 		<!-- docs -->
 		<class>cn.bc.docs.domain.Attach</class>
+		<class>cn.bc.docs.domain.AttachHistory</class>
 
 		<!-- bulletin -->
 		<class>cn.bc.bulletin.domain.Bulletin</class>

@@ -2,6 +2,7 @@
 
 浏览： https://github.com/rongjihuang/bc-demo
 源码： [内网]git@[serverIp]:bc-demo.git 或 [外网]git@github.com:rongjihuang/bc-demo.git
+打包：http://code.google.com/p/dragon-bc/
 
 一) 浏览器兼容性
 Chrome11、Firefox4、Safari5、Opera11、IE9、IE8
