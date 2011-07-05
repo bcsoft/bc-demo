@@ -2,6 +2,7 @@ src/main/webapp/ui-libs
 src/main/webapp/ui-libs-demo
 src/main/webapp/uploads
 src/main/webapp/bc
+src/main/webapp/bc-test
 .metadata
 .settings
 .classpath
