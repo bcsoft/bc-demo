@@ -28,10 +28,13 @@
 	</target>
 
 	<target name="build">
-		<!-- 建表 -->
+		<!-- mysql -->
 		<concatSql4create db="mysql" />
-		<!-- 删表 -->
 		<concatSql4drop db="mysql" />
+		
+		<!-- oracle -->
+		<concatSql4create db="oracle" />
+		<concatSql4drop db="oracle" />
 	</target>
 
 	<!-- 合并各个模块中定义的sql建表脚本的宏 -->

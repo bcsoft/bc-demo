@@ -1,7 +1,7 @@
 -- ##bc平台的mysql删表脚本##
 
 -- 测试用的表
-drop table if exists ZTEST_EXAMPLE;
+drop table if exists BC_EXAMPLE;
 
 -- 用户反馈
 drop table if exists BC_FEEDBACK;
@@ -39,4 +39,9 @@ drop table if exists BC_IDENTITY_IDGENERATOR;
 drop table if exists BC_IDENTITY_ROLE_RESOURCE;
 drop table if exists BC_IDENTITY_ROLE;
 drop table if exists BC_IDENTITY_RESOURCE;
+
+-- 选项模块
+drop table if exists BC_OPTION_ITEM;
+drop table if exists BC_OPTION_GROUP;
+
 
