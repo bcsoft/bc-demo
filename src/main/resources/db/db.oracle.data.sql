@@ -1,295 +1,295 @@
--- ##bcÂπ≥Âè∞ÁöÑ oracle Êï∞ÊçÆÂàùÂßãÂåñËÑöÊú¨##
+-- ##bc∆ΩÃ®µƒ oracle  ˝æ›≥ı ºªØΩ≈±æ##
 
--- Á≥ªÁªüÂÆâÂÖ®Áõ∏ÂÖ≥Ê®°ÂùóÁöÑÂàùÂßãÂåñÊï∞ÊçÆ
+-- œµÕ≥∞≤»´œ‡πÿƒ£øÈµƒ≥ı ºªØ ˝æ›
 
--- ÊèíÂÖ•ÂàÜÁ±ªËµÑÊ∫êÊï∞ÊçÆ
+-- ≤Â»Î∑÷¿‡◊ ‘¥ ˝æ›
 insert into BC_IDENTITY_RESOURCE (ID,STATUS_,INNER_,TYPE_,BELONG,ORDER_,NAME,URL,ICONCLASS) 
-	values(HIBERNATE_SEQUENCE.NEXTVAL,1, 0, 1, null, '010000','Â∑•‰Ωú‰∫ãÂä°', null, 'i0403');
+	values(HIBERNATE_SEQUENCE.NEXTVAL,1, 0, 1, null, '010000','π§◊˜ ¬ŒÒ', null, 'i0403');
 insert into BC_IDENTITY_RESOURCE (ID,STATUS_,INNER_,TYPE_,BELONG,ORDER_,NAME,URL,ICONCLASS) 
-	values(HIBERNATE_SEQUENCE.NEXTVAL,1, 0, 1, null, '020000','Á≥ªÁªüÂÖ¨Âëä', null, 'i0403');
+	values(HIBERNATE_SEQUENCE.NEXTVAL,1, 0, 1, null, '020000','œµÕ≥π´∏Ê', null, 'i0403');
 		
 insert into BC_IDENTITY_RESOURCE (ID,STATUS_,INNER_,TYPE_,BELONG,ORDER_,NAME,URL,ICONCLASS) 
-	values(HIBERNATE_SEQUENCE.NEXTVAL,1, 0, 1, null, '700000','ÊàëÁöÑÈÖçÁΩÆ', null, 'i0403');
+	values(HIBERNATE_SEQUENCE.NEXTVAL,1, 0, 1, null, '700000','Œ“µƒ≈‰÷√', null, 'i0403');
 	
 insert into BC_IDENTITY_RESOURCE (ID,STATUS_,INNER_,TYPE_,BELONG,ORDER_,NAME,URL,ICONCLASS) 
-	values(HIBERNATE_SEQUENCE.NEXTVAL,1, 0, 1, null, '800000','Á≥ªÁªüÈÖçÁΩÆ', null, 'i0403');
+	values(HIBERNATE_SEQUENCE.NEXTVAL,1, 0, 1, null, '800000','œµÕ≥≈‰÷√', null, 'i0403');
   insert into BC_IDENTITY_RESOURCE (ID,STATUS_,INNER_,TYPE_,BELONG,ORDER_,NAME,URL,ICONCLASS) 
-    select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, 1, m.id, '800100','ÁªÑÁªáÊû∂ÊûÑ', null, 'i0403' from BC_IDENTITY_RESOURCE m where m.order_='800000';
+    select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, 1, m.id, '800100','◊È÷Øº‹ππ', null, 'i0403' from BC_IDENTITY_RESOURCE m where m.order_='800000';
   insert into BC_IDENTITY_RESOURCE (ID,STATUS_,INNER_,TYPE_,BELONG,ORDER_,NAME,URL,ICONCLASS) 
-    select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, 1, m.id, '800200','ÊùÉÈôêÁÆ°ÁêÜ', null, 'i0403' from BC_IDENTITY_RESOURCE m where m.order_='800000';
+    select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, 1, m.id, '800200','»®œﬁπ‹¿Ì', null, 'i0403' from BC_IDENTITY_RESOURCE m where m.order_='800000';
 
--- ÊèíÂÖ•ÈìæÊé•ËµÑÊ∫êÊï∞ÊçÆ
+-- ≤Â»Î¡¥Ω”◊ ‘¥ ˝æ›
 insert into BC_IDENTITY_RESOURCE (ID,STATUS_,INNER_,TYPE_,BELONG,ORDER_,NAME,URL,ICONCLASS) 
-	select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, 2, m.id, '010100','ÂæÖÂäû‰∫ãÂä°', '/bc/todoWork/list', 'i0001' from BC_IDENTITY_RESOURCE m where m.order_='010000';
+	select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, 2, m.id, '010100','¥˝∞Ï ¬ŒÒ', '/bc/todoWork/list', 'i0001' from BC_IDENTITY_RESOURCE m where m.order_='010000';
 insert into BC_IDENTITY_RESOURCE (ID,STATUS_,INNER_,TYPE_,BELONG,ORDER_,NAME,URL,ICONCLASS) 
-	select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, 2, m.id, '010200','Â∑≤Âäû‰∫ãÂä°', '/bc/doneWork/paging', 'i0002' from BC_IDENTITY_RESOURCE m where m.order_='010000';
-
-insert into BC_IDENTITY_RESOURCE (ID,STATUS_,INNER_,TYPE_,BELONG,ORDER_,NAME,URL,ICONCLASS) 
-	select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, 2, m.id, '020100','ÁîµÂ≠êÂÖ¨Âëä', '/bc/bulletin/paging', 'i0406' from BC_IDENTITY_RESOURCE m where m.order_='020000';
+	select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, 2, m.id, '010200','“—∞Ï ¬ŒÒ', '/bc/doneWork/paging', 'i0002' from BC_IDENTITY_RESOURCE m where m.order_='010000';
 
 insert into BC_IDENTITY_RESOURCE (ID,STATUS_,INNER_,TYPE_,BELONG,ORDER_,NAME,URL,ICONCLASS) 
-	select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, 2, m.id, '700100','‰∏™ÊÄßÂåñËÆæÁΩÆ', '/bc/personal/edit', 'i0302' from BC_IDENTITY_RESOURCE m where m.order_='700000';
+	select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, 2, m.id, '020100','µÁ◊”π´∏Ê', '/bc/bulletin/paging', 'i0406' from BC_IDENTITY_RESOURCE m where m.order_='020000';
+
 insert into BC_IDENTITY_RESOURCE (ID,STATUS_,INNER_,TYPE_,BELONG,ORDER_,NAME,URL,ICONCLASS) 
-	select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, 2, m.id, '700200','ÊàëÁöÑÊ°åÈù¢', '/bc/shortcut/list', 'i0407' from BC_IDENTITY_RESOURCE m where m.order_='700000';
+	select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, 2, m.id, '700100','∏ˆ–‘ªØ…Ë÷√', '/bc/personal/edit', 'i0302' from BC_IDENTITY_RESOURCE m where m.order_='700000';
+insert into BC_IDENTITY_RESOURCE (ID,STATUS_,INNER_,TYPE_,BELONG,ORDER_,NAME,URL,ICONCLASS) 
+	select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, 2, m.id, '700200','Œ“µƒ◊¿√Ê', '/bc/shortcut/list', 'i0407' from BC_IDENTITY_RESOURCE m where m.order_='700000';
 insert into BC_IDENTITY_RESOURCE (ID,STATUS_,INNER_,TYPE_,BELONG,ORDER_,NAME,URL,ICONCLASS)
-	select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, 2, m.id, '700300','ÊàëÁöÑÊó•Âøó', '/bc/mysyslog/paging', 'i0208' from BC_IDENTITY_RESOURCE m where m.order_='700000';
+	select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, 2, m.id, '700300','Œ“µƒ»’÷æ', '/bc/mysyslog/paging', 'i0208' from BC_IDENTITY_RESOURCE m where m.order_='700000';
 insert into BC_IDENTITY_RESOURCE (ID,STATUS_,INNER_,TYPE_,BELONG,ORDER_,NAME,URL,ICONCLASS)
-	select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, 2, m.id, '700400','ÊàëÁöÑÂèçÈ¶à', '/bc/feedback/paging', 'i0303' from BC_IDENTITY_RESOURCE m where m.order_='700000';
+	select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, 2, m.id, '700400','Œ“µƒ∑¥¿°', '/bc/feedback/paging', 'i0303' from BC_IDENTITY_RESOURCE m where m.order_='700000';
 	
 insert into BC_IDENTITY_RESOURCE (ID,STATUS_,INNER_,TYPE_,BELONG,ORDER_,NAME,URL,ICONCLASS) 
-	select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, 2, m.id, '800101','ËÅåÂä°ÈÖçÁΩÆ', '/bc/duty/paging', 'i0009' from BC_IDENTITY_RESOURCE m where m.order_='800100';
+	select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, 2, m.id, '800101','÷∞ŒÒ≈‰÷√', '/bc/duty/paging', 'i0009' from BC_IDENTITY_RESOURCE m where m.order_='800100';
 insert into BC_IDENTITY_RESOURCE (ID,STATUS_,INNER_,TYPE_,BELONG,ORDER_,NAME,URL,ICONCLASS) 
-	select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, 2, m.id, '800102','Âçï‰ΩçÈÖçÁΩÆ', '/bc/unit/paging', 'i0007' from BC_IDENTITY_RESOURCE m where m.order_='800100';
+	select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, 2, m.id, '800102','µ•Œª≈‰÷√', '/bc/unit/paging', 'i0007' from BC_IDENTITY_RESOURCE m where m.order_='800100';
 insert into BC_IDENTITY_RESOURCE (ID,STATUS_,INNER_,TYPE_,BELONG,ORDER_,NAME,URL,ICONCLASS) 
-	select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, 2, m.id, '800103','ÈÉ®Èó®ÈÖçÁΩÆ', '/bc/department/paging', 'i0008' from BC_IDENTITY_RESOURCE m where m.order_='800100';
+	select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, 2, m.id, '800103','≤ø√≈≈‰÷√', '/bc/department/paging', 'i0008' from BC_IDENTITY_RESOURCE m where m.order_='800100';
 insert into BC_IDENTITY_RESOURCE (ID,STATUS_,INNER_,TYPE_,BELONG,ORDER_,NAME,URL,ICONCLASS) 
-	select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, 2, m.id, '800104','Â≤ó‰ΩçÈÖçÁΩÆ', '/bc/group/paging', 'i0003' from BC_IDENTITY_RESOURCE m where m.order_='800100';
+	select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, 2, m.id, '800104','∏⁄Œª≈‰÷√', '/bc/group/paging', 'i0003' from BC_IDENTITY_RESOURCE m where m.order_='800100';
 insert into BC_IDENTITY_RESOURCE (ID,STATUS_,INNER_,TYPE_,BELONG,ORDER_,NAME,URL,ICONCLASS) 
-	select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, 2, m.id, '800105','Áî®Êà∑ÈÖçÁΩÆ', '/bc/user/paging', 'i0003' from BC_IDENTITY_RESOURCE m where m.order_='800100';
+	select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, 2, m.id, '800105','”√ªß≈‰÷√', '/bc/user/paging', 'i0003' from BC_IDENTITY_RESOURCE m where m.order_='800100';
 insert into BC_IDENTITY_RESOURCE (ID,STATUS_,INNER_,TYPE_,BELONG,ORDER_,NAME,URL,ICONCLASS)
-	select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, 2, m.id, '800106','ËµÑÊ∫êÈÖçÁΩÆ', '/bc/resource/paging', 'i0005' from BC_IDENTITY_RESOURCE m where m.order_='800200';
+	select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, 2, m.id, '800106','◊ ‘¥≈‰÷√', '/bc/resource/paging', 'i0005' from BC_IDENTITY_RESOURCE m where m.order_='800200';
 insert into BC_IDENTITY_RESOURCE (ID,STATUS_,INNER_,TYPE_,BELONG,ORDER_,NAME,URL,ICONCLASS) 
-	select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, 2, m.id, '800107','ËßíËâ≤ÈÖçÁΩÆ', '/bc/role/paging', 'i0006' from BC_IDENTITY_RESOURCE m where m.order_='800200';
+	select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, 2, m.id, '800107','Ω«…´≈‰÷√', '/bc/role/paging', 'i0006' from BC_IDENTITY_RESOURCE m where m.order_='800200';
 
 insert into BC_IDENTITY_RESOURCE (ID,STATUS_,INNER_,TYPE_,BELONG,ORDER_,NAME,URL,ICONCLASS)
-	select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, 2, m.id, '800300','ÂèçÈ¶àÁÆ°ÁêÜ', '/bc/feedback/paging', 'i0309' from BC_IDENTITY_RESOURCE m where m.order_='800000';
+	select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, 2, m.id, '800300','∑¥¿°π‹¿Ì', '/bc/feedback/paging', 'i0309' from BC_IDENTITY_RESOURCE m where m.order_='800000';
 insert into BC_IDENTITY_RESOURCE (ID,STATUS_,INNER_,TYPE_,BELONG,ORDER_,NAME,URL,ICONCLASS)
-	select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, 2, m.id, '800400','ÈôÑ‰ª∂ÁÆ°ÁêÜ', '/bc/attach/paging', 'i0309' from BC_IDENTITY_RESOURCE m where m.order_='800000';
+	select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, 2, m.id, '800400','∏Ωº˛π‹¿Ì', '/bc/attach/paging', 'i0309' from BC_IDENTITY_RESOURCE m where m.order_='800000';
 insert into BC_IDENTITY_RESOURCE (ID,STATUS_,INNER_,TYPE_,BELONG,ORDER_,NAME,URL,ICONCLASS) 
-	select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, 2, m.id, '800500','Á≥ªÁªüÊó•Âøó', '/bc/syslog/paging', 'i0309' from BC_IDENTITY_RESOURCE m where m.order_='800000';
+	select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, 2, m.id, '800500','œµÕ≥»’÷æ', '/bc/syslog/paging', 'i0309' from BC_IDENTITY_RESOURCE m where m.order_='800000';
 insert into BC_IDENTITY_RESOURCE (ID,STATUS_,INNER_,TYPE_,BELONG,ORDER_,NAME,URL,ICONCLASS) 
-	select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, 2, m.id, '800600','Ê∂àÊÅØËÆ∞ÂΩï', '/bc/message/paging', 'i0309' from BC_IDENTITY_RESOURCE m where m.order_='800000';
+	select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, 2, m.id, '800600','œ˚œ¢º«¬º', '/bc/message/paging', 'i0309' from BC_IDENTITY_RESOURCE m where m.order_='800000';
    
 
--- ÊèíÂÖ•Ë∂ÖÁ∫ßÁÆ°ÁêÜÂëòËßíËâ≤Êï∞ÊçÆÔºàÂèØËÆøÈóÆÊâÄÊúâËµÑÊ∫êÔºâ
+-- ≤Â»Î≥¨º∂π‹¿Ì‘±Ω«…´ ˝æ›£®ø…∑√Œ À˘”–◊ ‘¥£©
 insert into BC_IDENTITY_ROLE (ID,STATUS_,INNER_,TYPE_,ORDER_,CODE,NAME) 
-	values(HIBERNATE_SEQUENCE.NEXTVAL,1, 0, 0,'0001', 'R_ADMIN','Ë∂ÖÁ∫ßÁÆ°ÁêÜÂëò');
+	values(HIBERNATE_SEQUENCE.NEXTVAL,1, 0, 0,'0001', 'R_ADMIN','≥¨º∂π‹¿Ì‘±');
 insert into BC_IDENTITY_ROLE_RESOURCE (RID,SID) 
 	select r.id,m.id from BC_IDENTITY_ROLE r,BC_IDENTITY_RESOURCE m where r.code='R_ADMIN' order by m.ORDER_;
 
--- ÊèíÂÖ•ÈÄöÁî®ËßíËâ≤Êï∞ÊçÆ
+-- ≤Â»ÎÕ®”√Ω«…´ ˝æ›
 insert into BC_IDENTITY_ROLE (ID,STATUS_,INNER_,TYPE_,ORDER_,CODE,NAME) 
-	values(HIBERNATE_SEQUENCE.NEXTVAL,1, 0, 0,'0000', 'R_COMMON','ÈÄöÁî®ËßíËâ≤');
+	values(HIBERNATE_SEQUENCE.NEXTVAL,1, 0, 0,'0000', 'R_COMMON','Õ®”√Ω«…´');
 insert into BC_IDENTITY_ROLE_RESOURCE (RID,SID) 
 	select r.id,m.id from BC_IDENTITY_ROLE r,BC_IDENTITY_RESOURCE m where r.code='R_COMMON' 
 	and m.order_ in ('010100','010200','020100','700100','700200','700300','700400')
 	order by m.order_;
 
--- ÊèíÂÖ•ÂÖ¨ÂëäÁÆ°ÁêÜÂëòËßíËâ≤Êï∞ÊçÆ
+-- ≤Â»Îπ´∏Êπ‹¿Ì‘±Ω«…´ ˝æ›
 insert into BC_IDENTITY_ROLE (ID,STATUS_,INNER_,TYPE_,ORDER_,CODE,NAME) 
-	values(HIBERNATE_SEQUENCE.NEXTVAL,1, 0, 0,'0002', 'R_MANAGER_BULLETIN','ÁîµÂ≠êÂÖ¨ÂëäÁÆ°ÁêÜ');
+	values(HIBERNATE_SEQUENCE.NEXTVAL,1, 0, 0,'0002', 'R_MANAGER_BULLETIN','µÁ◊”π´∏Êπ‹¿Ì');
 insert into BC_IDENTITY_ROLE_RESOURCE (RID,SID) 
 	select r.id,m.id from BC_IDENTITY_ROLE r,BC_IDENTITY_RESOURCE m where r.code='R_MANAGER_BULLETIN' 
 	and m.order_ in ('020000','020100')
 	order by m.order_;
 
--- ÊèíÂÖ•Áî®Êà∑ÂèçÈ¶àÁÆ°ÁêÜËßíËâ≤Êï∞ÊçÆ
+-- ≤Â»Î”√ªß∑¥¿°π‹¿ÌΩ«…´ ˝æ›
 insert into BC_IDENTITY_ROLE (ID,STATUS_,INNER_,TYPE_,ORDER_,CODE,NAME) 
-	values(HIBERNATE_SEQUENCE.NEXTVAL,1, 0, 0,'0003', 'R_MANAGER_FEEDBACK','Áî®Êà∑ÂèçÈ¶àÁÆ°ÁêÜ');
+	values(HIBERNATE_SEQUENCE.NEXTVAL,1, 0, 0,'0003', 'R_MANAGER_FEEDBACK','”√ªß∑¥¿°π‹¿Ì');
 insert into BC_IDENTITY_ROLE_RESOURCE (RID,SID) 
 	select r.id,m.id from BC_IDENTITY_ROLE r,BC_IDENTITY_RESOURCE m where r.code='R_MANAGER_FEEDBACK' 
 	and m.order_ in ('700400','800300')
 	order by m.order_;
 
--- ÊèíÂÖ•ÈôÑ‰ª∂ÁÆ°ÁêÜËßíËâ≤Êï∞ÊçÆ
+-- ≤Â»Î∏Ωº˛π‹¿ÌΩ«…´ ˝æ›
 insert into BC_IDENTITY_ROLE (ID,STATUS_,INNER_,TYPE_,ORDER_,CODE,NAME) 
-	values(HIBERNATE_SEQUENCE.NEXTVAL,1, 0, 0,'0004', 'R_MANAGER_ATTACH','ÈôÑ‰ª∂ÁÆ°ÁêÜ');
+	values(HIBERNATE_SEQUENCE.NEXTVAL,1, 0, 0,'0004', 'R_MANAGER_ATTACH','∏Ωº˛π‹¿Ì');
 insert into BC_IDENTITY_ROLE_RESOURCE (RID,SID) 
 	select r.id,m.id from BC_IDENTITY_ROLE r,BC_IDENTITY_RESOURCE m where r.code='R_MANAGER_ATTACH' 
 	and m.order_ in ('800400')
 	order by m.order_;
 
 
--- ÊèíÂÖ•ËÅåÂä°Êï∞ÊçÆ
-insert into BC_IDENTITY_DUTY (ID,CODE, NAME) values(HIBERNATE_SEQUENCE.NEXTVAL,'0101','Ëë£‰∫ãÈïø');
-insert into BC_IDENTITY_DUTY (ID,CODE, NAME) values(HIBERNATE_SEQUENCE.NEXTVAL,'0201','ÊÄªÁªèÁêÜ');
-insert into BC_IDENTITY_DUTY (ID,CODE, NAME) values(HIBERNATE_SEQUENCE.NEXTVAL,'0202','ÂâØÊÄªÁªèÁêÜ');
-insert into BC_IDENTITY_DUTY (ID,CODE, NAME) values(HIBERNATE_SEQUENCE.NEXTVAL,'0203','‰∏ªÁÆ°');
-insert into BC_IDENTITY_DUTY (ID,CODE, NAME) values(HIBERNATE_SEQUENCE.NEXTVAL,'0204','‰∏ª‰ªª');
-insert into BC_IDENTITY_DUTY (ID,CODE, NAME) values(HIBERNATE_SEQUENCE.NEXTVAL,'0205','ÂâØ‰∏ª‰ªª');
-insert into BC_IDENTITY_DUTY (ID,CODE, NAME) values(HIBERNATE_SEQUENCE.NEXTVAL,'0901','ËÅåÂëò');
+-- ≤Â»Î÷∞ŒÒ ˝æ›
+insert into BC_IDENTITY_DUTY (ID,CODE, NAME) values(HIBERNATE_SEQUENCE.NEXTVAL,'0101','∂≠ ¬≥§');
+insert into BC_IDENTITY_DUTY (ID,CODE, NAME) values(HIBERNATE_SEQUENCE.NEXTVAL,'0201','◊‹æ≠¿Ì');
+insert into BC_IDENTITY_DUTY (ID,CODE, NAME) values(HIBERNATE_SEQUENCE.NEXTVAL,'0202','∏±◊‹æ≠¿Ì');
+insert into BC_IDENTITY_DUTY (ID,CODE, NAME) values(HIBERNATE_SEQUENCE.NEXTVAL,'0203','÷˜π‹');
+insert into BC_IDENTITY_DUTY (ID,CODE, NAME) values(HIBERNATE_SEQUENCE.NEXTVAL,'0204','÷˜»Œ');
+insert into BC_IDENTITY_DUTY (ID,CODE, NAME) values(HIBERNATE_SEQUENCE.NEXTVAL,'0205','∏±÷˜»Œ');
+insert into BC_IDENTITY_DUTY (ID,CODE, NAME) values(HIBERNATE_SEQUENCE.NEXTVAL,'0901','÷∞‘±');
 
 
--- ÊèíÂÖ•Âçï‰ΩçÊï∞ÊçÆ
-insert into BC_IDENTITY_ACTOR (ID,UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_, PY) values(HIBERNATE_SEQUENCE.NEXTVAL,'uid', 1, 0, 2, 'D00','ÊÄªÂÖ¨Âè∏', '00000000','zonggongsi');
-insert into BC_IDENTITY_ACTOR (ID,UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_, PY) values(HIBERNATE_SEQUENCE.NEXTVAL,'uid', 1, 0, 2, 'D01','ÂàÜÂÖ¨Âè∏1', '01000000','fengongsi1');
+-- ≤Â»Îµ•Œª ˝æ›
+insert into BC_IDENTITY_ACTOR (ID,UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_, PY) values(HIBERNATE_SEQUENCE.NEXTVAL,'uid', 1, 0, 2, 'D00','◊‹π´Àæ', '00000000','zonggongsi');
+insert into BC_IDENTITY_ACTOR (ID,UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_, PY) values(HIBERNATE_SEQUENCE.NEXTVAL,'uid', 1, 0, 2, 'D01','∑÷π´Àæ1', '01000000','fengongsi1');
 insert into BC_IDENTITY_ACTOR_RELATION (TYPE_,MASTER_ID,FOLLOWER_ID) 
     select 0,am.id,af.id from BC_IDENTITY_ACTOR am,BC_IDENTITY_ACTOR af where am.code='D00' and af.code='D01';
-insert into BC_IDENTITY_ACTOR (ID,UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_, PY) values(HIBERNATE_SEQUENCE.NEXTVAL,'uid', 1, 0, 2, 'D02','ÂàÜÂÖ¨Âè∏2', '02000000','fengongsi2');
+insert into BC_IDENTITY_ACTOR (ID,UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_, PY) values(HIBERNATE_SEQUENCE.NEXTVAL,'uid', 1, 0, 2, 'D02','∑÷π´Àæ2', '02000000','fengongsi2');
 insert into BC_IDENTITY_ACTOR_RELATION (TYPE_,MASTER_ID,FOLLOWER_ID) 
     select 0,am.id,af.id from BC_IDENTITY_ACTOR am,BC_IDENTITY_ACTOR af where am.code='D00' and af.code='D02';
 
--- ÊèíÂÖ•ÈÉ®Èó®Êï∞ÊçÆ
-insert into BC_IDENTITY_ACTOR (ID,UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_, PY) values(HIBERNATE_SEQUENCE.NEXTVAL,'uid', 1, 0, 3, 'B01','ÂäûÂÖ¨ÂÆ§', '00010000','bangongshi');
+-- ≤Â»Î≤ø√≈ ˝æ›
+insert into BC_IDENTITY_ACTOR (ID,UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_, PY) values(HIBERNATE_SEQUENCE.NEXTVAL,'uid', 1, 0, 3, 'B01','∞Ïπ´ “', '00010000','bangongshi');
 insert into BC_IDENTITY_ACTOR_RELATION (TYPE_,MASTER_ID,FOLLOWER_ID) 
     select 0,am.id,af.id from BC_IDENTITY_ACTOR am,BC_IDENTITY_ACTOR af where am.code='D00' and af.code='B01';
     
-insert into BC_IDENTITY_ACTOR (ID,UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_, PY) values(HIBERNATE_SEQUENCE.NEXTVAL,'uid', 1, 0, 3, 'B02','Ë¥¢Âä°ÈÉ®', '00020000','caiwubu');
+insert into BC_IDENTITY_ACTOR (ID,UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_, PY) values(HIBERNATE_SEQUENCE.NEXTVAL,'uid', 1, 0, 3, 'B02','≤∆ŒÒ≤ø', '00020000','caiwubu');
 insert into BC_IDENTITY_ACTOR_RELATION (TYPE_,MASTER_ID,FOLLOWER_ID) 
     select 0,am.id,af.id from BC_IDENTITY_ACTOR am,BC_IDENTITY_ACTOR af where am.code='D00' and af.code='B02';
     
-insert into BC_IDENTITY_ACTOR (ID,UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_, PY) values(HIBERNATE_SEQUENCE.NEXTVAL,'uid', 1, 0, 3, 'B03','‰ø°ÊÅØ‰∏≠ÂøÉ', '00030000','xinxizhongxin');
+insert into BC_IDENTITY_ACTOR (ID,UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_, PY) values(HIBERNATE_SEQUENCE.NEXTVAL,'uid', 1, 0, 3, 'B03','–≈œ¢÷––ƒ', '00030000','xinxizhongxin');
 insert into BC_IDENTITY_ACTOR_RELATION (TYPE_,MASTER_ID,FOLLOWER_ID) 
     select 0,am.id,af.id from BC_IDENTITY_ACTOR am,BC_IDENTITY_ACTOR af where am.code='D00' and af.code='B03';
 
-insert into BC_IDENTITY_ACTOR (ID,UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_, PY) values(HIBERNATE_SEQUENCE.NEXTVAL,'uid', 1, 0, 3, 'B0301','Â≠êÈÉ®Èó®1', '00030100','zibumen1');
+insert into BC_IDENTITY_ACTOR (ID,UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_, PY) values(HIBERNATE_SEQUENCE.NEXTVAL,'uid', 1, 0, 3, 'B0301','◊”≤ø√≈1', '00030100','zibumen1');
 insert into BC_IDENTITY_ACTOR_RELATION (TYPE_,MASTER_ID,FOLLOWER_ID) 
     select 0,am.id,af.id from BC_IDENTITY_ACTOR am,BC_IDENTITY_ACTOR af where am.code='B03' and af.code='B0301';
     
-insert into BC_IDENTITY_ACTOR (ID,UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_, PY) values(HIBERNATE_SEQUENCE.NEXTVAL,'uid', 1, 0, 3, 'B0302','Â≠êÈÉ®Èó®2', '00030200','zibumen2');
+insert into BC_IDENTITY_ACTOR (ID,UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_, PY) values(HIBERNATE_SEQUENCE.NEXTVAL,'uid', 1, 0, 3, 'B0302','◊”≤ø√≈2', '00030200','zibumen2');
 insert into BC_IDENTITY_ACTOR_RELATION (TYPE_,MASTER_ID,FOLLOWER_ID) 
      select 0,am.id,af.id from BC_IDENTITY_ACTOR am,BC_IDENTITY_ACTOR af where am.code='B03' and af.code='B0302';
     
--- ÊèíÂÖ•‰∫∫ÂëòÊï∞ÊçÆ
-insert into BC_IDENTITY_ACTOR (ID,UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_, PY) values(HIBERNATE_SEQUENCE.NEXTVAL,'uid', 1, 0, 1, 'dongshizhang','Ëë£‰∫ãÈïø', '00000001','Ëë£‰∫ãÈïø');
+-- ≤Â»Î»À‘± ˝æ›
+insert into BC_IDENTITY_ACTOR (ID,UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_, PY) values(HIBERNATE_SEQUENCE.NEXTVAL,'uid', 1, 0, 1, 'dongshizhang','∂≠ ¬≥§', '00000001','∂≠ ¬≥§');
 insert into BC_IDENTITY_ACTOR_RELATION (TYPE_,MASTER_ID,FOLLOWER_ID) 
     select 0,am.id,af.id from BC_IDENTITY_ACTOR am,BC_IDENTITY_ACTOR af where am.code='D00' and af.code='dongshizhang'; 
     
-insert into BC_IDENTITY_ACTOR (ID,UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_, PY) values(HIBERNATE_SEQUENCE.NEXTVAL,'uid', 1, 0, 1, 'zongjingli','ÊÄªÁªèÁêÜ', '00000002','zongjingli');
+insert into BC_IDENTITY_ACTOR (ID,UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_, PY) values(HIBERNATE_SEQUENCE.NEXTVAL,'uid', 1, 0, 1, 'zongjingli','◊‹æ≠¿Ì', '00000002','zongjingli');
 insert into BC_IDENTITY_ACTOR_RELATION (TYPE_,MASTER_ID,FOLLOWER_ID)  
     select 0,am.id,af.id from BC_IDENTITY_ACTOR am,BC_IDENTITY_ACTOR af where am.code='D00' and af.code='zongjingli'; 
     
-insert into BC_IDENTITY_ACTOR (ID,UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_, PY) values(HIBERNATE_SEQUENCE.NEXTVAL,'uid', 1, 0, 1, 'fuzongjingli','ÂâØÊÄªÁªèÁêÜ', '00000003','fuzongjingli');
+insert into BC_IDENTITY_ACTOR (ID,UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_, PY) values(HIBERNATE_SEQUENCE.NEXTVAL,'uid', 1, 0, 1, 'fuzongjingli','∏±◊‹æ≠¿Ì', '00000003','fuzongjingli');
 insert into BC_IDENTITY_ACTOR_RELATION (TYPE_,MASTER_ID,FOLLOWER_ID)  
     select 0,am.id,af.id from BC_IDENTITY_ACTOR am,BC_IDENTITY_ACTOR af where am.code='D00' and af.code='fuzongjingli'; 
     
-insert into BC_IDENTITY_ACTOR (ID,UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_, PY) values(HIBERNATE_SEQUENCE.NEXTVAL,'uid', 1, 0, 1, 'xiaoming','Â∞èÊòé', '00010001','xiaoming');
+insert into BC_IDENTITY_ACTOR (ID,UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_, PY) values(HIBERNATE_SEQUENCE.NEXTVAL,'uid', 1, 0, 1, 'xiaoming','–°√˜', '00010001','xiaoming');
 insert into BC_IDENTITY_ACTOR_RELATION (TYPE_,MASTER_ID,FOLLOWER_ID) 
     select 0,am.id,af.id from BC_IDENTITY_ACTOR am,BC_IDENTITY_ACTOR af where am.code='B01' and af.code='xiaoming'; 
     
-insert into BC_IDENTITY_ACTOR (ID,UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_, PY) values(HIBERNATE_SEQUENCE.NEXTVAL,'uid', 1, 0, 1, 'xiaohong','Â∞èÁ∫¢', '00010002','xiaohong');
+insert into BC_IDENTITY_ACTOR (ID,UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_, PY) values(HIBERNATE_SEQUENCE.NEXTVAL,'uid', 1, 0, 1, 'xiaohong','–°∫Ï', '00010002','xiaohong');
 insert into BC_IDENTITY_ACTOR_RELATION (TYPE_,MASTER_ID,FOLLOWER_ID) 
     select 0,am.id,af.id from BC_IDENTITY_ACTOR am,BC_IDENTITY_ACTOR af where am.code='B01' and af.code='xiaohong'; 
     
-insert into BC_IDENTITY_ACTOR (ID,UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_, PY) values(HIBERNATE_SEQUENCE.NEXTVAL,'uid', 1, 0, 1, 'xiaojun','Â∞èÂÜõ', '00020001','xiaojun');
+insert into BC_IDENTITY_ACTOR (ID,UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_, PY) values(HIBERNATE_SEQUENCE.NEXTVAL,'uid', 1, 0, 1, 'xiaojun','–°æ¸', '00020001','xiaojun');
 insert into BC_IDENTITY_ACTOR_RELATION (TYPE_,MASTER_ID,FOLLOWER_ID) 
     select 0,am.id,af.id from BC_IDENTITY_ACTOR am,BC_IDENTITY_ACTOR af where am.code='B02' and af.code='xiaojun'; 
     
-insert into BC_IDENTITY_ACTOR (ID,UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_, PY) values(HIBERNATE_SEQUENCE.NEXTVAL,'uid', 1, 0, 1, 'admin','Ë∂ÖÁ∫ßÁÆ°ÁêÜÂëò', '00030001','chaojiguanliyuan');
+insert into BC_IDENTITY_ACTOR (ID,UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_, PY) values(HIBERNATE_SEQUENCE.NEXTVAL,'uid', 1, 0, 1, 'admin','≥¨º∂π‹¿Ì‘±', '00030001','chaojiguanliyuan');
 insert into BC_IDENTITY_ACTOR_RELATION (TYPE_,MASTER_ID,FOLLOWER_ID) 
     select 0,am.id,af.id from BC_IDENTITY_ACTOR am,BC_IDENTITY_ACTOR af where am.code='B03' and af.code='admin'; 
     
-insert into BC_IDENTITY_ACTOR (ID,UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_, PY) values(HIBERNATE_SEQUENCE.NEXTVAL,'uid', 1, 0, 1, 'dragon','ÈªÑËç£Âü∫', '00030002', 'huangrongji');
+insert into BC_IDENTITY_ACTOR (ID,UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_, PY) values(HIBERNATE_SEQUENCE.NEXTVAL,'uid', 1, 0, 1, 'dragon','ª∆»Ÿª˘', '00030002', 'huangrongji');
 insert into BC_IDENTITY_ACTOR_RELATION (TYPE_,MASTER_ID,FOLLOWER_ID) 
     select 0,am.id,af.id from BC_IDENTITY_ACTOR am,BC_IDENTITY_ACTOR af where am.code='B03' and af.code='dragon';
     
--- ÊèíÂÖ•‰∫∫ÂëòÁöÑDetail‰ø°ÊÅØ
+-- ≤Â»Î»À‘±µƒDetail–≈œ¢
 insert into BC_IDENTITY_ACTOR_DETAIL (ID,CREATE_DATE,WORK_DATE,SEX,CARD,DUTY_ID,COMMENT_) 
     select a.id,sysdate ,null,0,null,null,null from BC_IDENTITY_ACTOR a where a.type_=1; 
 update BC_IDENTITY_ACTOR a set a.detail_id = (select ad.id from BC_IDENTITY_ACTOR_DETAIL ad where ad.id = a.id)
     where a.type_=1 and exists (select 1 from BC_IDENTITY_ACTOR_DETAIL ad where ad.id = a.id);
     
--- ÊèíÂÖ•‰∫∫ÂëòÁöÑËÆ§ËØÅÊï∞ÊçÆ(ÂØÜÁ†ÅÈªòËÆ§‰∏∫888888ÁöÑmd5ÂÄº)
+-- ≤Â»Î»À‘±µƒ»œ÷§ ˝æ›(√‹¬Îƒ¨»œŒ™888888µƒmd5÷µ)
 insert into BC_IDENTITY_AUTH (ID,PASSWORD) 
     select a.id,'21218cca77804d2ba1922c33e0151105' from BC_IDENTITY_ACTOR a where a.type_=1; 
 
--- ÊèíÂÖ•Â≤ó‰ΩçÊï∞ÊçÆ
-insert into BC_IDENTITY_ACTOR (ID,UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_) values(HIBERNATE_SEQUENCE.NEXTVAL,'uid', 1, 0, 4, 'G_ADMIN','Ë∂ÖÁ∫ßÁÆ°ÁêÜÂ≤ó', '0000');
+-- ≤Â»Î∏⁄Œª ˝æ›
+insert into BC_IDENTITY_ACTOR (ID,UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_) values(HIBERNATE_SEQUENCE.NEXTVAL,'uid', 1, 0, 4, 'G_ADMIN','≥¨º∂π‹¿Ì∏⁄', '0000');
 insert into BC_IDENTITY_ACTOR_RELATION (TYPE_,MASTER_ID,FOLLOWER_ID) 
     select 0,am.id,af.id from BC_IDENTITY_ACTOR am,BC_IDENTITY_ACTOR af where am.code='B03' and af.code='G_ADMIN'; 
-insert into BC_IDENTITY_ACTOR (ID,UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_) values(HIBERNATE_SEQUENCE.NEXTVAL,'uid', 1, 0, 4, 'G9901','ÊµãËØïÂ≤ó‰Ωç1', '9901');
+insert into BC_IDENTITY_ACTOR (ID,UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_) values(HIBERNATE_SEQUENCE.NEXTVAL,'uid', 1, 0, 4, 'G9901','≤‚ ‘∏⁄Œª1', '9901');
 insert into BC_IDENTITY_ACTOR_RELATION (TYPE_,MASTER_ID,FOLLOWER_ID) 
     select 0,am.id,af.id from BC_IDENTITY_ACTOR am,BC_IDENTITY_ACTOR af where am.code='B03' and af.code='G9901'; 
-insert into BC_IDENTITY_ACTOR (ID,UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_) values(HIBERNATE_SEQUENCE.NEXTVAL,'uid', 1, 0, 4, 'G9902','ÊµãËØïÂ≤ó‰Ωç2', '9902');
+insert into BC_IDENTITY_ACTOR (ID,UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_) values(HIBERNATE_SEQUENCE.NEXTVAL,'uid', 1, 0, 4, 'G9902','≤‚ ‘∏⁄Œª2', '9902');
 insert into BC_IDENTITY_ACTOR_RELATION (TYPE_,MASTER_ID,FOLLOWER_ID) 
     select 0,am.id,af.id from BC_IDENTITY_ACTOR am,BC_IDENTITY_ACTOR af where am.code='B03' and af.code='G9902'; 
-insert into BC_IDENTITY_ACTOR (ID,UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_) values(HIBERNATE_SEQUENCE.NEXTVAL,'uid', 1, 0, 4, 'G9903','ÊµãËØïÂ≤ó‰Ωç3', '9903');
+insert into BC_IDENTITY_ACTOR (ID,UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_) values(HIBERNATE_SEQUENCE.NEXTVAL,'uid', 1, 0, 4, 'G9903','≤‚ ‘∏⁄Œª3', '9903');
 insert into BC_IDENTITY_ACTOR_RELATION (TYPE_,MASTER_ID,FOLLOWER_ID) 
     select 0,am.id,af.id from BC_IDENTITY_ACTOR am,BC_IDENTITY_ACTOR af where am.code='B03' and af.code='G9903'; 
-insert into BC_IDENTITY_ACTOR (ID,UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_) values(HIBERNATE_SEQUENCE.NEXTVAL,'uid', 1, 0, 4, 'G9904','ÊµãËØïÂ≤ó‰Ωç4', '9904');
+insert into BC_IDENTITY_ACTOR (ID,UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_) values(HIBERNATE_SEQUENCE.NEXTVAL,'uid', 1, 0, 4, 'G9904','≤‚ ‘∏⁄Œª4', '9904');
 insert into BC_IDENTITY_ACTOR_RELATION (TYPE_,MASTER_ID,FOLLOWER_ID) 
     select 0,am.id,af.id from BC_IDENTITY_ACTOR am,BC_IDENTITY_ACTOR af where am.code='B03' and af.code='G9904'; 
-insert into BC_IDENTITY_ACTOR (ID,UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_) values(HIBERNATE_SEQUENCE.NEXTVAL,'uid', 1, 0, 4, 'G9905','ÊµãËØïÂ≤ó‰Ωç5', '9905');
+insert into BC_IDENTITY_ACTOR (ID,UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_) values(HIBERNATE_SEQUENCE.NEXTVAL,'uid', 1, 0, 4, 'G9905','≤‚ ‘∏⁄Œª5', '9905');
 insert into BC_IDENTITY_ACTOR_RELATION (TYPE_,MASTER_ID,FOLLOWER_ID) 
     select 0,am.id,af.id from BC_IDENTITY_ACTOR am,BC_IDENTITY_ACTOR af where am.code='B03' and af.code='G9905'; 
-insert into BC_IDENTITY_ACTOR (ID,UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_) values(HIBERNATE_SEQUENCE.NEXTVAL,'uid', 1, 0, 4, 'G9906','ÊµãËØïÂ≤ó‰Ωç6', '9906');
+insert into BC_IDENTITY_ACTOR (ID,UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_) values(HIBERNATE_SEQUENCE.NEXTVAL,'uid', 1, 0, 4, 'G9906','≤‚ ‘∏⁄Œª6', '9906');
 insert into BC_IDENTITY_ACTOR_RELATION (TYPE_,MASTER_ID,FOLLOWER_ID) 
     select 0,am.id,af.id from BC_IDENTITY_ACTOR am,BC_IDENTITY_ACTOR af where am.code='B03' and af.code='G9906'; 
-insert into BC_IDENTITY_ACTOR (ID,UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_) values(HIBERNATE_SEQUENCE.NEXTVAL,'uid', 1, 0, 4, 'G9907','ÊµãËØïÂ≤ó‰Ωç7', '9907');
+insert into BC_IDENTITY_ACTOR (ID,UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_) values(HIBERNATE_SEQUENCE.NEXTVAL,'uid', 1, 0, 4, 'G9907','≤‚ ‘∏⁄Œª7', '9907');
 insert into BC_IDENTITY_ACTOR_RELATION (TYPE_,MASTER_ID,FOLLOWER_ID) 
     select 0,am.id,af.id from BC_IDENTITY_ACTOR am,BC_IDENTITY_ACTOR af where am.code='B03' and af.code='G9907'; 
--- ËÆ©Ë∂ÖÁ∫ßÁÆ°ÁêÜÂëòÊã•ÊúâË∂ÖÁ∫ßÁÆ°ÁêÜÂ≤ó
+-- »√≥¨º∂π‹¿Ì‘±”µ”–≥¨º∂π‹¿Ì∏⁄
 insert into BC_IDENTITY_ACTOR_RELATION (TYPE_,MASTER_ID,FOLLOWER_ID) 
     select 0,am.id,af.id from BC_IDENTITY_ACTOR am,BC_IDENTITY_ACTOR af where af.code in ('admin','dragon') and am.code in ('G_ADMIN','G9901','G9902','G9903','G9904','G9905','G9906','G9907'); 
 
--- Êõ¥Êñ∞ActorÁöÑuid‰∏∫'ACTOR-'+id
+-- ∏¸–¬ActorµƒuidŒ™'ACTOR-'+id
 UPDATE BC_IDENTITY_ACTOR SET UID_=CONCAT('ACTOR-',id);
 
--- ËÆ©È°∂Â±ÇÂçï‰ΩçÊã•ÊúâÈÄöÁî®ËßíËâ≤
+-- »√∂•≤„µ•Œª”µ”–Õ®”√Ω«…´
 insert into BC_IDENTITY_ROLE_ACTOR (AID,RID) 
 	select a.id, r.id from BC_IDENTITY_ACTOR a,BC_IDENTITY_ROLE r where a.code='D00' and r.code='R_COMMON';
 
--- ËÆ©Ë∂ÖÁ∫ßÁÆ°ÁêÜÂëòÊã•ÊúâË∂ÖÁ∫ßÁÆ°ÁêÜÂëòËßíËâ≤
+-- »√≥¨º∂π‹¿Ì‘±”µ”–≥¨º∂π‹¿Ì‘±Ω«…´
 insert into BC_IDENTITY_ROLE_ACTOR (AID,RID) 
 	select a.id, r.id from BC_IDENTITY_ACTOR a,BC_IDENTITY_ROLE r where a.code in ('admin','dragon') and r.code='R_ADMIN';
 
--- ËÆ©Ë∂ÖÁ∫ßÁÆ°ÁêÜÂ≤óÊã•ÊúâÊâÄÊúâËßíËâ≤
+-- »√≥¨º∂π‹¿Ì∏⁄”µ”–À˘”–Ω«…´
 insert into BC_IDENTITY_ROLE_ACTOR (AID,RID) 
 	select a.id, r.id from BC_IDENTITY_ACTOR a,BC_IDENTITY_ROLE r where a.code='G_ADMIN';
 
--- Á≥ªÁªüÊ°åÈù¢Áõ∏ÂÖ≥Ê®°ÂùóÁöÑÂàùÂßãÂåñÊï∞ÊçÆ
+-- œµÕ≥◊¿√Êœ‡πÿƒ£øÈµƒ≥ı ºªØ ˝æ›
 
--- ÊèíÂÖ•Ê°åÈù¢Âø´Êç∑ÊñπÂºèÊï∞ÊçÆ
+-- ≤Â»Î◊¿√ÊøÏΩ›∑Ω Ω ˝æ›
 insert into BC_DESKTOP_SHORTCUT (ID,STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,SID,AID) 
-	select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, '0001', 0, null, null, id, null from BC_IDENTITY_RESOURCE where name='ÂæÖÂäû‰∫ãÂä°';
+	select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, '0001', 0, null, null, id, null from BC_IDENTITY_RESOURCE where name='¥˝∞Ï ¬ŒÒ';
 insert into BC_DESKTOP_SHORTCUT (ID,STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,SID,AID) 
-	select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, '0002', 0, null, null, id, null from BC_IDENTITY_RESOURCE where name='Â∑≤Âäû‰∫ãÂä°';
+	select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, '0002', 0, null, null, id, null from BC_IDENTITY_RESOURCE where name='“—∞Ï ¬ŒÒ';
 	
 insert into BC_DESKTOP_SHORTCUT (ID,STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,SID,AID) 
-	select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, '0101', 0, null, null, id, null from BC_IDENTITY_RESOURCE where name='ÁîµÂ≠êÂÖ¨Âëä';
+	select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, '0101', 0, null, null, id, null from BC_IDENTITY_RESOURCE where name='µÁ◊”π´∏Ê';
 	
 insert into BC_DESKTOP_SHORTCUT (ID,STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,SID,AID) 
-	select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, '1001', 0, null, null, id, null from BC_IDENTITY_RESOURCE where name='‰∏™ÊÄßÂåñËÆæÁΩÆ';
+	select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, '1001', 0, null, null, id, null from BC_IDENTITY_RESOURCE where name='∏ˆ–‘ªØ…Ë÷√';
 insert into BC_DESKTOP_SHORTCUT (ID,STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,SID,AID) 
-	select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, '1002', 0, null, null, id, null from BC_IDENTITY_RESOURCE where name='ÊàëÁöÑÊ°åÈù¢';
+	select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, '1002', 0, null, null, id, null from BC_IDENTITY_RESOURCE where name='Œ“µƒ◊¿√Ê';
 insert into BC_DESKTOP_SHORTCUT (ID,STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,SID,AID) 
-	select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, '1003', 0, null, null, id, null from BC_IDENTITY_RESOURCE where name='ÊàëÁöÑÂèçÈ¶à';
+	select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, '1003', 0, null, null, id, null from BC_IDENTITY_RESOURCE where name='Œ“µƒ∑¥¿°';
 insert into BC_DESKTOP_SHORTCUT (ID,STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,SID,AID) 
-	select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, '1004', 0, null, null, id, null from BC_IDENTITY_RESOURCE where name='ÊàëÁöÑÊó•Âøó';
+	select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, '1004', 0, null, null, id, null from BC_IDENTITY_RESOURCE where name='Œ“µƒ»’÷æ';
 	
 insert into BC_DESKTOP_SHORTCUT (ID,STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,SID,AID) 
-	select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, '1101', 0, null, null, id, null from BC_IDENTITY_RESOURCE where name='Âçï‰ΩçÈÖçÁΩÆ';
+	select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, '1101', 0, null, null, id, null from BC_IDENTITY_RESOURCE where name='µ•Œª≈‰÷√';
 insert into BC_DESKTOP_SHORTCUT (ID,STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,SID,AID) 
-	select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, '1102', 0, null, null, id, null from BC_IDENTITY_RESOURCE where name='ÈÉ®Èó®ÈÖçÁΩÆ';
+	select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, '1102', 0, null, null, id, null from BC_IDENTITY_RESOURCE where name='≤ø√≈≈‰÷√';
 insert into BC_DESKTOP_SHORTCUT (ID,STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,SID,AID) 
-	select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, '1103', 0, null, null, id, null from BC_IDENTITY_RESOURCE where name='Â≤ó‰ΩçÈÖçÁΩÆ';
+	select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, '1103', 0, null, null, id, null from BC_IDENTITY_RESOURCE where name='∏⁄Œª≈‰÷√';
 insert into BC_DESKTOP_SHORTCUT (ID,STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,SID,AID) 
-	select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, '1104', 0, null, null, id, null from BC_IDENTITY_RESOURCE where name='Áî®Êà∑ÈÖçÁΩÆ';
+	select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, '1104', 0, null, null, id, null from BC_IDENTITY_RESOURCE where name='”√ªß≈‰÷√';
 insert into BC_DESKTOP_SHORTCUT (ID,STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,SID,AID) 
-	select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, '1105', 0, null, null, id, null from BC_IDENTITY_RESOURCE where name='ËµÑÊ∫êÈÖçÁΩÆ';
+	select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, '1105', 0, null, null, id, null from BC_IDENTITY_RESOURCE where name='◊ ‘¥≈‰÷√';
 insert into BC_DESKTOP_SHORTCUT (ID,STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,SID,AID) 
-	select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, '1106', 0, null, null, id, null from BC_IDENTITY_RESOURCE where name='ËßíËâ≤ÈÖçÁΩÆ';
+	select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, '1106', 0, null, null, id, null from BC_IDENTITY_RESOURCE where name='Ω«…´≈‰÷√';
 insert into BC_DESKTOP_SHORTCUT (ID,STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,SID,AID) 
-	select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, '1107', 0, null, null, id, null from BC_IDENTITY_RESOURCE where name='ËÅåÂä°ÈÖçÁΩÆ';
+	select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, '1107', 0, null, null, id, null from BC_IDENTITY_RESOURCE where name='÷∞ŒÒ≈‰÷√';
 insert into BC_DESKTOP_SHORTCUT (ID,STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,SID,AID) 
-	select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, '1108', 0, null, null, id, null from BC_IDENTITY_RESOURCE where name='ÂèçÈ¶àÁÆ°ÁêÜ';
+	select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, '1108', 0, null, null, id, null from BC_IDENTITY_RESOURCE where name='∑¥¿°π‹¿Ì';
 insert into BC_DESKTOP_SHORTCUT (ID,STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,SID,AID) 
-	select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, '1109', 0, null, null, id, null from BC_IDENTITY_RESOURCE where name='Á≥ªÁªüÊó•Âøó';
+	select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, '1109', 0, null, null, id, null from BC_IDENTITY_RESOURCE where name='œµÕ≥»’÷æ';
     
 insert into BC_DESKTOP_SHORTCUT (ID,STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,ICONCLASS) 
-	values(HIBERNATE_SEQUENCE.NEXTVAL,1, 0, '8001', 1, 'Ë∞∑Ê≠åÊêúÁ¥¢', 'http://www.google.com.hk/', 'i0204');
+	values(HIBERNATE_SEQUENCE.NEXTVAL,1, 0, '8001', 1, 'π»∏ËÀ—À˜', 'http://www.google.com.hk/', 'i0204');
 insert into BC_DESKTOP_SHORTCUT (ID,STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,ICONCLASS) 
-	values(HIBERNATE_SEQUENCE.NEXTVAL,1, 0, '8002', 1, 'ÁôæÂ∫¶ÊêúÁ¥¢', 'http://www.baidu.com/', 'i0205');
+	values(HIBERNATE_SEQUENCE.NEXTVAL,1, 0, '8002', 1, '∞Ÿ∂»À—À˜', 'http://www.baidu.com/', 'i0205');
 insert into BC_DESKTOP_SHORTCUT (ID,STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,ICONCLASS) 
-	values(HIBERNATE_SEQUENCE.NEXTVAL,1, 0, '8003', 0, '‰∏ãËΩΩÊµèËßàÂô®', '/bc/attach/browser', 'i0404');
+	values(HIBERNATE_SEQUENCE.NEXTVAL,1, 0, '8003', 0, 'œ¬‘ÿ‰Ø¿¿∆˜', '/bc/attach/browser', 'i0404');
 
--- Êä•Ë°®
+-- ±®±Ì
 insert into BC_DESKTOP_SHORTCUT (ID,STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,ICONCLASS) 
-	values(HIBERNATE_SEQUENCE.NEXTVAL,1, 0, '8101', 0, 'È•ºÂõæ', '/bc/chart/pie', 'i0201');
+	values(HIBERNATE_SEQUENCE.NEXTVAL,1, 0, '8101', 0, '±˝Õº', '/bc/chart/pie', 'i0201');
 insert into BC_DESKTOP_SHORTCUT (ID,STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,ICONCLASS) 
-	values(HIBERNATE_SEQUENCE.NEXTVAL,1, 0, '8102', 0, 'Êü±Âõæ', '/bc/chart/bar', 'i0200');
+	values(HIBERNATE_SEQUENCE.NEXTVAL,1, 0, '8102', 0, '÷˘Õº', '/bc/chart/bar', 'i0200');
 insert into BC_DESKTOP_SHORTCUT (ID,STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,ICONCLASS) 
-	values(HIBERNATE_SEQUENCE.NEXTVAL,1, 0, '8103', 0, 'Âä®ÊÄÅÊõ≤Á∫øÂõæ', '/bc/chart/spline', 'i0202');
+	values(HIBERNATE_SEQUENCE.NEXTVAL,1, 0, '8103', 0, '∂ØÃ¨«˙œﬂÕº', '/bc/chart/spline', 'i0202');
 insert into BC_DESKTOP_SHORTCUT (ID,STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,ICONCLASS) 
-	values(HIBERNATE_SEQUENCE.NEXTVAL,1, 0, '8104', 0, 'ÁªºÂêàÂõæË°®', '/bc/chart/mix', 'i0203');
+	values(HIBERNATE_SEQUENCE.NEXTVAL,1, 0, '8104', 0, '◊€∫œÕº±Ì', '/bc/chart/mix', 'i0203');
 	
--- ËÆæËÆ°Áî®ÁöÑÂø´Êç∑ÊñπÂºè
+-- …Ëº∆”√µƒøÏΩ›∑Ω Ω
 insert into BC_DESKTOP_SHORTCUT (ID,STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,ICONCLASS,AID) 
-    select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, '8201', 0, 'ÂàÜÈ°µËÆæËÆ°', '/bc/duty/paging', 'i0300', a.id from BC_IDENTITY_ACTOR a where a.code = 'admin';
+    select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, '8201', 0, '∑÷“≥…Ëº∆', '/bc/duty/paging', 'i0300', a.id from BC_IDENTITY_ACTOR a where a.code = 'admin';
 insert into BC_DESKTOP_SHORTCUT (ID,STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,ICONCLASS,AID) 
-    select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, '8202', 0, 'Êó†ÂàÜÈ°µËÆæËÆ°', '/bc/duty/list', 'i0300', a.id from BC_IDENTITY_ACTOR a where a.code = 'admin';
+    select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, '8202', 0, 'Œﬁ∑÷“≥…Ëº∆', '/bc/duty/list', 'i0300', a.id from BC_IDENTITY_ACTOR a where a.code = 'admin';
 insert into BC_DESKTOP_SHORTCUT (ID,STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,ICONCLASS,AID) 
-    select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, '8203', 0, 'ÈôÑ‰ª∂ËÆæËÆ°', '/bc/attach/design', 'i0300', a.id from BC_IDENTITY_ACTOR a where a.code = 'admin';
+    select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, '8203', 0, '∏Ωº˛…Ëº∆', '/bc/attach/design', 'i0300', a.id from BC_IDENTITY_ACTOR a where a.code = 'admin';
 
 insert into BC_DESKTOP_SHORTCUT (ID,STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,ICONCLASS,AID) 
     select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, '8301', 1, 'jqueryUI', '/ui-libs-demo/jquery-ui/1.8.13/index.html', 'i0300', a.id from BC_IDENTITY_ACTOR a where a.code = 'admin';
@@ -306,15 +306,15 @@ insert into BC_DESKTOP_SHORTCUT (ID,STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,IC
 insert into BC_DESKTOP_SHORTCUT (ID,STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,ICONCLASS,AID) 
     select HIBERNATE_SEQUENCE.NEXTVAL,1, 0, '8307', 1, 'jqLayout', '/ui-libs-demo/jquery-layout/1.2.0/index.html', 'i0300', a.id from BC_IDENTITY_ACTOR a where a.code = 'admin';
 
--- ÊèíÂÖ•ÂÖ®Â±ÄÈÖçÁΩÆ‰ø°ÊÅØ
+-- ≤Â»Î»´æ÷≈‰÷√–≈œ¢
 insert into BC_DESKTOP_PERSONAL (ID,STATUS_,INNER_,FONT,THEME,AID) 
 	values(HIBERNATE_SEQUENCE.NEXTVAL,1, 0, '12', 'redmond', null);
 
--- ÊèíÂÖ•ÊµèËßàÂô®ÈôÑ‰ª∂‰∏ãËΩΩ‰ø°ÊÅØ
+-- ≤Â»Î‰Ø¿¿∆˜∏Ωº˛œ¬‘ÿ–≈œ¢
 insert into BC_DOCS_ATTACH (ID,FILE_DATE,STATUS_,PTYPE,PUID,SIZE_,EXT,APPPATH,SUBJECT,PATH
 	,AUTHOR_ID,AUTHOR_NAME,DEPART_ID,DEPART_NAME,UNIT_ID,UNIT_NAME) 
 	select HIBERNATE_SEQUENCE.NEXTVAL,sysdate , 1, 'browser', 'chrome12.0.742.112', 23152416,'exe',0
-	,'Ë∞∑Ê≠åÊµèËßàÂô®Chrome12.0.exe','browser/chrome/chrome12.0.742.112.exe',
+	,'π»∏Ë‰Ø¿¿∆˜Chrome12.0.exe','browser/chrome/chrome12.0.742.112.exe',
 	(select a.id from BC_IDENTITY_ACTOR a where a.code='admin'),
 	(select a.name from BC_IDENTITY_ACTOR a where a.code='admin'),
 	(select a.id from BC_IDENTITY_ACTOR a where a.code='B03'),
@@ -324,7 +324,7 @@ insert into BC_DOCS_ATTACH (ID,FILE_DATE,STATUS_,PTYPE,PUID,SIZE_,EXT,APPPATH,SU
 insert into BC_DOCS_ATTACH (ID,FILE_DATE,STATUS_,PTYPE,PUID,SIZE_,EXT,APPPATH,SUBJECT,PATH
 	,AUTHOR_ID,AUTHOR_NAME,DEPART_ID,DEPART_NAME,UNIT_ID,UNIT_NAME) 
 	select HIBERNATE_SEQUENCE.NEXTVAL,sysdate , 1, 'browser', 'firefox5.0', 13530208,'exe',0
-	,'ÁÅ´ÁãêÊµèËßàÂô®Firefox5.0.exe','browser/firefox/firefox5.0.exe',
+	,'ª∫¸‰Ø¿¿∆˜Firefox5.0.exe','browser/firefox/firefox5.0.exe',
 	(select a.id from BC_IDENTITY_ACTOR a where a.code='admin'),
 	(select a.name from BC_IDENTITY_ACTOR a where a.code='admin'),
 	(select a.id from BC_IDENTITY_ACTOR a where a.code='B03'),
@@ -334,7 +334,7 @@ insert into BC_DOCS_ATTACH (ID,FILE_DATE,STATUS_,PTYPE,PUID,SIZE_,EXT,APPPATH,SU
 insert into BC_DOCS_ATTACH (ID,FILE_DATE,STATUS_,PTYPE,PUID,SIZE_,EXT,APPPATH,SUBJECT,PATH
 	,AUTHOR_ID,AUTHOR_NAME,DEPART_ID,DEPART_NAME,UNIT_ID,UNIT_NAME) 
 	select HIBERNATE_SEQUENCE.NEXTVAL,sysdate , 1, 'browser', 'safari5.0.5', 35624744,'exe',0
-	,'ËãπÊûúÊµèËßàÂô®Safari5.0.5.exe','browser/safari/safari5.0.5.exe',
+	,'∆ªπ˚‰Ø¿¿∆˜Safari5.0.5.exe','browser/safari/safari5.0.5.exe',
 	(select a.id from BC_IDENTITY_ACTOR a where a.code='admin'),
 	(select a.name from BC_IDENTITY_ACTOR a where a.code='admin'),
 	(select a.id from BC_IDENTITY_ACTOR a where a.code='B03'),
@@ -344,7 +344,7 @@ insert into BC_DOCS_ATTACH (ID,FILE_DATE,STATUS_,PTYPE,PUID,SIZE_,EXT,APPPATH,SU
 insert into BC_DOCS_ATTACH (ID,FILE_DATE,STATUS_,PTYPE,PUID,SIZE_,EXT,APPPATH,SUBJECT,PATH
 	,AUTHOR_ID,AUTHOR_NAME,DEPART_ID,DEPART_NAME,UNIT_ID,UNIT_NAME) 
 	select HIBERNATE_SEQUENCE.NEXTVAL,sysdate , 1, 'browser', 'opera11.50', 10309696,'exe',0
-	,'Êå™Â®ÅÊµèËßàÂô®Opera11.50.exe','browser/opera/opera11.50.exe',
+	,'≈≤Õ˛‰Ø¿¿∆˜Opera11.50.exe','browser/opera/opera11.50.exe',
 	(select a.id from BC_IDENTITY_ACTOR a where a.code='admin'),
 	(select a.name from BC_IDENTITY_ACTOR a where a.code='admin'),
 	(select a.id from BC_IDENTITY_ACTOR a where a.code='B03'),
@@ -354,7 +354,7 @@ insert into BC_DOCS_ATTACH (ID,FILE_DATE,STATUS_,PTYPE,PUID,SIZE_,EXT,APPPATH,SU
 insert into BC_DOCS_ATTACH (ID,FILE_DATE,STATUS_,PTYPE,PUID,SIZE_,EXT,APPPATH,SUBJECT,PATH
 	,AUTHOR_ID,AUTHOR_NAME,DEPART_ID,DEPART_NAME,UNIT_ID,UNIT_NAME) 
 	select HIBERNATE_SEQUENCE.NEXTVAL,sysdate , 1, 'browser', 'ie9.0', 18658608,'exe',0
-	,'ÂæÆËΩØÊµèËßàÂô®IE9.0.exe','browser/ie/IE9.0-Windows7-x86-chs.exe',
+	,'Œ¢»Ì‰Ø¿¿∆˜IE9.0.exe','browser/ie/IE9.0-Windows7-x86-chs.exe',
 	(select a.id from BC_IDENTITY_ACTOR a where a.code='admin'),
 	(select a.name from BC_IDENTITY_ACTOR a where a.code='admin'),
 	(select a.id from BC_IDENTITY_ACTOR a where a.code='B03'),
@@ -364,7 +364,7 @@ insert into BC_DOCS_ATTACH (ID,FILE_DATE,STATUS_,PTYPE,PUID,SIZE_,EXT,APPPATH,SU
 insert into BC_DOCS_ATTACH (ID,FILE_DATE,STATUS_,PTYPE,PUID,SIZE_,EXT,APPPATH,SUBJECT,PATH
 	,AUTHOR_ID,AUTHOR_NAME,DEPART_ID,DEPART_NAME,UNIT_ID,UNIT_NAME) 
 	select HIBERNATE_SEQUENCE.NEXTVAL,sysdate , 1, 'browser', 'ie8.0', 16901472,'exe',0
-	,'ÂæÆËΩØÊµèËßàÂô®IE8.0.exe','browser/ie/IE8.0-WindowsXP-x86-chs.exe',
+	,'Œ¢»Ì‰Ø¿¿∆˜IE8.0.exe','browser/ie/IE8.0-WindowsXP-x86-chs.exe',
 	(select a.id from BC_IDENTITY_ACTOR a where a.code='admin'),
 	(select a.name from BC_IDENTITY_ACTOR a where a.code='admin'),
 	(select a.id from BC_IDENTITY_ACTOR a where a.code='B03'),
@@ -372,28 +372,49 @@ insert into BC_DOCS_ATTACH (ID,FILE_DATE,STATUS_,PTYPE,PUID,SIZE_,EXT,APPPATH,SU
 	(select a.id from BC_IDENTITY_ACTOR a where a.code='D00'),
 	(select a.name from BC_IDENTITY_ACTOR a where a.code='D00') from dual;
 
--- ÊèíÂÖ•ÊµãËØïÊ∂àÊÅØ
+-- ≤Â»Î≤‚ ‘œ˚œ¢
 insert into BC_MESSAGE (ID,SEND_DATE,SUBJECT,CONTENT,SENDER_ID,RECEIVER_ID) 
-	select HIBERNATE_SEQUENCE.NEXTVAL,sysdate , 'ÊµãËØïÊ†áÈ¢ò1', 'ÊµãËØïÂÜÖÂÆπ1', 
+	select HIBERNATE_SEQUENCE.NEXTVAL,sysdate , '≤‚ ‘±ÍÃ‚1', '≤‚ ‘ƒ⁄»›1', 
 	(select s.id from BC_IDENTITY_ACTOR s where s.code='admin'),
 	(select r.id from BC_IDENTITY_ACTOR r where r.code='admin') from dual;
 insert into BC_MESSAGE (ID,SEND_DATE,SUBJECT,CONTENT,SENDER_ID,RECEIVER_ID) 
-	select HIBERNATE_SEQUENCE.NEXTVAL,sysdate , 'ÊµãËØïÊ†áÈ¢ò2', 'ÊµãËØïÂÜÖÂÆπ2', 
+	select HIBERNATE_SEQUENCE.NEXTVAL,sysdate , '≤‚ ‘±ÍÃ‚2', '≤‚ ‘ƒ⁄»›2', 
 	(select s.id from BC_IDENTITY_ACTOR s where s.code='admin'),
 	(select r.id from BC_IDENTITY_ACTOR r where r.code='admin') from dual;
 insert into BC_MESSAGE (ID,SEND_DATE,SUBJECT,CONTENT,SENDER_ID,RECEIVER_ID) 
-	select HIBERNATE_SEQUENCE.NEXTVAL,sysdate , 'ÊµãËØïÊ†áÈ¢ò3', 'ÊµãËØïÂÜÖÂÆπ3', 
+	select HIBERNATE_SEQUENCE.NEXTVAL,sysdate , '≤‚ ‘±ÍÃ‚3', '≤‚ ‘ƒ⁄»›3', 
 	(select s.id from BC_IDENTITY_ACTOR s where s.code='admin'),
 	(select r.id from BC_IDENTITY_ACTOR r where r.code='admin') from dual;
 insert into BC_MESSAGE (ID,SEND_DATE,SUBJECT,CONTENT,SENDER_ID,RECEIVER_ID) 
-	select HIBERNATE_SEQUENCE.NEXTVAL,sysdate , 'ÊµãËØïÊ†áÈ¢ò4', null, 
+	select HIBERNATE_SEQUENCE.NEXTVAL,sysdate , '≤‚ ‘±ÍÃ‚4', null, 
 	(select s.id from BC_IDENTITY_ACTOR s where s.code='admin'),
 	(select r.id from BC_IDENTITY_ACTOR r where r.code='admin') from dual;
 
--- ÊèíÂÖ•1000Êù°ÁôªÂΩïÊï∞ÊçÆ
--- ÂàõÂª∫Â≠òÂÇ®ËøáÁ®ãÔºöloop_time‰∏∫Âæ™ÁéØÁöÑÊ¨°Êï∞
 
+-- ≤Â»Î1000Ãıµ«¬º ˝æ›
+-- ¥¥Ω®¥Ê¥¢π˝≥Ã£∫loop_timeŒ™—≠ª∑µƒ¥Œ ˝
+-- ¥¥Ω®…æ≥˝÷∏∂®”√ªß±Ìµƒ¥Ê¥¢π˝≥Ã
+CREATE OR REPLACE PROCEDURE test_create_syslog
+(
+   --≤Œ ˝IN±Ì æ ‰»Î≤Œ ˝£¨
+   --OUT±Ì æ ‰»Î≤Œ ˝£¨¿‡–Õø…“‘ π”√»Œ“‚Oracle÷–µƒ∫œ∑®¿‡–Õ°£
+   loop_time IN number,
+   userCode IN varchar2
+)
+AS
+--∂®“Â±‰¡ø
+i number;
+BEGIN
+  i := 0;
+  WHILE i <  loop_time LOOP
+    insert into BC_LOG_SYSTEM (ID,TYPE_,CREATE_DATE,SUBJECT,CREATER_ID,CREATER_NAME,DEPART_ID,DEPART_NAME,UNIT_ID,UNIT_NAME,C_IP,S_IP,C_INFO)
+      select HIBERNATE_SEQUENCE.NEXTVAL, 0,sysdate,concat(u.name,'µ«¬ºœµÕ≥'),u.id,u.name,1,'D',1,'U','127.0.0.1','localhost','Chrome12'
+      from BC_IDENTITY_ACTOR u where u.CODE=userCode;
+    i := i + 1;
+  END LOOP;
+END;
+/
 
--- Ë∞ÉÁî®Â≠òÂÇ®ËøáÁ®ã
--- CALL test_create_syslog(500,'admin'); 
--- CALL test_create_syslog(500,'designer'); 
+-- µ˜”√¥Ê¥¢π˝≥Ã
+CALL test_create_syslog(500,'admin'); 
+CALL test_create_syslog(500,'dragon'); 

@@ -55,20 +55,43 @@ bc-demo
 5) 检出bc-framework-webapp工程到本工程的src/main/webapp目录下
    地址： [内网]git@[serverIp]:bc-framework-webapp.git 或 [外网]git@github.com:rongjihuang/bc-framework-webapp.git
    注：检出的目录名必须为bc
-6) 部署数据库(mysql): 
-       >cd bc-demo
-       >ant build
-       >cd src/main/resources/db
-       * 使用mysql命令行创建名为bcdemo的数据库，分配用户bcdemo，密码也设置为bcdemo
-	   * (如有异，可修改src/main/resource/db.properties文件)
-	   * 按顺序运行如下脚本
-       >mysql -ubcdemo -pbcdemo bcdemo < db.mysql.drop.sql -- 删表(首次不需运行)
-       >mysql -ubcdemo -pbcdemo bcdemo < db.mysql.create.sql -- 建表
-       >mysql -ubcdemo -pbcdemo bcdemo < db.mysql.data.sql -- 必须的初始化数据
+6) 部署数据库
+6-1)使用mysql (5.5.9 MySQL Community Server)
+    >cd bc-demo
+    >ant build
+    >cd src/main/resources/db
+    * 使用mysql命令行创建名为bcdemo的数据库(数据库编码须使用UTF-8)，分配用户bcdemo，密码也设置为bcdemo
+	* (如有异，可修改src/main/resource/db.properties文件)
+	* 按顺序运行如下脚本
+    >mysql -ubcdemo -pbcdemo bcdemo < db.mysql.drop.sql --> 删表(首次不需运行)
+    >mysql -ubcdemo -pbcdemo bcdemo < db.mysql.create.sql --> 建表
+    >mysql -ubcdemo -pbcdemo bcdemo < db.mysql.data.sql --> 导入初始化数据
+6-1)使用oracle (11.2.0.1)
+    >cd bc-demo
+    >ant build
+    >cd src/main/resources/db
+    * 给数据库(数据库编码须使用ZHS16GBK)创建用户bcdemo，密码也设置为bcdemo，并假设数据库的本地连接服务名为orcl，如下登录sqlplus
+	* (如有异，可修改src/main/resource/db.properties文件)
+    >sqlplus bcdemo/bcdemo@orcl
+	* 按顺序运行如下脚本
+    SQL>set serveroutput on --> 设置控制台输出更多信息
+    SQL>start db.oracle.drop.sql --> 删表(首次不需运行)
+    SQL>start db.oracle.create.sql --> 建表
+    SQL>start db.oracle.data.sql --> 导入初始化数据
+    SQL>commit; --> 提交事务
 7) 编译运行
-   >mvn jetty:run 或 >mvn jetty:run -Djetty.path=/bcdemo
+7-1)使用mysql(默认)
+   >mvn jetty:run
+   或
+   >mvn jetty:run -Djetty.path=/bcdemo
+7-2)使用oracle 
+   >mvn jetty:run -Poracle -Ddb.name=[数据库的SID] -Ddb.ip=[数据库服务器的IP]
+   或
+   >mvn jetty:run -Djetty.path=/bcdemo -Poracle -Ddb.name=[数据库的SID] -Ddb.ip=[数据库服务器的IP]
 8) 浏览器访问
-   http://localhost:8082 或 http://localhost:8082/bcdemo
+   http://localhost:8082
+   或
+   http://localhost:8082/bcdemo
    
 四) 部署文档转换服务
 如果要使用系统在线查看Office文档的功能，需要在服务器部署OpenOffice的文档转换服务：
