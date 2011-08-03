@@ -66,7 +66,7 @@ bc-demo
     >mysql -ubcdemo -pbcdemo bcdemo < db.mysql.drop.sql --> 删表(首次不需运行)
     >mysql -ubcdemo -pbcdemo bcdemo < db.mysql.create.sql --> 建表
     >mysql -ubcdemo -pbcdemo bcdemo < db.mysql.data.sql --> 导入初始化数据
-6-1)使用oracle (11.2.0.1)
+6-2)使用oracle (11.2.0.1)
     >cd bc-demo
     >ant build
     >cd src/main/resources/db

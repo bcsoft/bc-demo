@@ -182,6 +182,11 @@ update BC_IDENTITY_ACTOR a set a.detail_id = (select ad.id from BC_IDENTITY_ACTO
 -- 插入人员的认证数据(密码默认为888888的md5值)
 insert into BC_IDENTITY_AUTH (ID,PASSWORD) 
     select a.id,'21218cca77804d2ba1922c33e0151105' from BC_IDENTITY_ACTOR a where a.type_=1; 
+    
+-- 插入admin的ACTOR_HISTORY
+insert into BC_IDENTITY_ACTOR_HISTORY (ID,CREATE_DATE,ACTOR_TYPE,ACTOR_ID,ACTOR_NAME,UPPER_ID,UPPER_NAME,UNIT_ID,UNIT_NAME) 
+    select HIBERNATE_SEQUENCE.NEXTVAL,sysdate,a.type_,a.id,a.name,b.id,b.name,c.id,c.name 
+    from BC_IDENTITY_ACTOR a, BC_IDENTITY_ACTOR b, BC_IDENTITY_ACTOR c where a.code='admin' and b.code='B03' and c.code='D00'; 
 
 -- 插入岗位数据
 insert into BC_IDENTITY_ACTOR (ID,UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_) values(HIBERNATE_SEQUENCE.NEXTVAL,'uid', 1, 0, 4, 'G_ADMIN','超级管理岗', '0000');
@@ -311,84 +316,48 @@ insert into BC_DESKTOP_PERSONAL (ID,STATUS_,INNER_,FONT,THEME,AID)
 	values(HIBERNATE_SEQUENCE.NEXTVAL,1, 0, '12', 'redmond', null);
 
 -- 插入浏览器附件下载信息
-insert into BC_DOCS_ATTACH (ID,FILE_DATE,STATUS_,PTYPE,PUID,SIZE_,EXT,APPPATH,SUBJECT,PATH
-	,AUTHOR_ID,AUTHOR_NAME,DEPART_ID,DEPART_NAME,UNIT_ID,UNIT_NAME) 
+insert into BC_DOCS_ATTACH (ID,FILE_DATE,STATUS_,PTYPE,PUID,SIZE_,EXT,APPPATH,SUBJECT,PATH,AUTHOR_ID)
 	select HIBERNATE_SEQUENCE.NEXTVAL,sysdate , 1, 'browser', 'chrome12.0.742.112', 23152416,'exe',0
 	,'谷歌浏览器Chrome12.0.exe','browser/chrome/chrome12.0.742.112.exe',
-	(select a.id from BC_IDENTITY_ACTOR a where a.code='admin'),
-	(select a.name from BC_IDENTITY_ACTOR a where a.code='admin'),
-	(select a.id from BC_IDENTITY_ACTOR a where a.code='B03'),
-	(select a.name from BC_IDENTITY_ACTOR a where a.code='B03'),
-	(select a.id from BC_IDENTITY_ACTOR a where a.code='D00'),
-	(select a.name from BC_IDENTITY_ACTOR a where a.code='D00') from dual;
-insert into BC_DOCS_ATTACH (ID,FILE_DATE,STATUS_,PTYPE,PUID,SIZE_,EXT,APPPATH,SUBJECT,PATH
-	,AUTHOR_ID,AUTHOR_NAME,DEPART_ID,DEPART_NAME,UNIT_ID,UNIT_NAME) 
+	(select b.id from BC_IDENTITY_ACTOR a inner join BC_IDENTITY_ACTOR_HISTORY b on b.actor_id=a.id where a.code='admin') from dual;
+insert into BC_DOCS_ATTACH (ID,FILE_DATE,STATUS_,PTYPE,PUID,SIZE_,EXT,APPPATH,SUBJECT,PATH,AUTHOR_ID)
 	select HIBERNATE_SEQUENCE.NEXTVAL,sysdate , 1, 'browser', 'firefox5.0', 13530208,'exe',0
 	,'火狐浏览器Firefox5.0.exe','browser/firefox/firefox5.0.exe',
-	(select a.id from BC_IDENTITY_ACTOR a where a.code='admin'),
-	(select a.name from BC_IDENTITY_ACTOR a where a.code='admin'),
-	(select a.id from BC_IDENTITY_ACTOR a where a.code='B03'),
-	(select a.name from BC_IDENTITY_ACTOR a where a.code='B03'),
-	(select a.id from BC_IDENTITY_ACTOR a where a.code='D00'),
-	(select a.name from BC_IDENTITY_ACTOR a where a.code='D00') from dual;
-insert into BC_DOCS_ATTACH (ID,FILE_DATE,STATUS_,PTYPE,PUID,SIZE_,EXT,APPPATH,SUBJECT,PATH
-	,AUTHOR_ID,AUTHOR_NAME,DEPART_ID,DEPART_NAME,UNIT_ID,UNIT_NAME) 
+	(select b.id from BC_IDENTITY_ACTOR a inner join BC_IDENTITY_ACTOR_HISTORY b on b.actor_id=a.id where a.code='admin') from dual;
+insert into BC_DOCS_ATTACH (ID,FILE_DATE,STATUS_,PTYPE,PUID,SIZE_,EXT,APPPATH,SUBJECT,PATH,AUTHOR_ID)
 	select HIBERNATE_SEQUENCE.NEXTVAL,sysdate , 1, 'browser', 'safari5.0.5', 35624744,'exe',0
 	,'苹果浏览器Safari5.0.5.exe','browser/safari/safari5.0.5.exe',
-	(select a.id from BC_IDENTITY_ACTOR a where a.code='admin'),
-	(select a.name from BC_IDENTITY_ACTOR a where a.code='admin'),
-	(select a.id from BC_IDENTITY_ACTOR a where a.code='B03'),
-	(select a.name from BC_IDENTITY_ACTOR a where a.code='B03'),
-	(select a.id from BC_IDENTITY_ACTOR a where a.code='D00'),
-	(select a.name from BC_IDENTITY_ACTOR a where a.code='D00') from dual;
-insert into BC_DOCS_ATTACH (ID,FILE_DATE,STATUS_,PTYPE,PUID,SIZE_,EXT,APPPATH,SUBJECT,PATH
-	,AUTHOR_ID,AUTHOR_NAME,DEPART_ID,DEPART_NAME,UNIT_ID,UNIT_NAME) 
+	(select b.id from BC_IDENTITY_ACTOR a inner join BC_IDENTITY_ACTOR_HISTORY b on b.actor_id=a.id where a.code='admin') from dual;
+insert into BC_DOCS_ATTACH (ID,FILE_DATE,STATUS_,PTYPE,PUID,SIZE_,EXT,APPPATH,SUBJECT,PATH,AUTHOR_ID)
 	select HIBERNATE_SEQUENCE.NEXTVAL,sysdate , 1, 'browser', 'opera11.50', 10309696,'exe',0
 	,'挪威浏览器Opera11.50.exe','browser/opera/opera11.50.exe',
-	(select a.id from BC_IDENTITY_ACTOR a where a.code='admin'),
-	(select a.name from BC_IDENTITY_ACTOR a where a.code='admin'),
-	(select a.id from BC_IDENTITY_ACTOR a where a.code='B03'),
-	(select a.name from BC_IDENTITY_ACTOR a where a.code='B03'),
-	(select a.id from BC_IDENTITY_ACTOR a where a.code='D00'),
-	(select a.name from BC_IDENTITY_ACTOR a where a.code='D00') from dual;
-insert into BC_DOCS_ATTACH (ID,FILE_DATE,STATUS_,PTYPE,PUID,SIZE_,EXT,APPPATH,SUBJECT,PATH
-	,AUTHOR_ID,AUTHOR_NAME,DEPART_ID,DEPART_NAME,UNIT_ID,UNIT_NAME) 
+	(select b.id from BC_IDENTITY_ACTOR a inner join BC_IDENTITY_ACTOR_HISTORY b on b.actor_id=a.id where a.code='admin') from dual;
+insert into BC_DOCS_ATTACH (ID,FILE_DATE,STATUS_,PTYPE,PUID,SIZE_,EXT,APPPATH,SUBJECT,PATH,AUTHOR_ID)
 	select HIBERNATE_SEQUENCE.NEXTVAL,sysdate , 1, 'browser', 'ie9.0', 18658608,'exe',0
 	,'微软浏览器IE9.0.exe','browser/ie/IE9.0-Windows7-x86-chs.exe',
-	(select a.id from BC_IDENTITY_ACTOR a where a.code='admin'),
-	(select a.name from BC_IDENTITY_ACTOR a where a.code='admin'),
-	(select a.id from BC_IDENTITY_ACTOR a where a.code='B03'),
-	(select a.name from BC_IDENTITY_ACTOR a where a.code='B03'),
-	(select a.id from BC_IDENTITY_ACTOR a where a.code='D00'),
-	(select a.name from BC_IDENTITY_ACTOR a where a.code='D00') from dual;
-insert into BC_DOCS_ATTACH (ID,FILE_DATE,STATUS_,PTYPE,PUID,SIZE_,EXT,APPPATH,SUBJECT,PATH
-	,AUTHOR_ID,AUTHOR_NAME,DEPART_ID,DEPART_NAME,UNIT_ID,UNIT_NAME) 
+	(select b.id from BC_IDENTITY_ACTOR a inner join BC_IDENTITY_ACTOR_HISTORY b on b.actor_id=a.id where a.code='admin') from dual;
+insert into BC_DOCS_ATTACH (ID,FILE_DATE,STATUS_,PTYPE,PUID,SIZE_,EXT,APPPATH,SUBJECT,PATH,AUTHOR_ID)
 	select HIBERNATE_SEQUENCE.NEXTVAL,sysdate , 1, 'browser', 'ie8.0', 16901472,'exe',0
 	,'微软浏览器IE8.0.exe','browser/ie/IE8.0-WindowsXP-x86-chs.exe',
-	(select a.id from BC_IDENTITY_ACTOR a where a.code='admin'),
-	(select a.name from BC_IDENTITY_ACTOR a where a.code='admin'),
-	(select a.id from BC_IDENTITY_ACTOR a where a.code='B03'),
-	(select a.name from BC_IDENTITY_ACTOR a where a.code='B03'),
-	(select a.id from BC_IDENTITY_ACTOR a where a.code='D00'),
-	(select a.name from BC_IDENTITY_ACTOR a where a.code='D00') from dual;
-
+	(select b.id from BC_IDENTITY_ACTOR a inner join BC_IDENTITY_ACTOR_HISTORY b on b.actor_id=a.id where a.code='admin') from dual;
+  
 -- 插入测试消息
 insert into BC_MESSAGE (ID,SEND_DATE,SUBJECT,CONTENT,SENDER_ID,RECEIVER_ID) 
 	select HIBERNATE_SEQUENCE.NEXTVAL,sysdate , '测试标题1', '测试内容1', 
-	(select s.id from BC_IDENTITY_ACTOR s where s.code='admin'),
-	(select r.id from BC_IDENTITY_ACTOR r where r.code='admin') from dual;
+	(select b.id from BC_IDENTITY_ACTOR a inner join BC_IDENTITY_ACTOR_HISTORY b on b.actor_id=a.id where a.code='admin'),
+	(select b.id from BC_IDENTITY_ACTOR a inner join BC_IDENTITY_ACTOR_HISTORY b on b.actor_id=a.id where a.code='admin') from dual;
 insert into BC_MESSAGE (ID,SEND_DATE,SUBJECT,CONTENT,SENDER_ID,RECEIVER_ID) 
 	select HIBERNATE_SEQUENCE.NEXTVAL,sysdate , '测试标题2', '测试内容2', 
-	(select s.id from BC_IDENTITY_ACTOR s where s.code='admin'),
-	(select r.id from BC_IDENTITY_ACTOR r where r.code='admin') from dual;
+	(select b.id from BC_IDENTITY_ACTOR a inner join BC_IDENTITY_ACTOR_HISTORY b on b.actor_id=a.id where a.code='admin'),
+	(select b.id from BC_IDENTITY_ACTOR a inner join BC_IDENTITY_ACTOR_HISTORY b on b.actor_id=a.id where a.code='admin') from dual;
 insert into BC_MESSAGE (ID,SEND_DATE,SUBJECT,CONTENT,SENDER_ID,RECEIVER_ID) 
 	select HIBERNATE_SEQUENCE.NEXTVAL,sysdate , '测试标题3', '测试内容3', 
-	(select s.id from BC_IDENTITY_ACTOR s where s.code='admin'),
-	(select r.id from BC_IDENTITY_ACTOR r where r.code='admin') from dual;
+	(select b.id from BC_IDENTITY_ACTOR a inner join BC_IDENTITY_ACTOR_HISTORY b on b.actor_id=a.id where a.code='admin'),
+	(select b.id from BC_IDENTITY_ACTOR a inner join BC_IDENTITY_ACTOR_HISTORY b on b.actor_id=a.id where a.code='admin') from dual;
 insert into BC_MESSAGE (ID,SEND_DATE,SUBJECT,CONTENT,SENDER_ID,RECEIVER_ID) 
 	select HIBERNATE_SEQUENCE.NEXTVAL,sysdate , '测试标题4', null, 
-	(select s.id from BC_IDENTITY_ACTOR s where s.code='admin'),
-	(select r.id from BC_IDENTITY_ACTOR r where r.code='admin') from dual;
+	(select b.id from BC_IDENTITY_ACTOR a inner join BC_IDENTITY_ACTOR_HISTORY b on b.actor_id=a.id where a.code='admin'),
+	(select b.id from BC_IDENTITY_ACTOR a inner join BC_IDENTITY_ACTOR_HISTORY b on b.actor_id=a.id where a.code='admin') from dual;
 
 
 -- 插入1000条登录数据
@@ -407,9 +376,9 @@ i number;
 BEGIN
   i := 0;
   WHILE i <  loop_time LOOP
-    insert into BC_LOG_SYSTEM (ID,TYPE_,CREATE_DATE,SUBJECT,CREATER_ID,CREATER_NAME,DEPART_ID,DEPART_NAME,UNIT_ID,UNIT_NAME,C_IP,S_IP,C_INFO)
-      select HIBERNATE_SEQUENCE.NEXTVAL, 0,sysdate,concat(u.name,'登录系统'),u.id,u.name,1,'D',1,'U','127.0.0.1','localhost','Chrome12'
-      from BC_IDENTITY_ACTOR u where u.CODE=userCode;
+    insert into BC_LOG_SYSTEM (ID,TYPE_,FILE_DATE,SUBJECT,AUTHOR_ID,C_IP,S_IP,C_INFO)
+      select HIBERNATE_SEQUENCE.NEXTVAL, 0,sysdate,concat(a.name,'登录系统'),b.id,'127.0.0.1','localhost','Chrome12'
+      from BC_IDENTITY_ACTOR a inner join BC_IDENTITY_ACTOR_HISTORY b on b.actor_id=a.id where a.CODE=userCode;
     i := i + 1;
   END LOOP;
 END;
