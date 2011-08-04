@@ -201,6 +201,9 @@ public class LoginAction extends ActionSupport implements SessionAware {
 
 	// 递归向上查找部门所属的单位
 	private Actor loadUnit(Actor belong) {
+		if (belong.getType() == Actor.TYPE_UNIT)
+			return belong;
+			
 		Actor parent = this.userService.loadBelong(belong.getId(),
 				new Integer[] { Actor.TYPE_UNIT, Actor.TYPE_DEPARTMENT });
 		if (parent == null) {// 已是顶层单位
