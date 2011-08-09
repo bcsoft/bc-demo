@@ -421,3 +421,442 @@ ALTER TABLE BC_OPTION_ITEM ADD CONSTRAINT BCFK_OPTIONITEM_OPTIONGROUP FOREIGN KE
 	REFERENCES BC_OPTION_GROUP (ID);
 ALTER TABLE BC_OPTION_ITEM ADD INDEX BCIDX_OPTIONITEM_KEYVALUE (KEY_,VALUE_);
 
+create table ACT_GE_PROPERTY (
+    NAME_ varchar(64),
+    VALUE_ varchar(300),
+    REV_ integer,
+    primary key (NAME_)
+);
+
+insert into ACT_GE_PROPERTY
+values ('schema.version', '5.6', 1);
+
+insert into ACT_GE_PROPERTY
+values ('schema.history', 'create(5.6)', 1);
+
+insert into ACT_GE_PROPERTY
+values ('next.dbid', '1', 1);
+
+create table ACT_GE_BYTEARRAY (
+    ID_ varchar(64),
+    REV_ integer,
+    NAME_ varchar(255),
+    DEPLOYMENT_ID_ varchar(64),
+    BYTES_ LONGBLOB,
+    primary key (ID_)
+);
+
+create table ACT_RE_DEPLOYMENT (
+    ID_ varchar(64),
+    NAME_ varchar(255),
+    DEPLOY_TIME_ timestamp,
+    primary key (ID_)
+);
+
+create table ACT_RU_EXECUTION (
+    ID_ varchar(64),
+    REV_ integer,
+    PROC_INST_ID_ varchar(64),
+    BUSINESS_KEY_ varchar(255),
+    PARENT_ID_ varchar(64),
+    PROC_DEF_ID_ varchar(64),
+    SUPER_EXEC_ varchar(64),
+    ACT_ID_ varchar(255),
+    IS_ACTIVE_ TINYINT,
+    IS_CONCURRENT_ TINYINT,
+    IS_SCOPE_ TINYINT,
+    primary key (ID_),
+    unique ACT_UNIQ_RU_BUS_KEY (PROC_DEF_ID_, BUSINESS_KEY_)
+);
+
+create table ACT_RU_JOB (
+    ID_ varchar(64) NOT NULL,
+	  REV_ integer,
+    TYPE_ varchar(255) NOT NULL,
+    LOCK_EXP_TIME_ timestamp,
+    LOCK_OWNER_ varchar(255),
+    EXCLUSIVE_ boolean,
+    EXECUTION_ID_ varchar(64),
+    PROCESS_INSTANCE_ID_ varchar(64),
+    RETRIES_ integer,
+    EXCEPTION_STACK_ID_ varchar(64),
+    EXCEPTION_MSG_ varchar(4000),
+    DUEDATE_ timestamp NULL,
+    REPEAT_ varchar(255),
+    HANDLER_TYPE_ varchar(255),
+    HANDLER_CFG_ varchar(4000),
+    primary key (ID_)
+);
+
+create table ACT_RE_PROCDEF (
+    ID_ varchar(64),
+    CATEGORY_ varchar(255),
+    NAME_ varchar(255),
+    KEY_ varchar(255),
+    VERSION_ integer,
+    DEPLOYMENT_ID_ varchar(64),
+    RESOURCE_NAME_ varchar(4000),
+    DGRM_RESOURCE_NAME_ varchar(4000),
+    HAS_START_FORM_KEY_ TINYINT,
+    primary key (ID_)
+);
+
+create table ACT_RU_TASK (
+    ID_ varchar(64),
+    REV_ integer,
+    EXECUTION_ID_ varchar(64),
+    PROC_INST_ID_ varchar(64),
+    PROC_DEF_ID_ varchar(64),
+    NAME_ varchar(255),
+    PARENT_TASK_ID_ varchar(64),
+    DESCRIPTION_ varchar(4000),
+    TASK_DEF_KEY_ varchar(255),
+    OWNER_ varchar(64),
+    ASSIGNEE_ varchar(64),
+    DELEGATION_ varchar(64),
+    PRIORITY_ integer,
+    CREATE_TIME_ timestamp,
+    DUE_DATE_ datetime,
+    primary key (ID_)
+);
+
+create table ACT_RU_IDENTITYLINK (
+    ID_ varchar(64),
+    REV_ integer,
+    GROUP_ID_ varchar(64),
+    TYPE_ varchar(255),
+    USER_ID_ varchar(64),
+    TASK_ID_ varchar(64),
+    primary key (ID_)
+);
+
+create table ACT_RU_VARIABLE (
+    ID_ varchar(64) not null,
+    REV_ integer,
+    TYPE_ varchar(255) not null,
+    NAME_ varchar(255) not null,
+    EXECUTION_ID_ varchar(64),
+	  PROC_INST_ID_ varchar(64),
+    TASK_ID_ varchar(64),
+    BYTEARRAY_ID_ varchar(64),
+    DOUBLE_ double,
+    LONG_ bigint,
+    TEXT_ varchar(4000),
+    TEXT2_ varchar(4000),
+    primary key (ID_)
+);
+
+create index ACT_IDX_EXEC_BUSKEY on ACT_RU_EXECUTION(BUSINESS_KEY_);
+create index ACT_IDX_TASK_CREATE on ACT_RU_TASK(CREATE_TIME_);
+create index ACT_IDX_IDENT_LNK_USER on ACT_RU_IDENTITYLINK(USER_ID_);
+create index ACT_IDX_IDENT_LNK_GROUP on ACT_RU_IDENTITYLINK(GROUP_ID_);
+
+alter table ACT_GE_BYTEARRAY
+    add constraint ACT_FK_BYTEARR_DEPL 
+    foreign key (DEPLOYMENT_ID_) 
+    references ACT_RE_DEPLOYMENT (ID_);
+
+alter table ACT_RU_EXECUTION
+    add constraint ACT_FK_EXE_PROCINST 
+    foreign key (PROC_INST_ID_) 
+    references ACT_RU_EXECUTION (ID_) on delete cascade on update cascade;
+
+alter table ACT_RU_EXECUTION
+    add constraint ACT_FK_EXE_PARENT 
+    foreign key (PARENT_ID_) 
+    references ACT_RU_EXECUTION (ID_);
+    
+alter table ACT_RU_EXECUTION
+    add constraint ACT_FK_EXE_SUPER 
+    foreign key (SUPER_EXEC_) 
+    references ACT_RU_EXECUTION (ID_);
+    
+alter table ACT_RU_IDENTITYLINK
+    add constraint ACT_FK_TSKASS_TASK 
+    foreign key (TASK_ID_) 
+    references ACT_RU_TASK (ID_);
+    
+alter table ACT_RU_TASK
+    add constraint ACT_FK_TASK_EXE
+    foreign key (EXECUTION_ID_)
+    references ACT_RU_EXECUTION (ID_);
+    
+alter table ACT_RU_TASK
+    add constraint ACT_FK_TASK_PROCINST
+    foreign key (PROC_INST_ID_)
+    references ACT_RU_EXECUTION (ID_);
+    
+alter table ACT_RU_TASK
+  add constraint ACT_FK_TASK_PROCDEF
+  foreign key (PROC_DEF_ID_)
+  references ACT_RE_PROCDEF (ID_);
+  
+alter table ACT_RU_VARIABLE 
+    add constraint ACT_FK_VAR_EXE 
+    foreign key (EXECUTION_ID_) 
+    references ACT_RU_EXECUTION (ID_);
+
+alter table ACT_RU_VARIABLE
+    add constraint ACT_FK_VAR_PROCINST
+    foreign key (PROC_INST_ID_)
+    references ACT_RU_EXECUTION(ID_);
+
+alter table ACT_RU_VARIABLE 
+    add constraint ACT_FK_VAR_BYTEARRAY 
+    foreign key (BYTEARRAY_ID_) 
+    references ACT_GE_BYTEARRAY (ID_);
+
+alter table ACT_RU_JOB 
+    add constraint ACT_FK_JOB_EXCEPTION 
+    foreign key (EXCEPTION_STACK_ID_) 
+    references ACT_GE_BYTEARRAY (ID_);
+create table ACT_HI_PROCINST (
+    ID_ varchar(64) not null,
+    PROC_INST_ID_ varchar(64) not null,
+    BUSINESS_KEY_ varchar(255),
+    PROC_DEF_ID_ varchar(64) not null,
+    START_TIME_ datetime not null,
+    END_TIME_ datetime,
+    DURATION_ bigint,
+    START_USER_ID_ varchar(255),
+    START_ACT_ID_ varchar(255),
+    END_ACT_ID_ varchar(255),
+    primary key (ID_),
+    unique (PROC_INST_ID_),
+    unique ACT_UNIQ_HI_BUS_KEY (PROC_DEF_ID_, BUSINESS_KEY_)
+);
+
+create table ACT_HI_ACTINST (
+    ID_ varchar(64) not null,
+    PROC_DEF_ID_ varchar(64) not null,
+    PROC_INST_ID_ varchar(64) not null,
+    EXECUTION_ID_ varchar(64) not null,
+    ACT_ID_ varchar(255) not null,
+    ACT_NAME_ varchar(255),
+    ACT_TYPE_ varchar(255) not null,
+    ASSIGNEE_ varchar(64),
+    START_TIME_ datetime not null,
+    END_TIME_ datetime,
+    DURATION_ bigint,
+    primary key (ID_)
+);
+
+create table ACT_HI_TASKINST (
+    ID_ varchar(64) not null,
+    PROC_DEF_ID_ varchar(64),
+    TASK_DEF_KEY_ varchar(255),
+    PROC_INST_ID_ varchar(64),
+    EXECUTION_ID_ varchar(64),
+    NAME_ varchar(255),
+    PARENT_TASK_ID_ varchar(64),
+    DESCRIPTION_ varchar(4000),
+    OWNER_ varchar(64),
+    ASSIGNEE_ varchar(64),
+    START_TIME_ datetime not null,
+    END_TIME_ datetime,
+    DURATION_ bigint,
+    DELETE_REASON_ varchar(4000),
+    PRIORITY_ integer,
+    DUE_DATE_ datetime,
+    primary key (ID_)
+);
+
+create table ACT_HI_DETAIL (
+    ID_ varchar(64) not null,
+    TYPE_ varchar(255) not null,
+    PROC_INST_ID_ varchar(64) not null,
+    EXECUTION_ID_ varchar(64) not null,
+    TASK_ID_ varchar(64),
+    ACT_INST_ID_ varchar(64),
+    NAME_ varchar(255) not null,
+    VAR_TYPE_ varchar(255),
+    REV_ integer,
+    TIME_ datetime not null,
+    BYTEARRAY_ID_ varchar(64),
+    DOUBLE_ double,
+    LONG_ bigint,
+    TEXT_ varchar(4000),
+    TEXT2_ varchar(4000),
+    primary key (ID_)
+);
+
+create table ACT_HI_COMMENT (
+    ID_ varchar(64) not null,
+    TYPE_ varchar(255),
+    TIME_ datetime not null,
+    USER_ID_ varchar(255),
+    TASK_ID_ varchar(64),
+    PROC_INST_ID_ varchar(64),
+    ACTION_ varchar(255),
+    MESSAGE_ varchar(4000),
+    FULL_MSG_ LONGBLOB,
+    primary key (ID_)
+);
+
+create table ACT_HI_ATTACHMENT (
+    ID_ varchar(64) not null,
+    REV_ integer,
+    USER_ID_ varchar(255),
+    NAME_ varchar(255),
+    DESCRIPTION_ varchar(4000),
+    TYPE_ varchar(255),
+    TASK_ID_ varchar(64),
+    PROC_INST_ID_ varchar(64),
+    URL_ varchar(4000),
+    CONTENT_ID_ varchar(64),
+    primary key (ID_)
+);
+
+create index ACT_IDX_HI_PRO_INST_END on ACT_HI_PROCINST(END_TIME_);
+create index ACT_IDX_HI_PRO_I_BUSKEY on ACT_HI_PROCINST(BUSINESS_KEY_);
+create index ACT_IDX_HI_ACT_INST_START on ACT_HI_ACTINST(START_TIME_);
+create index ACT_IDX_HI_ACT_INST_END on ACT_HI_ACTINST(END_TIME_);
+create index ACT_IDX_HI_DETAIL_PROC_INST on ACT_HI_DETAIL(PROC_INST_ID_);
+create index ACT_IDX_HI_DETAIL_ACT_INST on ACT_HI_DETAIL(ACT_INST_ID_);
+create index ACT_IDX_HI_DETAIL_TIME on ACT_HI_DETAIL(TIME_);
+create index ACT_IDX_HI_DETAIL_NAME on ACT_HI_DETAIL(NAME_);
+create table ACT_ID_GROUP (
+    ID_ varchar(64),
+    REV_ integer,
+    NAME_ varchar(255),
+    TYPE_ varchar(255),
+    primary key (ID_)
+);
+
+create table ACT_ID_MEMBERSHIP (
+    USER_ID_ varchar(64),
+    GROUP_ID_ varchar(64),
+    primary key (USER_ID_, GROUP_ID_)
+);
+
+create table ACT_ID_USER (
+    ID_ varchar(64),
+    REV_ integer,
+    FIRST_ varchar(255),
+    LAST_ varchar(255),
+    EMAIL_ varchar(255),
+    PWD_ varchar(255),
+    PICTURE_ID_ varchar(64),
+    primary key (ID_)
+);
+
+create table ACT_ID_INFO (
+    ID_ varchar(64),
+    REV_ integer,
+    USER_ID_ varchar(64),
+    TYPE_ varchar(64),
+    KEY_ varchar(255),
+    VALUE_ varchar(255),
+    PASSWORD_ LONGBLOB,
+    PARENT_ID_ varchar(255),
+    primary key (ID_)
+);
+
+alter table ACT_ID_MEMBERSHIP 
+    add constraint ACT_FK_MEMB_GROUP 
+    foreign key (GROUP_ID_) 
+    references ACT_ID_GROUP (ID_);
+
+alter table ACT_ID_MEMBERSHIP 
+    add constraint ACT_FK_MEMB_USER 
+    foreign key (USER_ID_) 
+    references ACT_ID_USER (ID_);
+
+create table ACT_CY_CONN_CONFIG (
+	ID_ varchar(255) NOT NULL,
+	PLUGIN_ID_ varchar(255) NOT NULL,
+	INSTANCE_NAME_ varchar(255) NOT NULL, 
+	INSTANCE_ID_ varchar(255) NOT NULL,  
+	USER_ varchar(255),
+	GROUP_ varchar(255),
+	VALUES_ text,	
+	primary key (ID_)
+);
+
+create table ACT_CY_CONFIG (
+	ID_ varchar(255) NOT NULL,
+	GROUP_ varchar(255) NOT NULL,
+	KEY_ varchar(255) NOT NULL,
+	VALUE_ text,
+	primary key (ID_)
+);
+
+create table ACT_CY_LINK (
+	ID_ varchar(255) NOT NULL,
+	SOURCE_CONNECTOR_ID_ varchar(255),
+	SOURCE_ARTIFACT_ID_ varchar(550),
+	SOURCE_ELEMENT_ID_ varchar(255) DEFAULT NULL,
+	SOURCE_ELEMENT_NAME_ varchar(255) DEFAULT NULL,
+	SOURCE_REVISION_ bigint DEFAULT NULL,
+	TARGET_CONNECTOR_ID_ varchar(255),	
+	TARGET_ARTIFACT_ID_ varchar(550),
+	TARGET_ELEMENT_ID_ varchar(255) DEFAULT NULL,
+	TARGET_ELEMENT_NAME_ varchar(255) DEFAULT NULL,
+	TARGET_REVISION_ bigint DEFAULT NULL,
+	LINK_TYPE_ varchar(255) ,
+	COMMENT_ varchar(1000),
+	LINKED_BOTH_WAYS_ boolean,
+	primary key(ID_)
+);
+
+create table ACT_CY_PEOPLE_LINK (
+	ID_ varchar(255) NOT NULL,
+	SOURCE_CONNECTOR_ID_ varchar(255),
+	SOURCE_ARTIFACT_ID_ varchar(550),
+	SOURCE_REVISION_ bigint DEFAULT NULL,
+	USER_ID_ varchar(255),
+	GROUP_ID_ varchar(255),
+	LINK_TYPE_ varchar(255),
+	COMMENT_ varchar(1000),
+	primary key(ID_)
+);
+
+create table ACT_CY_TAG (
+	ID_ varchar(255),
+	NAME_ varchar(255),
+	CONNECTOR_ID_ varchar(255),
+	ARTIFACT_ID_ varchar(550),
+	ALIAS_ varchar(255),
+	primary key(ID_)	
+);
+
+create table ACT_CY_COMMENT (
+	ID_ varchar(255) NOT NULL,
+	CONNECTOR_ID_ varchar(255) NOT NULL,
+	NODE_ID_ varchar(550) NOT NULL,
+	ELEMENT_ID_ varchar(255) DEFAULT NULL,
+	CONTENT_ text NOT NULL,
+	AUTHOR_ varchar(255),
+	DATE_ timestamp NOT NULL,
+	ANSWERED_COMMENT_ID_ varchar(255) DEFAULT NULL,
+	primary key(ID_)
+);
+
+create index ACT_CY_IDX_COMMENT on ACT_CY_COMMENT(ANSWERED_COMMENT_ID_);
+alter table ACT_CY_COMMENT 
+    add constraint FK_CY_COMMENT_COMMENT 
+    foreign key (ANSWERED_COMMENT_ID_) 
+    references ACT_CY_COMMENT (ID_);
+
+create table ACT_CY_PROCESS_SOLUTION (
+	ID_ varchar(128) NOT NULL,
+	LABEL_ varchar(255) NOT NULL,
+	STATE_ varchar(32) NOT NULL,
+	primary key(ID_)
+);
+
+create table ACT_CY_V_FOLDER (
+	ID_ varchar(128) NOT NULL,
+	LABEL_ varchar(255) NOT NULL,
+	CONNECTOR_ID_ varchar(128) NOT NULL,
+	REFERENCED_NODE_ID_ varchar(550) NOT NULL,
+	PROCESS_SOLUTION_ID_ varchar(128) NOT NULL,
+	TYPE_ varchar(32) NOT NULL,
+	primary key(ID_)
+);
+
+create index ACT_CY_IDX_V_FOLDER on ACT_CY_V_FOLDER(PROCESS_SOLUTION_ID_);
+alter table ACT_CY_V_FOLDER 
+    add constraint FK_CY_PROCESS_SOLUTION 
+    foreign key (PROCESS_SOLUTION_ID_) 
+    references ACT_CY_PROCESS_SOLUTION (ID_);

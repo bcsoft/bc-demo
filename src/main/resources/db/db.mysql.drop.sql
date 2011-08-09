@@ -46,3 +46,37 @@ drop table if exists BC_OPTION_ITEM;
 drop table if exists BC_OPTION_GROUP;
 
 
+-- activiti5.6 cycle
+drop table if exists ACT_CY_CONN_CONFIG;
+drop table if exists ACT_CY_CONFIG;
+drop table if exists ACT_CY_LINK;
+drop table if exists ACT_CY_PEOPLE_LINK;
+drop table if exists ACT_CY_TAG;
+drop table if exists ACT_CY_COMMENT;
+drop table if exists ACT_CY_V_FOLDER;
+drop table if exists ACT_CY_PROCESS_SOLUTION;
+-- activiti5.6 identity
+drop table if exists ACT_ID_INFO;
+drop table if exists ACT_ID_MEMBERSHIP;
+drop table if exists ACT_ID_GROUP;
+drop table if exists ACT_ID_USER;
+
+-- activiti5.6 history
+drop table if exists ACT_HI_PROCINST;
+drop table if exists ACT_HI_ACTINST;
+drop table if exists ACT_HI_TASKINST;
+drop table if exists ACT_HI_DETAIL;
+drop table if exists ACT_HI_COMMENT;
+drop table if exists ACT_HI_ATTACHMENT;
+ 
+-- activiti5.6 engine
+drop table if exists ACT_GE_PROPERTY;
+drop table if exists ACT_RU_VARIABLE;
+drop table if exists ACT_RU_JOB; 
+drop table if exists ACT_GE_BYTEARRAY;
+drop table if exists ACT_RE_DEPLOYMENT;
+drop table if exists ACT_RU_IDENTITYLINK;
+drop table if exists ACT_RU_TASK;
+drop table if exists ACT_RE_PROCDEF;
+drop table if exists ACT_RU_EXECUTION;
+

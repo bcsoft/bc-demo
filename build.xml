@@ -9,21 +9,22 @@
 	<property name="fixlastline" value="true" />
 	<property name="encoding" value="UTF-8" />
 	<property name="frameworkSql.dir" value="../bc-framework/resources" />
-		
+	<property name="workflowSql.dir" value="../bc-workflow/resources" />
+
 	<target name="help">
 		<echo message="运行 'ant cleanAll' 删除除源代码之外的所有文件和目录" />
 	</target>
 
 	<target name="cleanAll">
-		<delete verbose="true" includeemptydirs="true">  
-			<fileset dir="${basedir}">  
-				<include name="**/.classpath"/>
-				<include name="**/.project"/>
-				<include name="**/*.log"/>
-				<include name="**/*.log.*"/>
-				<include name="**/target/**"/>
-				<include name="**/.settings/**"/>
-			</fileset>  
+		<delete verbose="true" includeemptydirs="true">
+			<fileset dir="${basedir}">
+				<include name="**/.classpath" />
+				<include name="**/.project" />
+				<include name="**/*.log" />
+				<include name="**/*.log.*" />
+				<include name="**/target/**" />
+				<include name="**/.settings/**" />
+			</fileset>
 		</delete>
 	</target>
 
@@ -31,39 +32,69 @@
 		<!-- mysql -->
 		<concatSql4create db="mysql" />
 		<concatSql4drop db="mysql" />
-		
+
 		<!-- oracle -->
-		<concatSql4create db="oracle" encoding="GBK"/>
-		<concatSql4drop db="oracle" encoding="GBK"/>
+		<concatSql4create db="oracle" encoding="GBK" />
+		<concatSql4drop db="oracle" encoding="GBK" />
 	</target>
 
 	<!-- 合并各个模块中定义的sql建表脚本的宏 -->
 	<macrodef name="concatSql4create">
 		<!-- 数据库类型：如mysql,mssql,oracle -->
-		<attribute name="db" default="mysql"/>
-		<attribute name="encoding" default="${encoding}"/>
+		<attribute name="db" default="mysql" />
+		<attribute name="encoding" default="${encoding}" />
 		<sequential>
 			<concat destfile="${resources.dir}/db.@{db}.create.sql" encoding="@{encoding}" fixlastline="${fixlastline}" force="${force}">
 				<!-- 使用多个fileset的目的是控制合并的顺序 -->
+				
 				<!-- 平台的 -->
 				<fileset dir="${frameworkSql.dir}">
 					<include name="framework.db.@{db}.create.sql" />
 				</fileset>
+				
+				<!-- activiti -->
+				<fileset dir="${workflowSql.dir}">
+					<include name="activiti.@{db}.create.engine.sql" />
+				</fileset>
+				<fileset dir="${workflowSql.dir}">
+					<include name="activiti.@{db}.create.history.sql" />
+				</fileset>
+				<fileset dir="${workflowSql.dir}">
+					<include name="activiti.@{db}.create.identity.sql" />
+				</fileset>
+				<fileset dir="${workflowSql.dir}">
+					<include name="activiti.@{db}.create.cycle.sql" />
+				</fileset>
 			</concat>
 		</sequential>
 	</macrodef>
-	
+
 	<!-- 合并各个模块中定义的sql脚本文件的宏：drop -->
 	<macrodef name="concatSql4drop">
 		<!-- 数据库类型：如mysql,mssql,oracle -->
-		<attribute name="db" default="mysql"/>
-		<attribute name="encoding" default="${encoding}"/>
+		<attribute name="db" default="mysql" />
+		<attribute name="encoding" default="${encoding}" />
 		<sequential>
 			<concat destfile="${resources.dir}/db.@{db}.drop.sql" encoding="@{encoding}" fixlastline="${fixlastline}" force="${force}">
 				<!-- 使用多个fileset的目的是控制合并的顺序 -->
+				
 				<!-- 平台的 -->
 				<fileset dir="${frameworkSql.dir}">
 					<include name="framework.db.@{db}.drop.sql" />
+				</fileset>
+				
+				<!-- activiti -->
+				<fileset dir="${workflowSql.dir}">
+					<include name="activiti.@{db}.drop.cycle.sql" />
+				</fileset>
+				<fileset dir="${workflowSql.dir}">
+					<include name="activiti.@{db}.drop.identity.sql" />
+				</fileset>
+				<fileset dir="${workflowSql.dir}">
+					<include name="activiti.@{db}.drop.history.sql" />
+				</fileset>
+				<fileset dir="${workflowSql.dir}">
+					<include name="activiti.@{db}.drop.engine.sql" />
 				</fileset>
 			</concat>
 		</sequential>
