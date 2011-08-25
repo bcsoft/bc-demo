@@ -74,7 +74,7 @@
 	  <priority value="WARN" />
 	</category>
  	<category name="cn.bc.docs.web.struts2.ImageAction">
-	  <priority value="DEBUG" />
+	  <priority value="WARN" />
 	</category>
     	
   	<!-- 设置默认的日志级别(该设置必须放在最后,否则加载会解析出错) -->

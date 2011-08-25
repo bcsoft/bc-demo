@@ -11,8 +11,8 @@
 	<name>bc平台演示</name>
 	
 	<properties>
-		<app.ts>20110708</app.ts>
-		<app.debug>true</app.debug>
+		<app.ts>20110825</app.ts>
+		<app.debug>false</app.debug>
 		<app.data.realPath>/bcdata4demo</app.data.realPath>
 		<app.data.subPath>uploads</app.data.subPath>
 		
