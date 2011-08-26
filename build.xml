@@ -4,6 +4,8 @@
 	<property name="db" value="mysql" />
 	<property name="src.dir" value="." />
 	<property name="build.dir" value="./build" />
+	<property name="target.dir" value="./target" />
+	<property name="packageName" value="bc-demo" />
 	<property name="resources.dir" value="./src/main/resources/db" />
 	<property name="force" value="true" />
 	<property name="fixlastline" value="true" />
@@ -28,6 +30,41 @@
 		</delete>
 	</target>
 
+	<target name="c" description="删除打包后ui-libs目录下为用到的开源组件等">
+		<mkdir dir="${target.dir}/${packageName}_ok" />
+		<copy todir="${target.dir}/${packageName}_ok">
+			<fileset dir="${target.dir}/${packageName}">
+				<include name="bc/**" />
+				<include name="bc-test/**" />
+				<include name="META-INF/**" />
+				<include name="WEB-INF/**" />
+				<include name="index.jsp" />
+
+				<include name="ui-libs-demo/highcharts/2.1.4/**" />
+				<include name="ui-libs-demo/jcrop/0.9.9/**" />
+				<include name="ui-libs-demo/jquery-ui/1.8.13/**" />
+				<include name="ui-libs-demo/xheditor/1.1.7/**" />
+				<include name="ui-libs-demo/zTree/2.6/**" />
+				<include name="ui-libs-demo/jquery-layout/1.2.0/**" />
+				<include name="ui-libs-demo/jqGrid/3.8.2/**" />
+
+				<include name="ui-libs/jquery/**" />
+				<include name="ui-libs/jquery-ui/1.8.13/**" />
+				<include name="ui-libs/jquery-ui/plugins/**" />
+				<include name="ui-libs/jquery-ui/themeSwitcher/**" />
+				<include name="ui-libs/jquery-layout/1.2.0/**" />
+				<include name="ui-libs/highcharts/2.1.4/**" />
+				<include name="ui-libs/jcrop/0.9.9/**" />
+				<include name="ui-libs/xheditor/1.1.7/**" />
+				<include name="ui-libs/zTree/2.6/**" />
+				<include name="ui-libs/nbl/2.0/**" />
+				<include name="ui-libs/swfupload/2.2.0.1/**" />
+				<include name="ui-libs/jqGrid/3.8.2/**" />
+				<include name="ui-libs/jshash/2.2/**"/>
+			</fileset>
+		</copy>
+	</target>
+
 	<target name="build">
 		<!-- mysql -->
 		<concatSql4create db="mysql" />
@@ -46,12 +83,12 @@
 		<sequential>
 			<concat destfile="${resources.dir}/db.@{db}.create.sql" encoding="@{encoding}" fixlastline="${fixlastline}" force="${force}">
 				<!-- 使用多个fileset的目的是控制合并的顺序 -->
-				
+
 				<!-- 平台的 -->
 				<fileset dir="${frameworkSql.dir}">
 					<include name="framework.db.@{db}.create.sql" />
 				</fileset>
-				
+
 				<!-- activiti -->
 				<fileset dir="${workflowSql.dir}">
 					<include name="activiti.@{db}.create.engine.sql" />
@@ -77,12 +114,12 @@
 		<sequential>
 			<concat destfile="${resources.dir}/db.@{db}.drop.sql" encoding="@{encoding}" fixlastline="${fixlastline}" force="${force}">
 				<!-- 使用多个fileset的目的是控制合并的顺序 -->
-				
+
 				<!-- 平台的 -->
 				<fileset dir="${frameworkSql.dir}">
 					<include name="framework.db.@{db}.drop.sql" />
 				</fileset>
-				
+
 				<!-- activiti -->
 				<fileset dir="${workflowSql.dir}">
 					<include name="activiti.@{db}.drop.cycle.sql" />
