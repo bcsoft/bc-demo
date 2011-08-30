@@ -59,6 +59,8 @@
 	<import resource="classpath:cn/bc/docs/spring.xml"/>
 	<!-- bc-feedback包的配置 -->
 	<import resource="classpath:cn/bc/feedback/spring.xml"/>
+	<!-- bc-scheduler包的配置 -->
+	<import resource="classpath:cn/bc/scheduler/spring.xml"/>
 
 	<!-- 项目自身模块的配置 -->
 	<import resource="classpath:spring-demo.xml" />
