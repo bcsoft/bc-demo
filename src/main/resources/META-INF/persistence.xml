@@ -46,8 +46,7 @@
 		<class>cn.bc.feedback.domain.Feedback</class>
 
 		<!-- scheduler -->
-		<class>cn.bc.scheduler.domain.JobCfg</class>
-		<class>cn.bc.scheduler.domain.TriggerCfg</class>
+		<class>cn.bc.scheduler.domain.ScheduleJob</class>
 		<class>cn.bc.scheduler.domain.ScheduleLog</class>
 
 		<!-- Test

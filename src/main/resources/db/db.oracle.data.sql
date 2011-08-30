@@ -344,14 +344,10 @@ insert into BC_DOCS_ATTACH (ID,FILE_DATE,STATUS_,PTYPE,PUID,SIZE_,EXT,APPPATH,SU
 	(select b.id from BC_IDENTITY_ACTOR a inner join BC_IDENTITY_ACTOR_HISTORY b on b.actor_id=a.id where a.code='admin') from dual;
   
 -- 插入任务调度测试信息
-insert into BC_SD_CFG_JOB (ID,NAME,BEAN,METHOD,SIE,DESC_) 
-	values(1,'成功测试', 'schedulerTestMock', 'success', 0, '测试信息');
-insert into BC_SD_CFG_JOB (ID,NAME,BEAN,METHOD,SIE,DESC_) 
-	values(2,'失败测试', 'schedulerTestMock', 'error', 1, '测试信息');
-insert into BC_SD_CFG_TRIGGER (ID,STATUS_,NAME,CRON,ORDER_,DESC_,JOB_ID) 
-	values(1,1,'成功测试', 'now', '9999', '测试信息',1);
-insert into BC_SD_CFG_TRIGGER (ID,STATUS_,NAME,CRON,ORDER_,DESC_,JOB_ID) 
-	values(2,1,'失败测试', 'now', '9999', '测试信息',2);
+insert into BC_SD_JOB (ID,STATUS_,NAME,GROUPN,BEAN,METHOD,CRON,ORDER_,IGNORE_ERROR,MEMO_) 
+	values(1,0,'无异常任务测试','bc', 'schedulerTestMock', 'success','0/10 * * * * ? *','9901', 0, '测试信息');
+insert into BC_SD_JOB (ID,STATUS_,NAME,GROUPN,BEAN,METHOD,CRON,ORDER_,IGNORE_ERROR,MEMO_) 
+	values(2,0,'有异常任务测试','bc', 'schedulerTestMock', 'error','5/10 * * * * ? *','9902', 0, '测试信息');
   
 -- 插入测试消息
 insert into BC_MESSAGE (ID,SEND_DATE,SUBJECT,CONTENT,SENDER_ID,RECEIVER_ID) 
