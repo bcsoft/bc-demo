@@ -57,6 +57,8 @@
 	<import resource="classpath:cn/bc/bulletin/spring.xml"/>
 	<!-- bc-docs包的配置 -->
 	<import resource="classpath:cn/bc/docs/spring.xml"/>
+	<!-- bc-option包的配置 -->
+	<import resource="classpath:cn/bc/option/spring.xml"/>
 	<!-- bc-feedback包的配置 -->
 	<import resource="classpath:cn/bc/feedback/spring.xml"/>
 	<!-- bc-scheduler包的配置 -->

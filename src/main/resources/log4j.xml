@@ -48,14 +48,14 @@
     </category>
 	<!-- struts2：设为DEBUG，查看转发到那个jsp文件 -->
     <category name="org.apache.struts2.dispatcher.ServletDispatcherResult">
-    	 <priority value="WARN" />
+    	 <priority value="DEBUG" />
     </category>
     <category name="com.opensymphony">
     	<priority value="WARN" />
     </category>
 	<!-- struts2：设为DEBUG，查看加载了哪些xml配置文件 -->
     <category name="com.opensymphony.xwork2.util.FileManager">
-    	<priority value="WARN" />
+    	<priority value="DEBUG" />
     </category>
 	<category name="freemarker">
 	  <priority value="ERROR" />
