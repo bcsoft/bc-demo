@@ -295,8 +295,10 @@ insert into BC_DESKTOP_SHORTCUT (ID,STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,IC
 	values(CORE_SEQUENCE.NEXTVAL,0, 0, '8104', 0, '综合图表', '/bc/chart/mix', 'i0203');
 	
 -- 设计用的快捷方式
-insert into BC_DESKTOP_SHORTCUT (ID,STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,ICONCLASS,AID) 
-	select CORE_SEQUENCE.NEXTVAL,0, 0, '8111', 0, '选择Actor', '/bc-test/selectIdentity', 'i0300', a.id from BC_IDENTITY_ACTOR a where a.code = 'admin';
+insert into BC_DESKTOP_SHORTCUT (ID, STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,ICONCLASS,AID) 
+	select CORE_SEQUENCE.NEXTVAL, 0, 0, '8111', 0, '选择Actor', '/bc-test/selectIdentity', 'i0300', a.id from BC_IDENTITY_ACTOR a where a.code = 'dragon';
+insert into BC_DESKTOP_SHORTCUT (ID, STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,ICONCLASS,AID) 
+	select CORE_SEQUENCE.NEXTVAL, 0, 0, '8112', 0, '选择日期', '/bc-test/datepicker', 'i0300', a.id from BC_IDENTITY_ACTOR a where a.code = 'dragon';
 insert into BC_DESKTOP_SHORTCUT (ID,STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,ICONCLASS,AID) 
     select CORE_SEQUENCE.NEXTVAL,0, 0, '8201', 0, '分页设计', '/bc/duty/paging', 'i0300', a.id from BC_IDENTITY_ACTOR a where a.code = 'admin';
 insert into BC_DESKTOP_SHORTCUT (ID,STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,ICONCLASS,AID) 
