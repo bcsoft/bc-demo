@@ -302,9 +302,9 @@ insert into BC_DESKTOP_SHORTCUT (STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,ICONC
 	
 -- 设计用的快捷方式
 insert into BC_DESKTOP_SHORTCUT (STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,ICONCLASS,AID) 
-	select 0, 0, '8111', 0, '选择Actor', '/bc-test/selectIdentity', 'i0300', a.id from BC_IDENTITY_ACTOR a where a.code = 'dragon';
+	select 0, 0, '8111', 0, '选择Actor', '/bc-test/selectIdentity', 'i0300', a.id from BC_IDENTITY_ACTOR a where a.code = 'admin';
 insert into BC_DESKTOP_SHORTCUT (STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,ICONCLASS,AID) 
-	select 0, 0, '8112', 0, '选择日期', '/bc-test/datepicker', 'i0300', a.id from BC_IDENTITY_ACTOR a where a.code = 'dragon';
+	select 0, 0, '8112', 0, '选择日期', '/bc-test/datepicker', 'i0300', a.id from BC_IDENTITY_ACTOR a where a.code = 'admin';
 insert into BC_DESKTOP_SHORTCUT (STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,ICONCLASS,AID) 
     select 0, 0, '8201', 0, '分页设计', '/bc/duty/paging', 'i0300', a.id from BC_IDENTITY_ACTOR a where a.code = 'admin';
 insert into BC_DESKTOP_SHORTCUT (STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,ICONCLASS,AID) 
@@ -313,7 +313,7 @@ insert into BC_DESKTOP_SHORTCUT (STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,ICONC
     select 0, 0, '8203', 0, '附件设计', '/bc/attach/design', 'i0300', a.id from BC_IDENTITY_ACTOR a where a.code = 'admin';
 
 insert into BC_DESKTOP_SHORTCUT (STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,ICONCLASS,AID) 
-    select 0, 0, '8301', 1, 'jqueryUI', '/ui-libs-demo/jquery-ui/1.8.13/index.html', 'i0300', a.id from BC_IDENTITY_ACTOR a where a.code = 'admin';
+    select 0, 0, '8301', 1, 'jqueryUI', '/ui-libs-demo/jquery-ui/1.8.16/index.html', 'i0300', a.id from BC_IDENTITY_ACTOR a where a.code = 'admin';
 insert into BC_DESKTOP_SHORTCUT (STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,ICONCLASS,AID) 
     select 0, 0, '8302', 1, 'highcharts', '/ui-libs-demo/highcharts/2.1.4/index.htm', 'i0300', a.id from BC_IDENTITY_ACTOR a where a.code = 'admin';
 insert into BC_DESKTOP_SHORTCUT (STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,ICONCLASS,AID) 
