@@ -46,11 +46,4 @@
 			<result name="mix">/bc-test/chart/mix.jsp</result>
 		</action>
 	</package>
-	
-	<!-- for test-->
-	<package name="test" extends="bc-default" namespace="/bc-test">
-		<action name="selectIdentity" class="selectIdentityAction" method="selectIdentity">
-			<result>/bc-test/identity/select.jsp</result>
-		</action>
-	</package>
 </struts>
