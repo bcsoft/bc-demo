@@ -333,8 +333,8 @@ insert into BC_DESKTOP_PERSONAL (STATUS_,INNER_,FONT,THEME,AID)
 
 -- 插入浏览器附件下载信息
 insert into BC_DOCS_ATTACH (FILE_DATE,STATUS_,PTYPE,PUID,SIZE_,EXT,APPPATH,SUBJECT,PATH,AUTHOR_ID)
-	select now(), 0, 'browser', 'chrome12.0.742.112', 23152416,'exe',0
-	,'谷歌浏览器Chrome12.0.exe','browser/chrome/chrome12.0.742.112.exe',
+	select now(), 1, 'browser', 'chrome14.0.835.186', 24610040,'exe',0
+	,'谷歌浏览器Chrome14.0.exe','browser/chrome/chrome14.0.835.186.exe',
 	(select b.id from BC_IDENTITY_ACTOR a inner join BC_IDENTITY_ACTOR_HISTORY b on b.actor_id=a.id where a.code='admin');
 insert into BC_DOCS_ATTACH (FILE_DATE,STATUS_,PTYPE,PUID,SIZE_,EXT,APPPATH,SUBJECT,PATH,AUTHOR_ID)
 	select now(), 0, 'browser', 'firefox5.0', 13530208,'exe',0
