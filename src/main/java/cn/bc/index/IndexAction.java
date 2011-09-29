@@ -3,7 +3,6 @@
  */
 package cn.bc.index;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -108,6 +107,10 @@ public class IndexAction extends ActionSupport implements SessionAware {
 		this.shortcuts = shortcuts;
 	}
 
+	public String index1() throws Exception {
+		return this.execute();
+	}
+
 	public String execute() throws Exception {
 		// 检测用户是否登录,未登录则跳转到登录页面
 		SystemContext context = (SystemContext) this.session.get(Context.KEY);
@@ -159,7 +162,7 @@ public class IndexAction extends ActionSupport implements SessionAware {
 
 		// 循环顶层模块生成菜单
 		Menu menu = this.buildMenu4Resources(topResources, parentChildren);
-		menu.addClazz("startMenu");
+		menu.addClazz("startMenu").addClazz("bc-menubar").setId("sysmenu");
 
 		this.startMenu = menu.toString();
 		if (logger.isDebugEnabled())

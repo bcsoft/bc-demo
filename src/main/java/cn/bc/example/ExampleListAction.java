@@ -12,6 +12,7 @@ import com.opensymphony.xwork2.ActionSupport;
  * @author dragon
  * 
  */
+@SuppressWarnings("deprecation")
 public class ExampleListAction extends ActionSupport {
 	private static final long serialVersionUID = 1L;
 	private InputStream inputStream;
