@@ -337,12 +337,12 @@ insert into BC_DOCS_ATTACH (FILE_DATE,STATUS_,PTYPE,PUID,SIZE_,EXT,APPPATH,SUBJE
 	,'谷歌浏览器Chrome14.0.exe','browser/chrome/chrome14.0.835.186.exe',
 	(select b.id from BC_IDENTITY_ACTOR a inner join BC_IDENTITY_ACTOR_HISTORY b on b.actor_id=a.id where a.code='admin');
 insert into BC_DOCS_ATTACH (FILE_DATE,STATUS_,PTYPE,PUID,SIZE_,EXT,APPPATH,SUBJECT,PATH,AUTHOR_ID)
-	select now(), 0, 'browser', 'firefox5.0', 13530208,'exe',0
-	,'火狐浏览器Firefox5.0.exe','browser/firefox/firefox5.0.exe',
+	select now(), 1, 'browser', 'firefox7.0', 13891928,'exe',0
+	,'火狐浏览器Firefox7.0.exe','browser/firefox/firefox7.0.exe',
 	(select b.id from BC_IDENTITY_ACTOR a inner join BC_IDENTITY_ACTOR_HISTORY b on b.actor_id=a.id where a.code='admin');
 insert into BC_DOCS_ATTACH (FILE_DATE,STATUS_,PTYPE,PUID,SIZE_,EXT,APPPATH,SUBJECT,PATH,AUTHOR_ID)
-	select now(), 0, 'browser', 'safari5.0.5', 35624744,'exe',0
-	,'苹果浏览器Safari5.0.5.exe','browser/safari/safari5.0.5.exe',
+	select now(), 1, 'browser', 'safari5.1', 37806960,'exe',0
+	,'苹果浏览器Safari5.1.exe','browser/safari/safari5.1.exe',
 	(select b.id from BC_IDENTITY_ACTOR a inner join BC_IDENTITY_ACTOR_HISTORY b on b.actor_id=a.id where a.code='admin');
 insert into BC_DOCS_ATTACH (FILE_DATE,STATUS_,PTYPE,PUID,SIZE_,EXT,APPPATH,SUBJECT,PATH,AUTHOR_ID)
 	select now(), 0, 'browser', 'opera11.50', 10309696,'exe',0
