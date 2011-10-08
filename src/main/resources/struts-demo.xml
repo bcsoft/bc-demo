@@ -25,6 +25,10 @@
 			<result>/bc/index/desktop.jsp</result>
 			<result name="redirect" type="redirect">/login</result>
 		</action>
+		<action name="index1" class="indexAction" method="index1">
+			<result>/bc/index/desktop1.jsp</result>
+			<result name="redirect" type="redirect">/login</result>
+		</action>
 		<!-- 设置空的name，使web.xml中可以通过action来配置welcome-file
 		<action name="" class="indexAction">
 			<result>/bc/index/desktop.jsp</result>
