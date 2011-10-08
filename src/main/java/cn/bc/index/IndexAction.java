@@ -3,7 +3,6 @@
  */
 package cn.bc.index;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -136,15 +135,16 @@ public class IndexAction extends ActionSupport implements SessionAware {
 		}
 
 		// 将可用的角色记录到上下文
-//		List<String> roleCodes = new ArrayList<String>();
-//		for (Role role : roles) {
-//			roleCodes.add(role.getCode());
-//		}
-//		context.setAttr(SystemContext.KEY_ROLES, roleCodes);
+		// List<String> roleCodes = new ArrayList<String>();
+		// for (Role role : roles) {
+		// roleCodes.add(role.getCode());
+		// }
+		// context.setAttr(SystemContext.KEY_ROLES, roleCodes);
 
 		// 找到顶层模块
 		Map<Resource, Set<Resource>> parentChildren = new LinkedHashMap<Resource, Set<Resource>>();
-		Set<Resource> topResources = this.findTopResources(resources, parentChildren);
+		Set<Resource> topResources = this.findTopResources(resources,
+				parentChildren);
 		if (logger.isDebugEnabled()) {
 			int i = 0;
 			for (Resource m : topResources) {
@@ -177,7 +177,8 @@ public class IndexAction extends ActionSupport implements SessionAware {
 	}
 
 	private void dealParentChildren(Resource m,
-			Map<Resource, Set<Resource>> parentChildren, Set<Resource> topResources) {
+			Map<Resource, Set<Resource>> parentChildren,
+			Set<Resource> topResources) {
 		Resource parent = m.getBelong();
 		if (parent != null) {// 有隶属的父模块
 			Set<Resource> childResources = parentChildren.get(parent);
@@ -208,10 +209,24 @@ public class IndexAction extends ActionSupport implements SessionAware {
 			Map<Resource, Set<Resource>> parentChildren) {
 		MenuItem menuItem;
 		menuItem = new MenuItem();
-		menuItem.setUrl(buildMenuItemUrl(m)).setLabel(m.getName())
-				.setType(String.valueOf(m.getType())).setAction("menuItem")
-				.setAttr("data-mid", m.getId().toString());// .addStyle("z-index",
-															// "10000");
+		menuItem.setUrl(buildMenuItemUrl(m))
+				.setLabel(m.getName())
+				.setType(String.valueOf(m.getType()))
+				.setAction("menuItem")
+				.setAttr("data-mid", m.getId().toString())
+				.setAttr("data-type", String.valueOf(m.getType()))
+				.setAttr("data-standalone",
+						String.valueOf(m.getType() == Resource.TYPE_OUTER_LINK))
+				.setAttr("data-order", m.getOrderNo())
+				.setAttr("data-iconClass", m.getIconClass())
+				.setAttr("data-name", m.getName());
+		if (m.getOption() != null)
+			menuItem.setAttr("data-option",
+					m.getOption() == null ? "" : m.getOption());
+		if (m.getUrl() != null)
+			menuItem.setAttr("data-url",
+					m.getUrl().startsWith("/") ? getContextPath() + m.getUrl()
+							: m.getUrl());
 		if (m.getType() == Resource.TYPE_FOLDER) {// 文件夹
 			Set<Resource> childResources = parentChildren.get(m);// 模块下的子模块
 			if (childResources != null && !childResources.isEmpty()) {
@@ -233,5 +248,10 @@ public class IndexAction extends ActionSupport implements SessionAware {
 		} else {
 			return null;
 		}
+	}
+
+	/** 获取访问该ation的上下文路径 */
+	protected String getContextPath() {
+		return ServletActionContext.getRequest().getContextPath();
 	}
 }
