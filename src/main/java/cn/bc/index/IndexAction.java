@@ -245,7 +245,7 @@ public class IndexAction extends ActionSupport implements SessionAware {
 		String url = m.getUrl();
 		if (url != null && url.length() > 0) {
 			if (m.getType() == Resource.TYPE_OUTER_LINK) {// 不处理外部链接
-				return url;
+				return  url.startsWith("http") ? url : contextPath + url;
 			} else {
 				return contextPath + url;// 内部的url需要附加部署路路径
 			}
