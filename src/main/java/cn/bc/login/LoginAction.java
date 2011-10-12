@@ -151,9 +151,10 @@ public class LoginAction extends ActionSupport implements SessionAware {
 
 					// 用户的角色（包含继承自上级组织和隶属岗位的角色）
 					Set<Role> roles = new LinkedHashSet<Role>();// 可用的角色
+					roles.addAll(user.getRoles());//加入自己的角色
 					List<Actor> ancestors = this.userService
 							.findAncestorOrganization(user.getId());
-					for (Actor ancestor : ancestors) {
+					for (Actor ancestor : ancestors) {//加入继承的角色
 						roles.addAll(ancestor.getRoles());
 					}
 					List<String> rcs = new ArrayList<String>();
