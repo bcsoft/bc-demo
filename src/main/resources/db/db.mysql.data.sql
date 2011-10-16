@@ -123,65 +123,65 @@ insert into BC_IDENTITY_DUTY (CODE, NAME) values('0901','职员');
 -- insert into BC_IDENTITY_IDGENERATOR (TYPE_,VALUE, FORMAT) values('bulletin.uid', 0, '${T}.${V}');
 
 -- 插入单位数据
-insert into BC_IDENTITY_ACTOR (UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_, PY) values('uid', 0, 0, 1, 'D00','总公司', '00000000','zonggongsi');
-insert into BC_IDENTITY_ACTOR (UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_, PY) values('uid', 0, 0, 1, 'D01','分公司1', '01000000','fengongsi1');
+insert into BC_IDENTITY_ACTOR (UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_, PY,PCODE,PNAME) values('uid', 0, 0, 1, 'D00','总公司', '00000000','zonggongsi',NULL,NULL);
+insert into BC_IDENTITY_ACTOR (UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_, PY,PCODE,PNAME) values('uid', 0, 0, 1, 'D01','分公司1', '01000000','fengongsi1','[1]D00','总公司');
 insert into BC_IDENTITY_ACTOR_RELATION (TYPE_,MASTER_ID,FOLLOWER_ID) 
     select 0,am.id,af.id from BC_IDENTITY_ACTOR am,BC_IDENTITY_ACTOR af where am.code='D00' and af.code='D01';
-insert into BC_IDENTITY_ACTOR (UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_, PY) values('uid', 0, 0, 1, 'D02','分公司2', '02000000','fengongsi2');
+insert into BC_IDENTITY_ACTOR (UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_, PY,PCODE,PNAME) values('uid', 0, 0, 1, 'D02','分公司2', '02000000','fengongsi2','[1]D00','总公司');
 insert into BC_IDENTITY_ACTOR_RELATION (TYPE_,MASTER_ID,FOLLOWER_ID) 
     select 0,am.id,af.id from BC_IDENTITY_ACTOR am,BC_IDENTITY_ACTOR af where am.code='D00' and af.code='D02';
 
 -- 插入部门数据
-insert into BC_IDENTITY_ACTOR (UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_, PY) values('uid', 0, 0, 2, 'B01','办公室', '00010000','bangongshi');
+insert into BC_IDENTITY_ACTOR (UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_, PY,PCODE,PNAME) values('uid', 0, 0, 2, 'B01','办公室', '00010000','bangongshi','[1]D00','总公司');
 insert into BC_IDENTITY_ACTOR_RELATION (TYPE_,MASTER_ID,FOLLOWER_ID) 
     select 0,am.id,af.id from BC_IDENTITY_ACTOR am,BC_IDENTITY_ACTOR af where am.code='D00' and af.code='B01';
     
-insert into BC_IDENTITY_ACTOR (UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_, PY) values('uid', 0, 0, 2, 'B02','财务部', '00020000','caiwubu');
+insert into BC_IDENTITY_ACTOR (UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_, PY,PCODE,PNAME) values('uid', 0, 0, 2, 'B02','财务部', '00020000','caiwubu','[1]D00','总公司');
 insert into BC_IDENTITY_ACTOR_RELATION (TYPE_,MASTER_ID,FOLLOWER_ID) 
     select 0,am.id,af.id from BC_IDENTITY_ACTOR am,BC_IDENTITY_ACTOR af where am.code='D00' and af.code='B02';
     
-insert into BC_IDENTITY_ACTOR (UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_, PY) values('uid', 0, 0, 2, 'B03','信息中心', '00030000','xinxizhongxin');
+insert into BC_IDENTITY_ACTOR (UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_, PY,PCODE,PNAME) values('uid', 0, 0, 2, 'B03','信息中心', '00030000','xinxizhongxin','[1]D00','总公司');
 insert into BC_IDENTITY_ACTOR_RELATION (TYPE_,MASTER_ID,FOLLOWER_ID) 
     select 0,am.id,af.id from BC_IDENTITY_ACTOR am,BC_IDENTITY_ACTOR af where am.code='D00' and af.code='B03';
 
-insert into BC_IDENTITY_ACTOR (UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_, PY) values('uid', 0, 0, 2, 'B0301','子部门1', '00030100','zibumen1');
+insert into BC_IDENTITY_ACTOR (UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_, PY,PCODE,PNAME) values('uid', 0, 0, 2, 'B0301','子部门1', '00030100','zibumen1','[1]D00','总公司');
 insert into BC_IDENTITY_ACTOR_RELATION (TYPE_,MASTER_ID,FOLLOWER_ID) 
     select 0,am.id,af.id from BC_IDENTITY_ACTOR am,BC_IDENTITY_ACTOR af where am.code='B03' and af.code='B0301';
     
-insert into BC_IDENTITY_ACTOR (UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_, PY) values('uid', 0, 0, 2, 'B0302','子部门2', '00030200','zibumen2');
+insert into BC_IDENTITY_ACTOR (UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_, PY,PCODE,PNAME) values('uid', 0, 0, 2, 'B0302','子部门2', '00030200','zibumen2','[1]D00','总公司');
 insert into BC_IDENTITY_ACTOR_RELATION (TYPE_,MASTER_ID,FOLLOWER_ID) 
      select 0,am.id,af.id from BC_IDENTITY_ACTOR am,BC_IDENTITY_ACTOR af where am.code='B03' and af.code='B0302';
     
 -- 插入人员数据
-insert into BC_IDENTITY_ACTOR (UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_, PY) values('uid', 0, 0, 4, 'dongshizhang','董事长', '00000001','董事长');
+insert into BC_IDENTITY_ACTOR (UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_, PY,PCODE,PNAME) values('uid', 0, 0, 4, 'dongshizhang','董事长', '00000001','董事长','[1]D00','总公司');
 insert into BC_IDENTITY_ACTOR_RELATION (TYPE_,MASTER_ID,FOLLOWER_ID) 
     select 0,am.id,af.id from BC_IDENTITY_ACTOR am,BC_IDENTITY_ACTOR af where am.code='D00' and af.code='dongshizhang'; 
     
-insert into BC_IDENTITY_ACTOR (UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_, PY) values('uid', 0, 0, 4, 'zongjingli','总经理', '00000002','zongjingli');
+insert into BC_IDENTITY_ACTOR (UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_, PY,PCODE,PNAME) values('uid', 0, 0, 4, 'zongjingli','总经理', '00000002','zongjingli','[1]D00','总公司');
 insert into BC_IDENTITY_ACTOR_RELATION (TYPE_,MASTER_ID,FOLLOWER_ID)  
     select 0,am.id,af.id from BC_IDENTITY_ACTOR am,BC_IDENTITY_ACTOR af where am.code='D00' and af.code='zongjingli'; 
     
-insert into BC_IDENTITY_ACTOR (UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_, PY) values('uid', 0, 0, 4, 'fuzongjingli','副总经理', '00000003','fuzongjingli');
+insert into BC_IDENTITY_ACTOR (UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_, PY,PCODE,PNAME) values('uid', 0, 0, 4, 'fuzongjingli','副总经理', '00000003','fuzongjingli','[1]D00','总公司');
 insert into BC_IDENTITY_ACTOR_RELATION (TYPE_,MASTER_ID,FOLLOWER_ID)  
     select 0,am.id,af.id from BC_IDENTITY_ACTOR am,BC_IDENTITY_ACTOR af where am.code='D00' and af.code='fuzongjingli'; 
     
-insert into BC_IDENTITY_ACTOR (UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_, PY) values('uid', 0, 0, 4, 'xiaoming','小明', '00010001','xiaoming');
+insert into BC_IDENTITY_ACTOR (UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_, PY,PCODE,PNAME) values('uid', 0, 0, 4, 'xiaoming','小明', '00010001','xiaoming','[1]D00/[2]B01','总公司/办公室');
 insert into BC_IDENTITY_ACTOR_RELATION (TYPE_,MASTER_ID,FOLLOWER_ID) 
     select 0,am.id,af.id from BC_IDENTITY_ACTOR am,BC_IDENTITY_ACTOR af where am.code='B01' and af.code='xiaoming'; 
     
-insert into BC_IDENTITY_ACTOR (UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_, PY) values('uid', 0, 0, 4, 'xiaohong','小红', '00010002','xiaohong');
+insert into BC_IDENTITY_ACTOR (UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_, PY,PCODE,PNAME) values('uid', 0, 0, 4, 'xiaohong','小红', '00010002','xiaohong','[1]D00/[2]B01','总公司/办公室');
 insert into BC_IDENTITY_ACTOR_RELATION (TYPE_,MASTER_ID,FOLLOWER_ID) 
     select 0,am.id,af.id from BC_IDENTITY_ACTOR am,BC_IDENTITY_ACTOR af where am.code='B01' and af.code='xiaohong'; 
     
-insert into BC_IDENTITY_ACTOR (UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_, PY) values('uid', 0, 0, 4, 'xiaojun','小军', '00020001','xiaojun');
+insert into BC_IDENTITY_ACTOR (UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_, PY,PCODE,PNAME) values('uid', 0, 0, 4, 'xiaojun','小军', '00020001','xiaojun','[1]D00/[2]B02','总公司/财务部');
 insert into BC_IDENTITY_ACTOR_RELATION (TYPE_,MASTER_ID,FOLLOWER_ID) 
     select 0,am.id,af.id from BC_IDENTITY_ACTOR am,BC_IDENTITY_ACTOR af where am.code='B02' and af.code='xiaojun'; 
     
-insert into BC_IDENTITY_ACTOR (UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_, PY) values('uid', 0, 0, 4, 'admin','超级管理员', '00030001','chaojiguanliyuan');
+insert into BC_IDENTITY_ACTOR (UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_, PY,PCODE,PNAME) values('uid', 0, 0, 4, 'admin','超级管理员', '00030001','chaojiguanliyuan','[1]D00/[2]B03','总公司/信息中心');
 insert into BC_IDENTITY_ACTOR_RELATION (TYPE_,MASTER_ID,FOLLOWER_ID) 
     select 0,am.id,af.id from BC_IDENTITY_ACTOR am,BC_IDENTITY_ACTOR af where am.code='B03' and af.code='admin'; 
     
-insert into BC_IDENTITY_ACTOR (UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_, PY) values('uid', 0, 0, 4, 'dragon','黄荣基', '00030002', 'huangrongji');
+insert into BC_IDENTITY_ACTOR (UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_, PY,PCODE,PNAME) values('uid', 0, 0, 4, 'dragon','黄荣基', '00030002', 'huangrongji','[1]D00/[2]B03','总公司/信息中心');
 insert into BC_IDENTITY_ACTOR_RELATION (TYPE_,MASTER_ID,FOLLOWER_ID) 
     select 0,am.id,af.id from BC_IDENTITY_ACTOR am,BC_IDENTITY_ACTOR af where am.code='B03' and af.code='dragon';
     
@@ -201,28 +201,28 @@ insert into BC_IDENTITY_ACTOR_HISTORY (CREATE_DATE,ACTOR_TYPE,ACTOR_ID,ACTOR_NAM
     from BC_IDENTITY_ACTOR a, BC_IDENTITY_ACTOR b, BC_IDENTITY_ACTOR c where a.code='admin' and b.code='B03' and c.code='D00'; 
 
 -- 插入岗位数据
-insert into BC_IDENTITY_ACTOR (UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_) values('uid', 0, 0, 3, 'G_ADMIN','超级管理岗', '0000');
+insert into BC_IDENTITY_ACTOR (UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_,PCODE,PNAME) values('uid', 0, 0, 3, 'G_ADMIN','超级管理岗', '0000','[1]D00/[2]B03','总公司/信息中心');
 insert into BC_IDENTITY_ACTOR_RELATION (TYPE_,MASTER_ID,FOLLOWER_ID) 
     select 0,am.id,af.id from BC_IDENTITY_ACTOR am,BC_IDENTITY_ACTOR af where am.code='B03' and af.code='G_ADMIN'; 
-insert into BC_IDENTITY_ACTOR (UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_) values('uid', 0, 0, 3, 'G9901','测试岗位1', '9901');
+insert into BC_IDENTITY_ACTOR (UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_,PCODE,PNAME) values('uid', 0, 0, 3, 'G9901','测试岗位1', '9901','[1]D00/[2]B03','总公司/信息中心');
 insert into BC_IDENTITY_ACTOR_RELATION (TYPE_,MASTER_ID,FOLLOWER_ID) 
     select 0,am.id,af.id from BC_IDENTITY_ACTOR am,BC_IDENTITY_ACTOR af where am.code='B03' and af.code='G9901'; 
-insert into BC_IDENTITY_ACTOR (UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_) values('uid', 0, 0, 3, 'G9902','测试岗位2', '9902');
+insert into BC_IDENTITY_ACTOR (UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_,PCODE,PNAME) values('uid', 0, 0, 3, 'G9902','测试岗位2', '9902','[1]D00/[2]B03','总公司/信息中心');
 insert into BC_IDENTITY_ACTOR_RELATION (TYPE_,MASTER_ID,FOLLOWER_ID) 
     select 0,am.id,af.id from BC_IDENTITY_ACTOR am,BC_IDENTITY_ACTOR af where am.code='B03' and af.code='G9902'; 
-insert into BC_IDENTITY_ACTOR (UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_) values('uid', 0, 0, 3, 'G9903','测试岗位3', '9903');
+insert into BC_IDENTITY_ACTOR (UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_,PCODE,PNAME) values('uid', 0, 0, 3, 'G9903','测试岗位3', '9903','[1]D00/[2]B03','总公司/信息中心');
 insert into BC_IDENTITY_ACTOR_RELATION (TYPE_,MASTER_ID,FOLLOWER_ID) 
     select 0,am.id,af.id from BC_IDENTITY_ACTOR am,BC_IDENTITY_ACTOR af where am.code='B03' and af.code='G9903'; 
-insert into BC_IDENTITY_ACTOR (UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_) values('uid', 0, 0, 3, 'G9904','测试岗位4', '9904');
+insert into BC_IDENTITY_ACTOR (UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_,PCODE,PNAME) values('uid', 0, 0, 3, 'G9904','测试岗位4', '9904','[1]D00/[2]B03','总公司/信息中心');
 insert into BC_IDENTITY_ACTOR_RELATION (TYPE_,MASTER_ID,FOLLOWER_ID) 
     select 0,am.id,af.id from BC_IDENTITY_ACTOR am,BC_IDENTITY_ACTOR af where am.code='B03' and af.code='G9904'; 
-insert into BC_IDENTITY_ACTOR (UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_) values('uid', 0, 0, 3, 'G9905','测试岗位5', '9905');
+insert into BC_IDENTITY_ACTOR (UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_,PCODE,PNAME) values('uid', 0, 0, 3, 'G9905','测试岗位5', '9905','[1]D00/[2]B03','总公司/信息中心');
 insert into BC_IDENTITY_ACTOR_RELATION (TYPE_,MASTER_ID,FOLLOWER_ID) 
     select 0,am.id,af.id from BC_IDENTITY_ACTOR am,BC_IDENTITY_ACTOR af where am.code='B03' and af.code='G9905'; 
-insert into BC_IDENTITY_ACTOR (UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_) values('uid', 0, 0, 3, 'G9906','测试岗位6', '9906');
+insert into BC_IDENTITY_ACTOR (UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_,PCODE,PNAME) values('uid', 0, 0, 3, 'G9906','测试岗位6', '9906','[1]D00/[2]B03','总公司/信息中心');
 insert into BC_IDENTITY_ACTOR_RELATION (TYPE_,MASTER_ID,FOLLOWER_ID) 
     select 0,am.id,af.id from BC_IDENTITY_ACTOR am,BC_IDENTITY_ACTOR af where am.code='B03' and af.code='G9906'; 
-insert into BC_IDENTITY_ACTOR (UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_) values('uid', 0, 0, 3, 'G9907','测试岗位7', '9907');
+insert into BC_IDENTITY_ACTOR (UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_,PCODE,PNAME) values('uid', 0, 0, 3, 'G9907','测试岗位7', '9907','[1]D00/[2]B03','总公司/信息中心');
 insert into BC_IDENTITY_ACTOR_RELATION (TYPE_,MASTER_ID,FOLLOWER_ID) 
     select 0,am.id,af.id from BC_IDENTITY_ACTOR am,BC_IDENTITY_ACTOR af where am.code='B03' and af.code='G9907'; 
 -- 让超级管理员拥有超级管理岗
