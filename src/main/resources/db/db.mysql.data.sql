@@ -42,9 +42,9 @@ insert into BC_IDENTITY_RESOURCE (STATUS_,INNER_,TYPE_,BELONG,ORDER_,NAME,URL,IC
 insert into BC_IDENTITY_RESOURCE (STATUS_,INNER_,TYPE_,BELONG,ORDER_,NAME,URL,ICONCLASS) 
 	select 0, 0, 3, m.id, '073901','新浪微博', 'http://weibo.com', 'i0508' from BC_IDENTITY_RESOURCE m where m.order_='073900';
 insert into BC_IDENTITY_RESOURCE (STATUS_,INNER_,TYPE_,BELONG,ORDER_,NAME,URL,ICONCLASS) 
-	select 0, 0, 3, m.id, '073902','腾讯微博', 'http://t.qq.com', 'i0508' from BC_IDENTITY_RESOURCE m where m.order_='073900';
+	select 0, 0, 3, m.id, '073902','腾讯微博', 'http://t.qq.com', 'i0507' from BC_IDENTITY_RESOURCE m where m.order_='073900';
 insert into BC_IDENTITY_RESOURCE (STATUS_,INNER_,TYPE_,BELONG,ORDER_,NAME,URL,ICONCLASS) 
-	select 0, 0, 3, m.id, '073903','网易微博', 'http://t.163.com', 'i0508' from BC_IDENTITY_RESOURCE m where m.order_='073900';
+	select 0, 0, 3, m.id, '073903','网易微博', 'http://t.163.com', 'i0506' from BC_IDENTITY_RESOURCE m where m.order_='073900';
 insert into BC_IDENTITY_RESOURCE (STATUS_,INNER_,TYPE_,BELONG,ORDER_,NAME,URL,ICONCLASS) 
 	select 0, 0, 3, m.id, '073904','搜狐微博', 'http://t.sohu.com', 'i0508' from BC_IDENTITY_RESOURCE m where m.order_='073900';
 -- 资源:常用链接/搜索引擎
