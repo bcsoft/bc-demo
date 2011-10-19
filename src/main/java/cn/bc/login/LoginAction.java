@@ -5,6 +5,7 @@ package cn.bc.login;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +25,7 @@ import org.springframework.util.DigestUtils;
 import org.springframework.util.StringUtils;
 
 import cn.bc.Context;
+import cn.bc.core.util.DateUtils;
 import cn.bc.identity.domain.Actor;
 import cn.bc.identity.domain.ActorHistory;
 import cn.bc.identity.domain.ActorRelation;
@@ -84,6 +86,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
 	}
 
 	public String doLogin() throws Exception {
+		Date startTime = new Date();
 		success = true;
 
 		Actor user = this.userService.loadByCode(name);
@@ -151,10 +154,10 @@ public class LoginAction extends ActionSupport implements SessionAware {
 
 					// 用户的角色（包含继承自上级组织和隶属岗位的角色）
 					Set<Role> roles = new LinkedHashSet<Role>();// 可用的角色
-					roles.addAll(user.getRoles());//加入自己的角色
+					roles.addAll(user.getRoles());// 加入自己的角色
 					List<Actor> ancestors = this.userService
 							.findAncestorOrganization(user.getId());
-					for (Actor ancestor : ancestors) {//加入继承的角色
+					for (Actor ancestor : ancestors) {// 加入继承的角色
 						roles.addAll(ancestor.getRoles());
 					}
 					List<String> rcs = new ArrayList<String>();
@@ -196,7 +199,9 @@ public class LoginAction extends ActionSupport implements SessionAware {
 				}
 			}
 		}
-
+		
+		if (logger.isInfoEnabled())
+			logger.info("doLogin耗时：" + DateUtils.getWasteTime(startTime));
 		return SUCCESS;
 	}
 
@@ -204,7 +209,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
 	private Actor loadUnit(Actor belong) {
 		if (belong.getType() == Actor.TYPE_UNIT)
 			return belong;
-			
+
 		Actor parent = this.userService.loadBelong(belong.getId(),
 				new Integer[] { Actor.TYPE_UNIT, Actor.TYPE_DEPARTMENT });
 		if (parent == null) {// 已是顶层单位
