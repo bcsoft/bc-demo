@@ -46,6 +46,7 @@ CREATE TABLE BC_IDENTITY_RESOURCE (
     URL varchar2(255),
     ICONCLASS varchar2(255),
     OPTION_ varchar2(4000),
+   	PNAME varchar2(4000),
     CONSTRAINT BCPK_RESOURCE PRIMARY KEY (ID)
 );
 COMMENT ON TABLE BC_IDENTITY_RESOURCE IS '系统资源';
@@ -58,6 +59,9 @@ COMMENT ON COLUMN BC_IDENTITY_RESOURCE.NAME IS '名称';
 COMMENT ON COLUMN BC_IDENTITY_RESOURCE.URL IS '地址';
 COMMENT ON COLUMN BC_IDENTITY_RESOURCE.ICONCLASS IS '图标样式';
 COMMENT ON COLUMN BC_IDENTITY_RESOURCE.OPTION_ IS '扩展参数';
+COMMENT ON COLUMN BC_IDENTITY_RESOURCE.PNAME IS '所隶属模块的全名:如系统维护/组织架构/单位配置';
+CREATE INDEX BCIDX_RESOURCE_BELONG ON BC_IDENTITY_RESOURCE (BELONG);
+CREATE INDEX BCIDX_RESOURCE_BELONG_NULL ON BC_IDENTITY_RESOURCE (nvl(BELONG,0));
 
 -- 角色
 CREATE TABLE BC_IDENTITY_ROLE (
@@ -140,9 +144,6 @@ CREATE TABLE BC_IDENTITY_ACTOR (
     PNAME varchar2(4000),
     CONSTRAINT BCPK_ACTOR PRIMARY KEY (ID)
 );
-ALTER TABLE BC_IDENTITY_ACTOR ADD CONSTRAINT BCFK_ACTOR_ACTORDETAIL FOREIGN KEY (DETAIL_ID) 
-	REFERENCES BC_IDENTITY_ACTOR_DETAIL (ID) ON DELETE CASCADE;
-CREATE INDEX BCIDX_ACTOR_TYPE ON BC_IDENTITY_ACTOR (TYPE_ ASC);
 COMMENT ON TABLE BC_IDENTITY_ACTOR IS '参与者(代表一个人或组织，组织也可以是单位、部门、岗位、团队等)';
 COMMENT ON COLUMN BC_IDENTITY_ACTOR.UID_ IS '全局标识';
 COMMENT ON COLUMN BC_IDENTITY_ACTOR.TYPE_ IS '类型：0-未定义,1-单位,2-部门,3-岗位,4-用户';
@@ -157,6 +158,12 @@ COMMENT ON COLUMN BC_IDENTITY_ACTOR.PHONE IS '联系电话';
 COMMENT ON COLUMN BC_IDENTITY_ACTOR.DETAIL_ID IS '扩展表的ID';
 COMMENT ON COLUMN BC_IDENTITY_ACTOR.PCODE IS '隶属机构的全编码';
 COMMENT ON COLUMN BC_IDENTITY_ACTOR.PNAME IS '隶属机构的全名';
+ALTER TABLE BC_IDENTITY_ACTOR ADD CONSTRAINT BCFK_ACTOR_ACTORDETAIL FOREIGN KEY (DETAIL_ID) 
+	REFERENCES BC_IDENTITY_ACTOR_DETAIL (ID) ON DELETE CASCADE;
+CREATE INDEX BCIDX_ACTOR_CODE ON BC_IDENTITY_ACTOR (CODE ASC);
+CREATE INDEX BCIDX_ACTOR_STATUSTYPE ON BC_IDENTITY_ACTOR (STATUS_ ASC,TYPE_ ASC);
+CREATE INDEX BCIDX_ACTOR_TYPE ON BC_IDENTITY_ACTOR (TYPE_ ASC);
+CREATE INDEX BCIDX_ACTOR_DETAIL ON BC_IDENTITY_ACTOR (DETAIL_ID ASC);
 
 -- 参与者之间的关联关系
 CREATE TABLE BC_IDENTITY_ACTOR_RELATION (
@@ -210,9 +217,9 @@ COMMENT ON COLUMN BC_IDENTITY_ACTOR_HISTORY.PCODE IS '隶属机构的全编码';
 COMMENT ON COLUMN BC_IDENTITY_ACTOR_HISTORY.PNAME IS '隶属机构的全名';
 ALTER TABLE BC_IDENTITY_ACTOR_HISTORY ADD CONSTRAINT BCFK_ACTORHISTORY_ACTOR FOREIGN KEY (ACTOR_ID)
       REFERENCES BC_IDENTITY_ACTOR (ID);
-CREATE INDEX BCIDX_ACTORHISTORY_UPPERID ON BC_IDENTITY_ACTOR_HISTORY (UPPER_ID ASC);
-CREATE INDEX BCIDX_ACTORHISTORY_UNITID ON BC_IDENTITY_ACTOR_HISTORY (UNIT_ID ASC);
--- CREATE INDEX BCIDX_ACTORHISTORY_ACTORID ON BC_IDENTITY_ACTOR_HISTORY (ACTOR_ID ASC);
+CREATE INDEX BCIDX_ACTORHISTORY_UPPER ON BC_IDENTITY_ACTOR_HISTORY (UPPER_ID ASC);
+CREATE INDEX BCIDX_ACTORHISTORY_UNIT ON BC_IDENTITY_ACTOR_HISTORY (UNIT_ID ASC);
+CREATE INDEX BCIDX_ACTORHISTORY_ACTOR ON BC_IDENTITY_ACTOR_HISTORY (ACTOR_ID ASC);
 
 -- 认证信息
 CREATE TABLE BC_IDENTITY_AUTH (
@@ -264,8 +271,8 @@ create table BC_DESKTOP_SHORTCUT (
     NAME varchar(255),
     URL varchar(255),
     ICONCLASS varchar(255),
-    SID number(19),
-    AID number(19),
+    SID number(19) default 0 NOT NULL,
+    AID number(19) default 0 NOT NULL,
     CONSTRAINT BCPK_DESKTOP_SHORTCUT primary key (ID)
 );
 COMMENT ON TABLE BC_DESKTOP_SHORTCUT IS '桌面快捷方式';
@@ -278,10 +285,6 @@ COMMENT ON COLUMN BC_DESKTOP_SHORTCUT.URL IS '地址,为空则使用模块的地址';
 COMMENT ON COLUMN BC_DESKTOP_SHORTCUT.ICONCLASS IS '图标样式';
 COMMENT ON COLUMN BC_DESKTOP_SHORTCUT.SID IS '对应的资源ID';
 COMMENT ON COLUMN BC_DESKTOP_SHORTCUT.AID IS '所属的参与者(如果为上级参与者,如单位部门,则其下的所有参与者都拥有该快捷方式)';
-ALTER TABLE BC_DESKTOP_SHORTCUT ADD CONSTRAINT BCFK_SHORTCUT_RESOURCE FOREIGN KEY (SID) 
-	REFERENCES BC_IDENTITY_RESOURCE (ID);
-ALTER TABLE BC_DESKTOP_SHORTCUT ADD CONSTRAINT BCFK_SHORTCUT_ACTOR FOREIGN KEY (AID) 
-	REFERENCES BC_IDENTITY_ACTOR (ID);
 CREATE INDEX BCIDX_SHORTCUT ON BC_DESKTOP_SHORTCUT (AID,SID);
 
 -- 个人设置
@@ -291,7 +294,7 @@ CREATE TABLE BC_DESKTOP_PERSONAL (
     STATUS_ number(1)  NOT NULL,
     FONT varchar2(2) NOT NULL,
     THEME varchar2(255) NOT NULL,
-    AID number(19),
+    AID number(19) default 0 NOT NULL,
     INNER_ number(1)  NOT NULL,
     CONSTRAINT BCPK_DESKTOP_PERSONAL PRIMARY KEY (ID)
 );
@@ -302,10 +305,7 @@ COMMENT ON COLUMN BC_DESKTOP_PERSONAL.FONT IS '字体大小，如12、14、16';
 COMMENT ON COLUMN BC_DESKTOP_PERSONAL.THEME IS '主题名称,如base';
 COMMENT ON COLUMN BC_DESKTOP_PERSONAL.AID IS '所属的参与者';
 COMMENT ON COLUMN BC_DESKTOP_PERSONAL.INNER_ IS '是否为内置对象:0-否,1-是';
-ALTER TABLE BC_DESKTOP_PERSONAL ADD CONSTRAINT BCFK_PERSONAL_ACTOR FOREIGN KEY (AID) 
-	REFERENCES BC_IDENTITY_ACTOR (ID);
 ALTER TABLE BC_DESKTOP_PERSONAL ADD CONSTRAINT BCUK_PERSONAL_AID UNIQUE (AID);
-
 
 -- 消息模块
 CREATE TABLE BC_MESSAGE (
@@ -488,7 +488,7 @@ COMMENT ON COLUMN BC_BULLETIN.CONTENT IS '详细内容';
 ALTER TABLE BC_BULLETIN ADD CONSTRAINT BCFK_BULLETIN_AUTHOR FOREIGN KEY (AUTHOR_ID)
       REFERENCES BC_IDENTITY_ACTOR_HISTORY (ID);
 ALTER TABLE BC_BULLETIN ADD CONSTRAINT BCFK_BULLETIN_ISSUER FOREIGN KEY (ISSUER_ID)
-      REFERENCES BC_IDENTITY_ACTOR_HISTORY (ID);
+      REFERENCES BC_IDENTITY_ACTOR (ID);
 ALTER TABLE BC_BULLETIN ADD CONSTRAINT BCFK_BULLETIN_MODIFIER FOREIGN KEY (MODIFIER_ID)
       REFERENCES BC_IDENTITY_ACTOR_HISTORY (ID);
 ALTER TABLE BC_BULLETIN ADD CONSTRAINT BCFK_BULLETIN_UNIT FOREIGN KEY (UNIT_ID)
@@ -694,6 +694,111 @@ COMMENT ON COLUMN BC_SD_LOG.CFG_NAME IS '对应ScheduleJob的name';
 COMMENT ON COLUMN BC_SD_LOG.CFG_GROUP IS '对应ScheduleJob的groupn';
 COMMENT ON COLUMN BC_SD_LOG.CFG_BEAN IS '对应ScheduleJob的bean';
 COMMENT ON COLUMN BC_SD_LOG.CFG_METHOD IS '对应ScheduleJob的method';
+
+-- ##bc平台的 oracle 自定义函数和存储过程##
+
+-- 设置将信息输出到控制台（如果是在SQL Plus命令行运行这个sql文件，须先行执行这个命令才能看到输出信息）
+-- set serveroutput on; -- pl/sql的SQL窗口不支持该命令，但在其命令窗口可以
+-- set serveroutput on SIZE number(1000);
+
+-- 创建更新actor的pcode和pname的存储过程：会递归处理下级单位和部门
+CREATE OR REPLACE PROCEDURE update_actor_pcodepname(
+   --actor所隶属上级的id，为0代表顶层单位
+   pid IN number
+)
+AS
+--定义变量
+pfcode varchar2(4000);
+pfname varchar2(4000);
+cid number;
+ct number;
+pid1 number;
+cursor curChilden is select a.id,a.type_ from bc_identity_actor a inner join bc_identity_actor_relation r on r.follower_id = a.id 
+	where r.type_=0 and r.master_id=pid order by a.order_;
+cursor curTops is select a.id from bc_identity_actor a where a.type_=1 and not exists 
+	(select r.follower_id from bc_identity_actor_relation r where r.type_=0 and a.id=r.follower_id)
+    order by a.order_;
+BEGIN
+	dbms_output.put_line('pid=' || pid);
+    
+  	if pid > 0 then
+		select (case when pcode is null then '' else pcode || '/' end) || '[' || type_ || ']' || code
+        	,(case when pname is null then '' else pname || '/' end) || name
+        	into pfcode,pfname from bc_identity_actor where id=pid;
+        dbms_output.put_line('pfcode='||pfcode||',pfname='||pfname);
+        open curChilden;
+        fetch curChilden into cid,ct;
+        while curChilden%found loop
+            dbms_output.put_line('cid='||cid);
+            update bc_identity_actor a set a.pcode=pfcode,a.pname=pfname where a.id=cid;
+  			if ct < 3 then 
+             	dbms_output.put_line('--');
+           		-- 单位或部门执行递归处理
+                update_actor_pcodepname(cid);
+			end if;
+            -- 将游标指向下条记录, 否则为死循环
+            fetch curChilden into cid,ct;
+        end loop;
+        close curChilden;
+	else
+        open curTops;
+        fetch curTops into pid1;
+        while curTops%found loop
+            update_actor_pcodepname(pid1);
+            -- 将游标指向下条记录, 否则为死循环
+            fetch curTops into pid1;
+        end loop;
+        close curTops;
+  	end if; 
+END;
+/
+
+-- 创建更新resource的pname的存储过程：会递归处理下级资源
+CREATE OR REPLACE PROCEDURE update_resource_pname(
+   --resource所隶属的id，为0代表顶层资源
+   pid IN number
+)
+AS
+--定义变量
+pfname varchar2(4000);
+cid number;
+ct number;
+pid1 number;
+cursor curChilden is select r.id,r.type_ from bc_identity_resource r where r.belong = pid order by r.order_;
+cursor curTops is select r.id from bc_identity_resource r where nvl(r.belong,0) = 0 order by r.order_;
+BEGIN
+	dbms_output.put_line('pid=' || pid);
+    
+  	if pid > 0 then
+		select (case when pname is null then '' else pname || '/' end) || name
+        	into pfname from bc_identity_resource where id=pid;
+        dbms_output.put_line('pfname='||pfname);
+        open curChilden;
+        fetch curChilden into cid,ct;
+        while curChilden%found loop
+            dbms_output.put_line('cid='||cid);
+            update bc_identity_resource r set r.pname=pfname where r.id=cid;
+  			if ct = 1 then 
+             	dbms_output.put_line('--');
+           		-- 分类型资源执行递归处理
+                update_resource_pname(cid);
+			end if;
+            -- 将游标指向下条记录, 否则为死循环
+            fetch curChilden into cid,ct;
+        end loop;
+        close curChilden;
+	else
+        open curTops;
+        fetch curTops into pid1;
+        while curTops%found loop
+            update_resource_pname(pid1);
+            -- 将游标指向下条记录, 否则为死循环
+            fetch curTops into pid1;
+        end loop;
+        close curTops;
+  	end if; 
+END;
+/
 
 create table ACT_GE_PROPERTY (
     NAME_ NVARCHAR2(64),

@@ -48,18 +48,18 @@
 	
 	<!-- struts2 -->
     <category name="org.apache.struts2">
-    	 <priority value="WARN" />
+    	 <priority value="ERROR" />
     </category>
 	<!-- struts2：设为DEBUG，查看转发到那个jsp文件 -->
     <category name="org.apache.struts2.dispatcher.ServletDispatcherResult">
-    	 <priority value="DEBUG" />
+    	 <priority value="ERROR" />
     </category>
     <category name="com.opensymphony">
-    	<priority value="WARN" />
+    	<priority value="ERROR" />
     </category>
 	<!-- struts2：设为DEBUG，查看加载了哪些xml配置文件 -->
     <category name="com.opensymphony.xwork2.util.FileManager">
-    	<priority value="DEBUG" />
+    	<priority value="ERROR" />
     </category>
 	<category name="freemarker">
 	  <priority value="ERROR" />
@@ -69,23 +69,30 @@
 	<category name="cn.bc">
 	  <priority value="WARN" />
 	</category>
-	<category name="cn.bc.web.ui.AbstractComponent">
-	  <priority value="ERROR" />
-	</category>
  
 	<!-- bc -->
- 	<category name="cn.bc.docs.web.struts2.ImageAction">
-	  <priority value="INFO" />
-	</category>
 	<category name="cn.bc.login.LoginAction">
-	  <priority value="INFO" />
+	  <priority value="WARN" />
 	</category>
 	<category name="cn.bc.index.IndexAction">
-	  <priority value="INFO" />
+	  <priority value="WARN" />
 	</category>
-	<category name="cn.bc.identity.dao.hibernate.jpa.ActorDaoImpl">
+	<category name="cn.bc.desktop.service.LoginServiceImpl">
+	  <priority value="WARN" />
+	</category>
+	<category name="cn.bc.web.struts2.interceptor.CacheInterceptor">
+	  <priority value="WARN" />
+	</category>
+	<category name="cn.bc.web.struts2.interceptor.AuthIterceptor">
+	  <priority value="WARN" />
+	</category>
+	<category name="cn.bc.orm.hibernate.jpa.HibernateJpaNativeQuery">
 	  <priority value="DEBUG" />
 	</category>
+	<category name="cn.bc.web.struts2.AbstractGridPageAction">
+	  <priority value="INFO" />
+	</category>
+	
     	
   	<!-- 设置默认的日志级别(该设置必须放在最后,否则加载会解析出错) -->
 	<!-- 优先级别:OFF/FATAL/ERROR/WARN /INFO /DEBUG /ALL -->

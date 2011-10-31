@@ -88,6 +88,9 @@
 				<fileset dir="${frameworkSql.dir}">
 					<include name="framework.db.@{db}.create.sql" />
 				</fileset>
+				<fileset dir="${frameworkSql.dir}">
+					<include name="framework.db.@{db}.create.fn.sql" />
+				</fileset>
 
 				<!-- activiti -->
 				<fileset dir="${workflowSql.dir}">

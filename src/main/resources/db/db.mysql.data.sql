@@ -109,13 +109,13 @@ insert into BC_IDENTITY_RESOURCE (STATUS_,INNER_,TYPE_,BELONG,ORDER_,NAME,URL,IC
 insert into BC_IDENTITY_RESOURCE (STATUS_,INNER_,TYPE_,BELONG,ORDER_,NAME,URL,ICONCLASS) 
 	select 0, 0, 2, m.id, '800101','职务配置', '/bc/duty/paging', 'i0009' from BC_IDENTITY_RESOURCE m where m.order_='800100';
 insert into BC_IDENTITY_RESOURCE (STATUS_,INNER_,TYPE_,BELONG,ORDER_,NAME,URL,ICONCLASS) 
-	select 0, 0, 2, m.id, '800102','单位配置', '/bc/unit/paging', 'i0007' from BC_IDENTITY_RESOURCE m where m.order_='800100';
+	select 0, 0, 2, m.id, '800102','单位配置', '/bc/units/paging', 'i0007' from BC_IDENTITY_RESOURCE m where m.order_='800100';
 insert into BC_IDENTITY_RESOURCE (STATUS_,INNER_,TYPE_,BELONG,ORDER_,NAME,URL,ICONCLASS) 
-	select 0, 0, 2, m.id, '800103','部门配置', '/bc/department/paging', 'i0008' from BC_IDENTITY_RESOURCE m where m.order_='800100';
+	select 0, 0, 2, m.id, '800103','部门配置', '/bc/departments/paging', 'i0008' from BC_IDENTITY_RESOURCE m where m.order_='800100';
 insert into BC_IDENTITY_RESOURCE (STATUS_,INNER_,TYPE_,BELONG,ORDER_,NAME,URL,ICONCLASS) 
-	select 0, 0, 2, m.id, '800104','岗位配置', '/bc/group/paging', 'i0003' from BC_IDENTITY_RESOURCE m where m.order_='800100';
+	select 0, 0, 2, m.id, '800104','岗位配置', '/bc/groups/paging', 'i0003' from BC_IDENTITY_RESOURCE m where m.order_='800100';
 insert into BC_IDENTITY_RESOURCE (STATUS_,INNER_,TYPE_,BELONG,ORDER_,NAME,URL,ICONCLASS) 
-	select 0, 0, 2, m.id, '800105','用户配置', '/bc/user/paging', 'i0003' from BC_IDENTITY_RESOURCE m where m.order_='800100';
+	select 0, 0, 2, m.id, '800105','用户配置', '/bc/users/paging', 'i0003' from BC_IDENTITY_RESOURCE m where m.order_='800100';
     
 -- 资源:系统维护/权限管理
 insert into BC_IDENTITY_RESOURCE (STATUS_,INNER_,TYPE_,BELONG,ORDER_,NAME,URL,ICONCLASS) 
@@ -140,46 +140,61 @@ insert into BC_IDENTITY_RESOURCE (STATUS_,INNER_,TYPE_,BELONG,ORDER_,NAME,URL,IC
 	select 0, 0, 2, m.id, '800305','定时任务', '/bc/schedule/job/list', 'i0309' from BC_IDENTITY_RESOURCE m where m.order_='800000';
 insert into BC_IDENTITY_RESOURCE (STATUS_,INNER_,TYPE_,BELONG,ORDER_,NAME,URL,ICONCLASS) 
 	select 0, 0, 2, m.id, '800306','日志管理', '/bc/syslog/paging', 'i0309' from BC_IDENTITY_RESOURCE m where m.order_='800000';
-   
+
+-- 平台模块
+insert into BC_IDENTITY_RESOURCE (STATUS_,INNER_,TYPE_,BELONG,ORDER_,NAME,URL,ICONCLASS) 
+	values(0, 0,  1, null, '020000','平台模块', null, 'i0403');
+insert into BC_IDENTITY_RESOURCE (STATUS_,INNER_,TYPE_,BELONG,ORDER_,NAME,URL,ICONCLASS) 
+	select 0, 0, 2, m.id, '020100','公告信息', '/bc/bulletins/paging', 'i0406' from BC_IDENTITY_RESOURCE m where m.order_='020000';
+
+-- 全局更新Resource的pname值
+call update_resource_pname(0);
 
 -- 插入通用角色数据
 insert into BC_IDENTITY_ROLE (STATUS_,INNER_,TYPE_,ORDER_,CODE,NAME) 
-	values(0, 0,  0,'0000', 'R_COMMON','通用角色');
+	values(0, 0,  0,'0000', 'BC_COMMON','通用角色');
 insert into BC_IDENTITY_ROLE_RESOURCE (RID,SID) 
-	select r.id,m.id from BC_IDENTITY_ROLE r,BC_IDENTITY_RESOURCE m where r.code='R_COMMON' 
-	and m.type_ > 1 and (m.order_ like '01%' or m.order_ like '03%' or m.order_ like '04%' or m.order_ like '07%')
+	select r.id,m.id from BC_IDENTITY_ROLE r,BC_IDENTITY_RESOURCE m where r.code='BC_COMMON' 
+	and m.type_ > 1 and (m.order_ like '01%' or m.order_ like '02%' or m.order_ like '03%' or m.order_ like '04%' or m.order_ like '07%')
 	order by m.order_;
 
 -- 插入超级管理员角色数据（可访问所有资源）
-insert into  BC_IDENTITY_ROLE (STATUS_,INNER_,TYPE_,ORDER_,CODE,NAME) 
-	values(0, 0,  0,'0001', 'R_ADMIN','超级管理员');
+insert into BC_IDENTITY_ROLE (STATUS_,INNER_,TYPE_,ORDER_,CODE,NAME) 
+	values(0, 0,  0,'0001', 'BC_ADMIN','超级管理员');
 insert into BC_IDENTITY_ROLE_RESOURCE (RID,SID) 
-	select r.id,m.id from BC_IDENTITY_ROLE r,BC_IDENTITY_RESOURCE m where m.type_ > 1 and r.code='R_ADMIN' order by r.ORDER_,m.ORDER_;
+	select r.id,m.id from BC_IDENTITY_ROLE r,BC_IDENTITY_RESOURCE m where m.type_ > 1 and r.code='BC_ADMIN' order by r.ORDER_,m.ORDER_;
+
+-- 插入选项管理员角色数据
+insert into BC_IDENTITY_ROLE (STATUS_,INNER_,TYPE_,ORDER_,CODE,NAME) 
+	values(0, 0,  0,'0002', 'BC_OPTION','选项管理');
+insert into BC_IDENTITY_ROLE_RESOURCE (RID,SID) 
+	select r.id,m.id from BC_IDENTITY_ROLE r,BC_IDENTITY_RESOURCE m where r.code='BC_OPTION' 
+	and m.type_ > 1 and m.order_ in ('800301','800302')
+	order by m.order_;
 
 -- 插入公告管理员角色数据
 insert into  BC_IDENTITY_ROLE (STATUS_,INNER_,TYPE_,ORDER_,CODE,NAME) 
-	values(0, 0,  0,'0002', 'R_MANAGER_BULLETIN','电子公告管理');
+	values(0, 0,  0,'0003', 'BC_BULLETIN','公告管理');
 insert into BC_IDENTITY_ROLE_RESOURCE (RID,SID) 
-	select r.id,m.id from BC_IDENTITY_ROLE r,BC_IDENTITY_RESOURCE m where r.code='R_MANAGER_BULLETIN' 
-	and m.type_ > 1 and (m.order_ like '04%')
+	select r.id,m.id from BC_IDENTITY_ROLE r,BC_IDENTITY_RESOURCE m where r.code='BC_BULLETIN' 
+	and m.type_ > 1 and m.order_ = '020100'
 	order by m.order_;
 
 -- 插入用户反馈管理角色数据
 insert into  BC_IDENTITY_ROLE (STATUS_,INNER_,TYPE_,ORDER_,CODE,NAME) 
-	values(0, 0,  0,'0003', 'R_MANAGER_FEEDBACK','系统反馈管理');
+	values(0, 0,  0,'0004', 'BC_FEEDBACK','反馈管理');
 insert into BC_IDENTITY_ROLE_RESOURCE (RID,SID) 
-	select r.id,m.id from BC_IDENTITY_ROLE r,BC_IDENTITY_RESOURCE m where r.code='R_MANAGER_FEEDBACK' 
+	select r.id,m.id from BC_IDENTITY_ROLE r,BC_IDENTITY_RESOURCE m where r.code='BC_FEEDBACK' 
 	and m.type_ > 1 and m.order_ in ('011000','800303')
 	order by m.order_;
 
 -- 插入附件管理角色数据
 insert into  BC_IDENTITY_ROLE (STATUS_,INNER_,TYPE_,ORDER_,CODE,NAME) 
-	values(0, 0,  0,'0004', 'R_MANAGER_ATTACH','附件管理');
+	values(0, 0,  0,'0005', 'BC_ATTACH','附件管理');
 insert into BC_IDENTITY_ROLE_RESOURCE (RID,SID) 
-	select r.id,m.id from BC_IDENTITY_ROLE r,BC_IDENTITY_RESOURCE m where r.code='R_MANAGER_ATTACH' 
+	select r.id,m.id from BC_IDENTITY_ROLE r,BC_IDENTITY_RESOURCE m where r.code='BC_ATTACH' 
 	and m.type_ > 1 and m.order_ in ('800304')
 	order by m.order_;
-
 
 
 -- 插入职务数据
@@ -301,6 +316,10 @@ insert into BC_IDENTITY_ACTOR_RELATION (TYPE_,MASTER_ID,FOLLOWER_ID)
 insert into BC_IDENTITY_ACTOR (UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_,PCODE,PNAME) values('uid', 0, 0, 3, 'G9907','测试岗位7', '9907','[1]D00/[2]B03','总公司/信息中心');
 insert into BC_IDENTITY_ACTOR_RELATION (TYPE_,MASTER_ID,FOLLOWER_ID) 
     select 0,am.id,af.id from BC_IDENTITY_ACTOR am,BC_IDENTITY_ACTOR af where am.code='B03' and af.code='G9907'; 
+
+-- 全局更新Actor的pcode、pname值
+call update_actor_pcodepname(0);
+
 -- 让超级管理员拥有超级管理岗
 insert into BC_IDENTITY_ACTOR_RELATION (TYPE_,MASTER_ID,FOLLOWER_ID) 
     select 0,am.id,af.id from BC_IDENTITY_ACTOR am,BC_IDENTITY_ACTOR af where af.code in ('admin','dragon') and am.code in ('G_ADMIN','G9901','G9902','G9903','G9904','G9905','G9906','G9907'); 
@@ -310,11 +329,11 @@ UPDATE BC_IDENTITY_ACTOR SET UID_=CONCAT('ACTOR-',id);
 
 -- 让顶层单位拥有通用角色
 insert into BC_IDENTITY_ROLE_ACTOR (AID,RID) 
-	select a.id, r.id from BC_IDENTITY_ACTOR a,BC_IDENTITY_ROLE r where a.code='D00' and r.code='R_COMMON';
+	select a.id, r.id from BC_IDENTITY_ACTOR a,BC_IDENTITY_ROLE r where a.code='D00' and r.code='BC_COMMON';
 
 -- 让超级管理员拥有超级管理员角色
 insert into BC_IDENTITY_ROLE_ACTOR (AID,RID) 
-	select a.id, r.id from BC_IDENTITY_ACTOR a,BC_IDENTITY_ROLE r where a.code in ('admin','dragon') and r.code='R_ADMIN';
+	select a.id, r.id from BC_IDENTITY_ACTOR a,BC_IDENTITY_ROLE r where a.code = 'admin' and r.code='BC_ADMIN';
 
 -- 让超级管理岗拥有所有角色
 insert into BC_IDENTITY_ROLE_ACTOR (AID,RID) 
@@ -323,15 +342,15 @@ insert into BC_IDENTITY_ROLE_ACTOR (AID,RID)
 -- 系统桌面相关模块的初始化数据
 
 -- 插入桌面快捷方式数据
-insert into BC_DESKTOP_SHORTCUT (STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,SID,AID) 
-	select 0, 0, '1001', 0, null, null, id, null from BC_IDENTITY_RESOURCE where name='个性化设置';
-insert into BC_DESKTOP_SHORTCUT (STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,SID,AID) 
-	select 0, 0, '1002', 0, null, null, id, null from BC_IDENTITY_RESOURCE where name='系统反馈';
+insert into BC_DESKTOP_SHORTCUT (STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,ICONCLASS,SID,AID) 
+	select 0, 0, '1001', 0, name, url, iconclass, id, 0 from BC_IDENTITY_RESOURCE where name='个性化设置';
+insert into BC_DESKTOP_SHORTCUT (STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,ICONCLASS,SID,AID) 
+	select 0, 0, '1002', 0, name, url, iconclass, id, 0 from BC_IDENTITY_RESOURCE where name='系统反馈';
 
 
 -- 插入全局配置信息
-insert into BC_DESKTOP_PERSONAL (STATUS_,INNER_,FONT,THEME,AID) 
-	values(0, 0, '12', 'smoothness', null);
+insert into BC_DESKTOP_PERSONAL (STATUS_,INNER_,FONT,THEME) 
+	values(0, 0, '12', 'smoothness');
 
 -- 插入浏览器附件下载信息
 insert into BC_DOCS_ATTACH (FILE_DATE,STATUS_,PTYPE,PUID,SIZE_,EXT,APPPATH,SUBJECT,PATH,AUTHOR_ID)

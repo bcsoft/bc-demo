@@ -33,4 +33,8 @@
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource"
 		p:driverClassName="${db_driverClassName}" p:url="${db_url}"
 		p:username="${db_username}" p:password="${db_password}" />
+		
+	<bean id="jpaTemplate" class="org.springframework.orm.jpa.JpaTemplate">
+		<constructor-arg ref="entityManagerFactory" />
+	</bean>
 </beans>

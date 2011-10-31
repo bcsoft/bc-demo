@@ -3,6 +3,8 @@
  */
 package cn.bc.index;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -24,12 +26,10 @@ import cn.bc.Context;
 import cn.bc.core.exception.CoreException;
 import cn.bc.core.util.DateUtils;
 import cn.bc.desktop.domain.Personal;
-import cn.bc.desktop.domain.Shortcut;
-import cn.bc.desktop.service.PersonalService;
-import cn.bc.desktop.service.ShortcutService;
+import cn.bc.desktop.service.LoginService;
 import cn.bc.identity.domain.Actor;
 import cn.bc.identity.domain.Resource;
-import cn.bc.identity.domain.Role;
+import cn.bc.identity.domain.ResourceComparator;
 import cn.bc.identity.web.SystemContext;
 import cn.bc.web.ui.html.menu.Menu;
 import cn.bc.web.ui.html.menu.MenuItem;
@@ -45,15 +45,19 @@ import com.opensymphony.xwork2.ActionSupport;
 public class IndexAction extends ActionSupport implements SessionAware {
 	private static final long serialVersionUID = 1L;
 	private static Log logger = LogFactory.getLog(IndexAction.class);
-	private String msg;
-	private ShortcutService shortcutService;
-	private PersonalService personalConfigService;
-	private List<Shortcut> shortcuts;
-	private String startMenu;// 开始菜单
+	private List<Map<String, String>> shortcuts;
 	private Personal personalConfig;// 个人配置
 	private Map<String, Object> session;
+	public String msg;
+	public String startMenu;// 开始菜单
+	private LoginService loginService;
 
 	public String contextPath;
+
+	@Autowired
+	public void setLoginService(LoginService loginService) {
+		this.loginService = loginService;
+	}
 
 	public IndexAction() {
 		contextPath = ServletActionContext.getRequest().getContextPath();
@@ -67,16 +71,6 @@ public class IndexAction extends ActionSupport implements SessionAware {
 		this.session = session;
 	}
 
-	@Autowired
-	public void setShortcutService(ShortcutService shortcutService) {
-		this.shortcutService = shortcutService;
-	}
-
-	@Autowired
-	public void setPersonalConfigService(PersonalService personalConfigService) {
-		this.personalConfigService = personalConfigService;
-	}
-
 	public Personal getPersonalConfig() {
 		return personalConfig;
 	}
@@ -85,27 +79,11 @@ public class IndexAction extends ActionSupport implements SessionAware {
 		this.personalConfig = personalConfig;
 	}
 
-	public String getStartMenu() {
-		return startMenu;
-	}
-
-	public void setStartMenu(String startMenu) {
-		this.startMenu = startMenu;
-	}
-
-	public String getMsg() {
-		return msg;
-	}
-
-	public void setMsg(String msg) {
-		this.msg = msg;
-	}
-
-	public List<Shortcut> getShortcuts() {
+	public List<Map<String, String>> getShortcuts() {
 		return shortcuts;
 	}
 
-	public void setShortcuts(List<Shortcut> shortcuts) {
+	public void setShortcuts(List<Map<String, String>> shortcuts) {
 		this.shortcuts = shortcuts;
 	}
 
@@ -123,43 +101,56 @@ public class IndexAction extends ActionSupport implements SessionAware {
 		Actor user = context.getUser();
 
 		// 个人配置
-		this.personalConfig = this.personalConfigService.loadByActor(
-				user.getId(), true);
+		this.personalConfig = this.loginService.loadPersonal(user.getId());
 		if (this.personalConfig == null)
 			throw new CoreException("缺少配置信息！");
+		logger.info("index.personal:" + DateUtils.getWasteTime(startTime));
 
-		// 快捷方式
-		Set<Resource> resources = new LinkedHashSet<Resource>();// 有权限使用的资源
-		Set<Role> roles = new LinkedHashSet<Role>();// 可用的角色
-		this.shortcuts = this.shortcutService.findByActor(user.getId(), null,
-				roles, resources);
+		// 当前用户拥有的角色id
+		Long[] roleIds = context.getAttr(SystemContext.KEY_ROLEIDS);
+		// 当前用户及其祖先的id
+		Long[] actorIds = context.getAttr(SystemContext.KEY_ANCESTORS);
+
+		// 查询可访问的资源
+		Set<Resource> resources = this.loginService.findResources(roleIds);
+		logger.info("index.resources:" + DateUtils.getWasteTime(startTime));
+		List<Long> resourceIds = new ArrayList<Long>();
+		for (Resource resource : resources) {
+			resourceIds.add(new Long(resource.getId()));
+		}
+
+		// 查询可访问的快捷方式
+		shortcuts = this.loginService.findShortcuts(actorIds,
+				resourceIds.toArray(new Long[0]));
+
+		logger.info("index.shortcuts:" + DateUtils.getWasteTime(startTime));
 		if (logger.isDebugEnabled()) {
 			logger.debug("shortcuts=" + shortcuts.size());
 			int i = 0;
-			for (Resource m : resources) {
-				logger.debug(++i + ") " + m);
+			for (Map<String, String> shortcut : shortcuts) {
+				logger.debug(++i + ") " + shortcut.toString());
+			}
+			i = 0;
+			logger.debug("resources=" + resources.size());
+			for (Resource resource : resources) {
+				logger.debug(++i + ") " + resource.getFullName());
 			}
 		}
 
-		// 将可用的角色记录到上下文
-		// List<String> roleCodes = new ArrayList<String>();
-		// for (Role role : roles) {
-		// roleCodes.add(role.getCode());
-		// }
-		// context.setAttr(SystemContext.KEY_ROLES, roleCodes);
-
 		// 找到顶层模块
 		Map<Resource, Set<Resource>> parentChildren = new LinkedHashMap<Resource, Set<Resource>>();
-		Set<Resource> topResources = this.findTopResources(resources,
+		List<Resource> topResources = this.findTopResources(resources,
 				parentChildren);
 		if (logger.isDebugEnabled()) {
+			logger.debug("topResources=" + topResources.size());
 			int i = 0;
 			for (Resource m : topResources) {
 				logger.debug(++i + ") " + m);
 			}
 			i = 0;
+			logger.debug("childResources=" + parentChildren.size());
 			for (Entry<Resource, Set<Resource>> m : parentChildren.entrySet()) {
-				logger.debug(++i + ") " + m.getKey() + " "
+				logger.debug(++i + ") " + m.getKey() + ",children.size="
 						+ m.getValue().size());
 			}
 		}
@@ -171,19 +162,25 @@ public class IndexAction extends ActionSupport implements SessionAware {
 		this.startMenu = menu.toString();
 		if (logger.isDebugEnabled())
 			logger.debug("startMenu=" + startMenu);
-
 		if (logger.isInfoEnabled())
-			logger.info("doLogin耗时：" + DateUtils.getWasteTime(startTime));
+			logger.info("index耗时：" + DateUtils.getWasteTime(startTime));
 		return SUCCESS;
 	}
 
-	private Set<Resource> findTopResources(Set<Resource> resources,
+	private List<Resource> toSortList(Set<Resource> set) {
+		List<Resource> list = new ArrayList<Resource>();
+		list.addAll(set);
+		Collections.sort(list, new ResourceComparator());
+		return list;
+	}
+
+	private List<Resource> findTopResources(Set<Resource> resources,
 			Map<Resource, Set<Resource>> parentChildren) {
 		Set<Resource> topResources = new LinkedHashSet<Resource>();
 		for (Resource m : resources) {
 			this.dealParentChildren(m, parentChildren, topResources);
 		}
-		return topResources;
+		return toSortList(topResources);
 	}
 
 	private void dealParentChildren(Resource m,
@@ -204,7 +201,7 @@ public class IndexAction extends ActionSupport implements SessionAware {
 		}
 	}
 
-	private Menu buildMenu4Resources(Set<Resource> resources,
+	private Menu buildMenu4Resources(List<Resource> resources,
 			Map<Resource, Set<Resource>> parentChildren) {
 		Menu menu = new Menu();
 		MenuItem menuItem;
@@ -240,8 +237,8 @@ public class IndexAction extends ActionSupport implements SessionAware {
 		if (m.getType() == Resource.TYPE_FOLDER) {// 文件夹
 			Set<Resource> childResources = parentChildren.get(m);// 模块下的子模块
 			if (childResources != null && !childResources.isEmpty()) {
-				menuItem.setChildMenu(buildMenu4Resources(childResources,
-						parentChildren));
+				menuItem.setChildMenu(buildMenu4Resources(
+						toSortList(childResources), parentChildren));
 			}
 		}
 		return menuItem;
