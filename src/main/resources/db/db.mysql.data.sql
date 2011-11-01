@@ -164,9 +164,17 @@ insert into BC_IDENTITY_ROLE (STATUS_,INNER_,TYPE_,ORDER_,CODE,NAME)
 insert into BC_IDENTITY_ROLE_RESOURCE (RID,SID) 
 	select r.id,m.id from BC_IDENTITY_ROLE r,BC_IDENTITY_RESOURCE m where m.type_ > 1 and r.code='BC_ADMIN' order by r.ORDER_,m.ORDER_;
 
+-- 插入组织架构管理角色数据
+insert into BC_IDENTITY_ROLE (STATUS_,INNER_,TYPE_,ORDER_,CODE,NAME) 
+	values(0, 0,  0,'0002', 'BC_ORGANIZE','组织架构管理');
+insert into BC_IDENTITY_ROLE_RESOURCE (RID,SID) 
+	select r.id,m.id from BC_IDENTITY_ROLE r,BC_IDENTITY_RESOURCE m where r.code='BC_ORGANIZE' 
+	and m.type_ > 1 and (m.order_ like '8001%' or m.order_ like '8002%')
+	order by m.order_;
+
 -- 插入选项管理员角色数据
 insert into BC_IDENTITY_ROLE (STATUS_,INNER_,TYPE_,ORDER_,CODE,NAME) 
-	values(0, 0,  0,'0002', 'BC_OPTION','选项管理');
+	values(0, 0,  0,'0003', 'BC_OPTION','选项管理');
 insert into BC_IDENTITY_ROLE_RESOURCE (RID,SID) 
 	select r.id,m.id from BC_IDENTITY_ROLE r,BC_IDENTITY_RESOURCE m where r.code='BC_OPTION' 
 	and m.type_ > 1 and m.order_ in ('800301','800302')
@@ -174,7 +182,7 @@ insert into BC_IDENTITY_ROLE_RESOURCE (RID,SID)
 
 -- 插入公告管理员角色数据
 insert into  BC_IDENTITY_ROLE (STATUS_,INNER_,TYPE_,ORDER_,CODE,NAME) 
-	values(0, 0,  0,'0003', 'BC_BULLETIN','公告管理');
+	values(0, 0,  0,'0004', 'BC_BULLETIN','公告管理');
 insert into BC_IDENTITY_ROLE_RESOURCE (RID,SID) 
 	select r.id,m.id from BC_IDENTITY_ROLE r,BC_IDENTITY_RESOURCE m where r.code='BC_BULLETIN' 
 	and m.type_ > 1 and m.order_ = '020100'
@@ -182,7 +190,7 @@ insert into BC_IDENTITY_ROLE_RESOURCE (RID,SID)
 
 -- 插入用户反馈管理角色数据
 insert into  BC_IDENTITY_ROLE (STATUS_,INNER_,TYPE_,ORDER_,CODE,NAME) 
-	values(0, 0,  0,'0004', 'BC_FEEDBACK','反馈管理');
+	values(0, 0,  0,'0005', 'BC_FEEDBACK','反馈管理');
 insert into BC_IDENTITY_ROLE_RESOURCE (RID,SID) 
 	select r.id,m.id from BC_IDENTITY_ROLE r,BC_IDENTITY_RESOURCE m where r.code='BC_FEEDBACK' 
 	and m.type_ > 1 and m.order_ in ('011000','800303')
@@ -190,7 +198,7 @@ insert into BC_IDENTITY_ROLE_RESOURCE (RID,SID)
 
 -- 插入附件管理角色数据
 insert into  BC_IDENTITY_ROLE (STATUS_,INNER_,TYPE_,ORDER_,CODE,NAME) 
-	values(0, 0,  0,'0005', 'BC_ATTACH','附件管理');
+	values(0, 0,  0,'0006', 'BC_ATTACH','附件管理');
 insert into BC_IDENTITY_ROLE_RESOURCE (RID,SID) 
 	select r.id,m.id from BC_IDENTITY_ROLE r,BC_IDENTITY_RESOURCE m where r.code='BC_ATTACH' 
 	and m.type_ > 1 and m.order_ in ('800304')
@@ -353,6 +361,10 @@ insert into BC_IDENTITY_ROLE_ACTOR (AID,RID)
 -- 让超级管理员拥有超级管理员角色
 insert into BC_IDENTITY_ROLE_ACTOR (AID,RID) 
 	select a.id, r.id from BC_IDENTITY_ACTOR a,BC_IDENTITY_ROLE r where a.code = 'admin' and r.code='BC_ADMIN';
+
+-- 让dragon拥有组织架构管理角色
+insert into BC_IDENTITY_ROLE_ACTOR (AID,RID) 
+	select a.id, r.id from BC_IDENTITY_ACTOR a,BC_IDENTITY_ROLE r where a.code = 'dragon' and r.code='BC_ORGANIZE';
 
 -- 让超级管理岗拥有所有角色
 insert into BC_IDENTITY_ROLE_ACTOR (AID,RID) 
