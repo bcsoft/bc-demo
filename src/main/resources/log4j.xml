@@ -72,13 +72,13 @@
  
 	<!-- bc -->
 	<category name="cn.bc.login.LoginAction">
-	  <priority value="WARN" />
+	  <priority value="INFO" />
 	</category>
 	<category name="cn.bc.index.IndexAction">
-	  <priority value="WARN" />
+	  <priority value="INFO" />
 	</category>
 	<category name="cn.bc.desktop.service.LoginServiceImpl">
-	  <priority value="WARN" />
+	  <priority value="DEBUG" />
 	</category>
 	<category name="cn.bc.web.struts2.interceptor.CacheInterceptor">
 	  <priority value="WARN" />
