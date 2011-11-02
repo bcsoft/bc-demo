@@ -117,3 +117,15 @@ bc-demo
 下载：http://nchc.dl.sourceforge.net/project/jodconverter/JODConverter/2.2.2/jodconverter-2.2.2.zip
 3)对于不支持html5上传文件的浏览器，如IE等，附件上传使用了SWFUpload组件实现多文件选择上传功能，
 这个组件需要flash插件的支持，因此这些浏览器需要安装flash才能正常使用。当前测试通过的flash版本为13.0。
+
+六）测试发布注意事项：
+1)备份原有数据库
+2)发布测试系统
+>mvn clean package -Pmysql -Ddb.type=mysql -Ddb.name=bcdemo -Ddb.ip=127.0.0.1 -Dapp.debug=false -Ddb.username=bcdemo -Ddb.password=bcdemo -Dapp.data.realPath=/bcdata4demo -Dapp.ts=20111102
+修改WEB-INF/web.xml文件，将appRealDir参数的值修改为/bcdata4demo。
+修改classess/log4j.xml，将日志级别统一设为ERROR,修改日志的文件名为bcdemo_vxx.log。
+修改classess/db.properties，确认数据库连接参数正确：测试系统使用帐号bcdemo/bcdemo。
+修改classess/global.properties，确认如下参数正确：
+    app.debug=false
+    app.ts=20111102
+    app.data.realPath=/bcdata4demo
