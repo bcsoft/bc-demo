@@ -60,6 +60,17 @@
 		<servlet-name>uploadFileServlet</servlet-name>
 		<url-pattern>/upload/*</url-pattern>
 	</servlet-mapping>
+	
+	<!-- Jetty WebSocket -->
+	<servlet>
+		<servlet-name>WSChat</servlet-name>
+		<servlet-class>cn.bc.websocket.jetty.WebSocketChatServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>WSChat</servlet-name>
+		<url-pattern>/ws/*</url-pattern>
+	</servlet-mapping>
 
 	<!-- 配置Spring加载哪些配置文件，多个文件用逗号连接，可使用通配符， 如/WEB-INF/applicationContext-*.xml,classpath*:applicationContext-*.xml -->
 	<context-param>

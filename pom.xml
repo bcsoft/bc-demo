@@ -134,6 +134,11 @@
 			<artifactId>bc-scheduler</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>cn.bc</groupId>
+			<artifactId>bc-websocket</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 		
 		<!-- for provided -->
 		<dependency>

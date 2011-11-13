@@ -92,6 +92,12 @@
 	<category name="cn.bc.web.struts2.AbstractGridPageAction">
 	  <priority value="INFO" />
 	</category>
+	<category name="cn.bc.websocket.jetty.WebSocketChatServlet">
+	  <priority value="DEBUG" />
+	</category>
+	<category name="cn.bc.websocket.jetty.WebSocketChatServlet.ChatWebSocket">
+	  <priority value="DEBUG" />
+	</category>
 	
     	
   	<!-- 设置默认的日志级别(该设置必须放在最后,否则加载会解析出错) -->
