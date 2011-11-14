@@ -95,7 +95,7 @@
 	<category name="cn.bc.websocket.jetty.WebSocketChatServlet">
 	  <priority value="DEBUG" />
 	</category>
-	<category name="cn.bc.websocket.jetty.WebSocketChatServlet.ChatWebSocket">
+	<category name="cn.bc.websocket.jetty.ChatWebSocket">
 	  <priority value="DEBUG" />
 	</category>
 	
