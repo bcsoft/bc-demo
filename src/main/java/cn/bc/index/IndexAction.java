@@ -51,6 +51,8 @@ public class IndexAction extends ActionSupport implements SessionAware {
 	public String msg;
 	public String startMenu;// 开始菜单
 	private LoginService loginService;
+	public String ts;// 附加到js、css文件后的时间戳
+	public String sid;// session的id
 
 	public String contextPath;
 
@@ -61,6 +63,16 @@ public class IndexAction extends ActionSupport implements SessionAware {
 
 	public IndexAction() {
 		contextPath = ServletActionContext.getRequest().getContextPath();
+		if ("true".equalsIgnoreCase(getText("app.debug"))) {
+			// 调试状态每次登陆都自动生成
+			ts = String.valueOf(new Date().getTime());
+		} else {
+			// 产品环境使用资源文件配置的值
+			ts = getText("app.ts");
+		}
+		
+		//记录session的id
+		sid = ServletActionContext.getRequest().getSession().getId();
 	}
 
 	public Context getContext() {
