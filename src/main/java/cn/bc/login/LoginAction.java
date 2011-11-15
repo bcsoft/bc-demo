@@ -325,13 +325,13 @@ public class LoginAction extends ActionSupport implements SessionAware {
 					"true".equalsIgnoreCase(getText("app.traceClientMachine")),
 					ServletActionContext.getRequest());
 			syslogService.save(log);
+			
+			// 移除下线用户
+			this.onlineUserService.remove(ServletActionContext.getRequest().getSession().getId());
 
 			// 将session设置为无效
 			((org.apache.struts2.dispatcher.SessionMap<String, Object>) this.session)
 					.invalidate();
-
-			// 移除下线用户
-			this.onlineUserService.remove(user.getActorId());
 		}
 		return SUCCESS;
 	}

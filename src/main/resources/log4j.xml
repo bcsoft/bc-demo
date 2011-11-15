@@ -39,7 +39,7 @@
 	</category>
 	<!-- hibernate：设为DEBUG，查看实际的sql语句，相当于hibernate.show_sql=true (org.hibernate.jdbc.util.SQLStatementLogger) -->
 	<category name="org.hibernate.SQL">
-	  <priority value="DEBUG" />
+	  <priority value="WARN" />
 	</category>
 	<!-- hibernate：设为INFO，查看实体对象映射到哪张数据表；设为DEBUG则可以查看实体属性与表中列的映射对应关系 -->
 	<category name="org.hibernate.cfg.HbmBinder">
@@ -72,10 +72,10 @@
  
 	<!-- bc -->
 	<category name="cn.bc.login.LoginAction">
-	  <priority value="INFO" />
+	  <priority value="WARN" />
 	</category>
 	<category name="cn.bc.index.IndexAction">
-	  <priority value="INFO" />
+	  <priority value="WARN" />
 	</category>
 	<category name="cn.bc.desktop.service.LoginServiceImpl">
 	  <priority value="WARN" />
@@ -87,10 +87,10 @@
 	  <priority value="WARN" />
 	</category>
 	<category name="cn.bc.orm.hibernate.jpa.HibernateJpaNativeQuery">
-	  <priority value="DEBUG" />
+	  <priority value="WARN" />
 	</category>
 	<category name="cn.bc.web.struts2.AbstractGridPageAction">
-	  <priority value="INFO" />
+	  <priority value="WARN" />
 	</category>
 	<category name="cn.bc.websocket.jetty.WebSocketChatServlet">
 	  <priority value="DEBUG" />
