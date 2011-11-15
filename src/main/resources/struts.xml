@@ -40,6 +40,7 @@
 	<include file="cn/bc/docs/web/struts2/struts.xml" />
 	<include file="cn/bc/option/web/struts2/struts.xml" />
 	<include file="cn/bc/scheduler/web/struts2/struts.xml" />
+	<include file="cn/bc/chat/web/struts2/struts.xml" />
 
 	<!-- 项目自定义的配置文件 -->
 	<include file="struts-demo.xml" />

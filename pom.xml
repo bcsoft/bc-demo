@@ -6,7 +6,6 @@
 		<version>0.6-SNAPSHOT</version>
 	</parent>
 	<artifactId>bc-demo</artifactId>
-  	<version>0.6-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>bc平台演示</name>
 	
@@ -137,6 +136,11 @@
 		<dependency>
 			<groupId>cn.bc</groupId>
 			<artifactId>bc-websocket</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>cn.bc</groupId>
+			<artifactId>bc-chat</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		

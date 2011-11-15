@@ -78,7 +78,7 @@
 	  <priority value="INFO" />
 	</category>
 	<category name="cn.bc.desktop.service.LoginServiceImpl">
-	  <priority value="DEBUG" />
+	  <priority value="WARN" />
 	</category>
 	<category name="cn.bc.web.struts2.interceptor.CacheInterceptor">
 	  <priority value="WARN" />
@@ -95,7 +95,13 @@
 	<category name="cn.bc.websocket.jetty.WebSocketChatServlet">
 	  <priority value="DEBUG" />
 	</category>
-	<category name="cn.bc.websocket.jetty.ChatWebSocket">
+	<category name="cn.bc.websocket.jetty.ChatWebSocketImpl">
+	  <priority value="DEBUG" />
+	</category>
+	<category name="cn.bc.chat.service.OnlineUserServiceImpl">
+	  <priority value="DEBUG" />
+	</category>
+	<category name="cn.bc.log.web.SyslogSessionListener">
 	  <priority value="DEBUG" />
 	</category>
 	

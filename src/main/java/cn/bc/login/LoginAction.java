@@ -25,6 +25,8 @@ import org.springframework.util.DigestUtils;
 import org.springframework.util.StringUtils;
 
 import cn.bc.Context;
+import cn.bc.chat.OnlineUser;
+import cn.bc.chat.service.OnlineUserService;
 import cn.bc.core.exception.CoreException;
 import cn.bc.core.util.DateUtils;
 import cn.bc.desktop.service.LoginService;
@@ -36,6 +38,7 @@ import cn.bc.identity.web.SystemContextImpl;
 import cn.bc.log.domain.Syslog;
 import cn.bc.log.service.SyslogService;
 import cn.bc.log.web.struts2.SyslogAction;
+import cn.bc.web.util.WebUtils;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.util.LocalizedTextUtil;
@@ -55,9 +58,15 @@ public class LoginAction extends ActionSupport implements SessionAware {
 	public String password;// 密码
 	public String msg;// 登录信息
 	public boolean success;// 登录是否成功
+	private OnlineUserService onlineUserService;
 	private LoginService loginService;
 	private SyslogService syslogService;
 	private Map<String, Object> session;
+
+	@Autowired
+	public void setOnlineUserService(OnlineUserService onlineUserService) {
+		this.onlineUserService = onlineUserService;
+	}
 
 	@Autowired
 	public void setLoginService(LoginService loginService) {
@@ -107,15 +116,18 @@ public class LoginAction extends ActionSupport implements SessionAware {
 					msg = "密码错误！";
 					success = false;
 				} else {
-					String info = user.getName() + "登录系统,ip=";
 					HttpServletRequest request = ServletActionContext
 							.getRequest();
-					info += request.getRemoteAddr();
-					info += ",host=" + request.getRemoteHost();
-					logger.info(info);
-					msg = "登录成功，跳转到系统主页！";
-					logger.info("doLogin.authOk："
-							+ DateUtils.getWasteTime(startTime));
+					String clientIp = WebUtils.getClientIP(request);
+					if (logger.isInfoEnabled()) {
+						String info = user.getName() + "登录系统";
+						info += ",ip=" + clientIp;
+						info += ",host=" + request.getRemoteHost();
+						logger.info(info);
+						msg = "登录成功，跳转到系统主页！";
+						logger.info("doLogin.authOk："
+								+ DateUtils.getWasteTime(startTime));
+					}
 
 					// 创建默认的上下文实现并保存到session中
 					Context context = new SystemContextImpl();
@@ -204,19 +216,33 @@ public class LoginAction extends ActionSupport implements SessionAware {
 					this.session.put("loginTime", now);
 
 					// 记录登陆日志
-					Syslog log = SyslogAction
-							.buildSyslog(
-									now,
-									Syslog.TYPE_LOGIN,
-									userHistory,
-									userHistory.getName()
-											+ LocalizedTextUtil.findText(
-													SyslogAction.class,
-													"syslog.login",
-													this.getLocale()),
-									"true".equalsIgnoreCase(getText("app.traceClientMachine")),
-									ServletActionContext.getRequest());
+					boolean traceClientMAC = "true"
+							.equalsIgnoreCase(getText("app.traceClientMachine"));
+					request = ServletActionContext.getRequest();
+					Syslog log = SyslogAction.buildSyslog(
+							now,
+							Syslog.TYPE_LOGIN,
+							userHistory,
+							userHistory.getName()
+									+ LocalizedTextUtil.findText(
+											SyslogAction.class, "syslog.login",
+											this.getLocale()), traceClientMAC,
+							ServletActionContext.getRequest());
 					syslogService.save(log);
+
+					// 记录在线用户
+					OnlineUser onlineUser = new OnlineUser();
+					onlineUser.setId(user.getId());
+					onlineUser.setUid(user.getUid());
+					onlineUser.setName(user.getName());
+					onlineUser.setCode(user.getCode());
+					onlineUser.setFullName(user.getFullName());
+					onlineUser.setIp(clientIp);
+					onlineUser.setSession(request.getSession().getId());
+					onlineUser.setBrowser(WebUtils.getBrowser(request));
+					onlineUser.setMac(traceClientMAC ? WebUtils
+							.getMac(clientIp) : "no trace");
+					this.onlineUserService.add(onlineUser);
 				}
 			}
 		}
@@ -300,8 +326,12 @@ public class LoginAction extends ActionSupport implements SessionAware {
 					ServletActionContext.getRequest());
 			syslogService.save(log);
 
+			// 将session设置为无效
 			((org.apache.struts2.dispatcher.SessionMap<String, Object>) this.session)
 					.invalidate();
+
+			// 移除下线用户
+			this.onlineUserService.remove(user.getActorId());
 		}
 		return SUCCESS;
 	}
