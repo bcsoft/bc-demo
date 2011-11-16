@@ -232,13 +232,15 @@ public class LoginAction extends ActionSupport implements SessionAware {
 
 					// 记录在线用户
 					OnlineUser onlineUser = new OnlineUser();
+					onlineUser.setLoginTime(now);
 					onlineUser.setId(user.getId());
 					onlineUser.setUid(user.getUid());
 					onlineUser.setName(user.getName());
 					onlineUser.setCode(user.getCode());
+					onlineUser.setPname(user.getPname());
 					onlineUser.setFullName(user.getFullName());
 					onlineUser.setIp(clientIp);
-					onlineUser.setSession(request.getSession().getId());
+					onlineUser.setSid(request.getSession().getId());
 					onlineUser.setBrowser(WebUtils.getBrowser(request));
 					onlineUser.setMac(traceClientMAC ? WebUtils
 							.getMac(clientIp) : "no trace");
@@ -325,13 +327,14 @@ public class LoginAction extends ActionSupport implements SessionAware {
 					"true".equalsIgnoreCase(getText("app.traceClientMachine")),
 					ServletActionContext.getRequest());
 			syslogService.save(log);
-			
-			// 移除下线用户
-			this.onlineUserService.remove(ServletActionContext.getRequest().getSession().getId());
 
-			// 将session设置为无效
+			// 移除下线用户
+			this.onlineUserService.remove(ServletActionContext.getRequest()
+					.getSession().getId());
+
+			// 将session设置为无效：使用clear而不是invalidate可以避免session的id变了
 			((org.apache.struts2.dispatcher.SessionMap<String, Object>) this.session)
-					.invalidate();
+					.clear();// invalidate();
 		}
 		return SUCCESS;
 	}
