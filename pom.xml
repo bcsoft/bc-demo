@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>cn.bc</groupId>
@@ -8,13 +9,13 @@
 	<artifactId>bc-demo</artifactId>
 	<packaging>war</packaging>
 	<name>bc平台演示</name>
-	
+
 	<properties>
 		<app.ts>20111102</app.ts>
 		<app.debug>false</app.debug>
 		<app.data.realPath>/bcdata4demo</app.data.realPath>
 		<app.data.subPath>uploads</app.data.subPath>
-		
+
 		<!-- 数据库连接配置 -->
 		<db>mysql</db>
 		<db.name>bcdemo</db.name>
@@ -60,7 +61,7 @@
 			<artifactId>hibernate-jpa-2.0-api</artifactId>
 			<scope>compile</scope>
 		</dependency>
-		
+
 		<!-- 平台模块 -->
 		<dependency>
 			<groupId>cn.bc</groupId>
@@ -145,7 +146,21 @@
 			<artifactId>bc-chat</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-		
+
+		<!-- 数据库连接池 -->
+		<dependency>
+			<groupId>c3p0</groupId>
+			<artifactId>c3p0</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-dbcp</groupId>
+			<artifactId>commons-dbcp</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.atomikos</groupId>
+			<artifactId>transactions-jdbc</artifactId>
+		</dependency>
+
 		<!-- for provided -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -157,40 +172,37 @@
 			<artifactId>jsp-api</artifactId>
 			<scope>provided</scope>
 		</dependency>
-		
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-webapp</artifactId>
+			<version>${jetty.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-plus</artifactId>
+			<version>${jetty.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-servlet</artifactId>
+			<version>${jetty.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
 		<!-- for test -->
 
-		<!--
-		<dependency>
-			<groupId>org.json</groupId>
-			<artifactId>json</artifactId>
-			<version>20080701</version>
-		</dependency>
-		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.jgeppert.struts2.jquery</groupId>
-			<artifactId>struts2-jquery-plugin</artifactId>
-			<version>${struts2.jquery.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.jgeppert.struts2.jquery</groupId>
-			<artifactId>struts2-jquery-chart-plugin</artifactId>
-			<version>${struts2.jquery.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.jgeppert.struts2.jquery</groupId>
-			<artifactId>struts2-jquery-richtext-plugin</artifactId>
-			<version>${struts2.jquery.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.jgeppert.struts2.jquery</groupId>
-			<artifactId>struts2-jquery-grid-plugin</artifactId>
-			<version>${struts2.jquery.version}</version>
-		</dependency>
-		-->
+		<!-- <dependency> <groupId>org.json</groupId> <artifactId>json</artifactId> 
+			<version>20080701</version> </dependency> <dependency> <groupId>log4j</groupId> 
+			<artifactId>log4j</artifactId> <scope>compile</scope> </dependency> <dependency> 
+			<groupId>com.jgeppert.struts2.jquery</groupId> <artifactId>struts2-jquery-plugin</artifactId> 
+			<version>${struts2.jquery.version}</version> </dependency> <dependency> <groupId>com.jgeppert.struts2.jquery</groupId> 
+			<artifactId>struts2-jquery-chart-plugin</artifactId> <version>${struts2.jquery.version}</version> 
+			</dependency> <dependency> <groupId>com.jgeppert.struts2.jquery</groupId> 
+			<artifactId>struts2-jquery-richtext-plugin</artifactId> <version>${struts2.jquery.version}</version> 
+			</dependency> <dependency> <groupId>com.jgeppert.struts2.jquery</groupId> 
+			<artifactId>struts2-jquery-grid-plugin</artifactId> <version>${struts2.jquery.version}</version> 
+			</dependency> -->
 	</dependencies>
 </project>

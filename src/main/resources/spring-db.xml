@@ -23,17 +23,26 @@
 				hibernate.dialect=${hibernate_dialect}
 				hibernate.show_sql=${hibernate_showSql}
 				hibernate.hbm2ddl.auto=${hibernate_hbm2ddl_auto}
-            </value>
+			</value>
 		</property>
 	</bean>
 	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
+	
+	<!-- 基于驱动的数据源
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource"
 		p:driverClassName="${db_driverClassName}" p:url="${db_url}"
 		p:username="${db_username}" p:password="${db_password}" />
-		
+	 -->	
+	<!-- 基于jndi的数据源 -->
+	<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName">
+			<value>java:comp/env/jdbc/${jndi_name}</value>
+		</property>
+	</bean>
+	
 	<bean id="jpaTemplate" class="org.springframework.orm.jpa.JpaTemplate">
 		<constructor-arg ref="entityManagerFactory" />
 	</bean>
