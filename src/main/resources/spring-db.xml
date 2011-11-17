@@ -29,19 +29,37 @@
 	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
-	
-	<!-- 基于驱动的数据源
+
+	<!-- 基于驱动的数据源 -->
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource"
 		p:driverClassName="${db_driverClassName}" p:url="${db_url}"
 		p:username="${db_username}" p:password="${db_password}" />
-	 -->	
-	<!-- 基于jndi的数据源 -->
+
+	<!-- 基于jndi的数据源
 	<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
 		<property name="jndiName">
 			<value>java:comp/env/jdbc/${jndi_name}</value>
 		</property>
-	</bean>
+	</bean> -->
+
+	<!-- 在Spring中创建c3p0数据源
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
+		<property name="driverClass" value="${db_driverClassName}" />
+		<property name="jdbcUrl" value="${db_url}" />
+		<property name="properties">
+			<props>
+				<prop key="c3p0.minPoolSize">1</prop>
+				<prop key="hc3p0.maxPoolSize">10</prop>
+				<prop key="hc3p0.timeout">60</prop>
+				<prop key="c3p0.max_statement">50</prop>
+				<prop key="c3p0.testConnectionOnCheckout">true</prop>
+				<prop key="user">${db_username}</prop>
+				<prop key="password">${db_password}</prop>
+			</props>
+		</property>
+	</bean> -->
 	
 	<bean id="jpaTemplate" class="org.springframework.orm.jpa.JpaTemplate">
 		<constructor-arg ref="entityManagerFactory" />

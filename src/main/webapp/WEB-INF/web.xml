@@ -12,8 +12,19 @@
 	</welcome-file-list>
 	<session-config>
 		<!-- session超时设置，设为不大于0的数将永远不过时，单位为分钟 -->
-		<session-timeout>60</session-timeout>
+		<session-timeout>2</session-timeout>
 	</session-config>
+
+	<!-- Jetty WebSocket -->
+	<servlet>
+		<servlet-name>WSChat</servlet-name>
+		<servlet-class>cn.bc.websocket.jetty.WebSocketChatServlet</servlet-class>
+		<load-on-startup>0</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>WSChat</servlet-name>
+		<url-pattern>/ws/*</url-pattern>
+	</servlet-mapping>
 
 	<!-- Log4j -->
 	<servlet>
@@ -23,7 +34,7 @@
 			<param-name>log4jConfigLocation</param-name>
 			<param-value>/WEB-INF/classes/log4j.xml</param-value>
 		</init-param>
-		<load-on-startup>0</load-on-startup>
+		<load-on-startup>1</load-on-startup>
 	</servlet>
 
 	<!-- 上传文件 -->
@@ -50,22 +61,11 @@
 			<param-name>maxSize</param-name>
 			<param-value>104857600</param-value>
 		</init-param>
-		<load-on-startup>1</load-on-startup>
+		<load-on-startup>2</load-on-startup>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>uploadFileServlet</servlet-name>
 		<url-pattern>/upload/*</url-pattern>
-	</servlet-mapping>
-
-	<!-- Jetty WebSocket -->
-	<servlet>
-		<servlet-name>WSChat</servlet-name>
-		<servlet-class>cn.bc.websocket.jetty.WebSocketChatServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>WSChat</servlet-name>
-		<url-pattern>/ws/*</url-pattern>
 	</servlet-mapping>
 
 	<!-- 配置Spring加载哪些配置文件，多个文件用逗号连接，可使用通配符， 如/WEB-INF/applicationContext-*.xml,classpath*:applicationContext-*.xml -->
