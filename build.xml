@@ -30,7 +30,7 @@
 		</delete>
 	</target>
 
-	<target name="c" description="删除打包后ui-libs目录下为用到的开源组件等">
+	<target name="c" description="删除打包后ui-libs目录下未用到的开源组件等">
 		<mkdir dir="${target.dir}/${packageName}_ok" />
 		<copy todir="${target.dir}/${packageName}_ok">
 			<fileset dir="${target.dir}/${packageName}">
@@ -66,6 +66,10 @@
 	</target>
 
 	<target name="build">
+		<!-- postgresql -->
+		<concatSql4create db="postgresql" />
+		<concatSql4drop db="postgresql" />
+
 		<!-- mysql -->
 		<concatSql4create db="mysql" />
 		<concatSql4drop db="mysql" />
