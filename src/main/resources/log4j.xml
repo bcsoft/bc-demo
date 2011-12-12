@@ -39,7 +39,7 @@
 	</category>
 	<!-- hibernate：设为DEBUG，查看实际的sql语句，相当于hibernate.show_sql=true (org.hibernate.jdbc.util.SQLStatementLogger) -->
 	<category name="org.hibernate.SQL">
-	  <priority value="WARN" />
+	  <priority value="DEBUG" />
 	</category>
 	<!-- hibernate：设为INFO，查看实体对象映射到哪张数据表；设为DEBUG则可以查看实体属性与表中列的映射对应关系 -->
 	<category name="org.hibernate.cfg.HbmBinder">
