@@ -4,14 +4,14 @@
 	<parent>
 		<groupId>cn.bc</groupId>
 		<artifactId>bc-parent</artifactId>
-		<version>0.6-SNAPSHOT</version>
+		<version>0.7-SNAPSHOT</version>
 	</parent>
 	<artifactId>bc-demo</artifactId>
 	<packaging>war</packaging>
 	<name>bc平台演示</name>
 
 	<properties>
-		<app.ts>20111102</app.ts>
+		<app.ts>20111212</app.ts>
 		<app.debug>false</app.debug>
 		<app.data.realPath>/bcdata4demo</app.data.realPath>
 		<app.data.subPath>uploads</app.data.subPath>
