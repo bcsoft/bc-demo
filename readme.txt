@@ -56,7 +56,14 @@ bc-demo
    地址： [内网]git@[serverIp]:bc-framework-webapp.git 或 [外网]git@github.com:rongjihuang/bc-framework-webapp.git
    注：检出的目录名必须为bc
 6) 部署数据库
-6-1)使用mysql (5.5.9 MySQL Community Server)
+6-1)使用 postgresql (9.1.2)
+    打开 pgAdmin III，创建用户bcdemo，密码也设为bcdemo，创建UTF8数据库bcdemo(属主设为用户bcdemo)
+	(如有异，可修改src/main/resource/db.properties文件)；
+	按顺序执行如下脚本：
+    db.postgresql.drop.sql --> 删表(首次不需运行)
+    db.postgresql.create.sql --> 建表
+    db.postgresql.data.sql --> 导入初始化数据
+6-2)使用 mysql (5.5.9 MySQL Community Server)
     >cd bc-demo
     >ant build
     >cd src/main/resources/db
@@ -66,7 +73,7 @@ bc-demo
     >mysql -ubcdemo -pbcdemo bcdemo < db.mysql.drop.sql --> 删表(首次不需运行)
     >mysql -ubcdemo -pbcdemo bcdemo < db.mysql.create.sql --> 建表
     >mysql -ubcdemo -pbcdemo bcdemo < db.mysql.data.sql --> 导入初始化数据
-6-2)使用oracle (11.2.0.1)
+6-3)使用 oracle (11.2.0.1)
     >cd bc-demo
     >ant build
     >cd src/main/resources/db
@@ -127,5 +134,5 @@ bc-demo
 修改classess/db.properties，确认数据库连接参数正确：测试系统使用帐号bcdemo/bcdemo。
 修改classess/global.properties，确认如下参数正确：
     app.debug=false
-    app.ts=20111102
+    app.ts=20111220
     app.data.realPath=/bcdata4demo

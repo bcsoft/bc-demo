@@ -14,6 +14,7 @@
 
 	<!-- 配置数据库连接 -->
 	<context:property-placeholder location="classpath:db.properties" />
+	<bean id="JdbcUtils" class="cn.bc.db.JdbcUtils" p:dbtype="${db_type}" />
 	<bean id="entityManagerFactory"
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
 		<property name="persistenceUnitName" value="persistenceUnit" />
@@ -30,18 +31,18 @@
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
 
-	<!-- 基于驱动的数据源 -->
+	<!-- 基于驱动的数据源
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource"
 		p:driverClassName="${db_driverClassName}" p:url="${db_url}"
-		p:username="${db_username}" p:password="${db_password}" />
+		p:username="${db_username}" p:password="${db_password}" /> -->
 
-	<!-- 基于jndi的数据源
+	<!-- 基于jndi的数据源 -->
 	<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
 		<property name="jndiName">
 			<value>java:comp/env/jdbc/${jndi_name}</value>
 		</property>
-	</bean> -->
+	</bean>
 
 	<!-- 在Spring中创建c3p0数据源
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Configure PUBLIC "-//Mort Bay Consulting//DTD Configure//EN" "http://jetty.mortbay.org/configure.dtd">
+<!-- A jetty-env.xml file is an optional file that you can place in your 
+	webapp's WEB-INF directory to configure JNDI resources specifically for that 
+	webapp. -->
+<!-- For Jetty8. Ref: http://docs.codehaus.org/display/JETTY/DataSource+Examples -->
+<Configure class="org.eclipse.jetty.webapp.WebAppContext">
+	<!-- 基于c3p0的连接池配置:测试通过 -->
+	<New id="bcdemo" class="org.eclipse.jetty.plus.jndi.Resource">
+		<Arg></Arg>
+		<Arg>jdbc/bcdemo</Arg>
+		<Arg>
+			<New class="com.mchange.v2.c3p0.ComboPooledDataSource">
+				<Set name="driverClass">com.mysql.jdbc.Driver</Set>
+				<Set name="jdbcUrl"><![CDATA[jdbc:mysql://127.0.0.1:3306/bcdemo?useUnicode=true&characterEncoding=UTF-8]]></Set>
+				<Set name="user">bcdemo</Set>
+				<Set name="password">bcdemo</Set>
+			</New>
+		</Arg>
+	</New>
+
+	<!-- 基于dbcp的连接池配置:测试通过
+	<New id="bcdemo" class="org.eclipse.jetty.plus.jndi.Resource">
+		<Arg></Arg>
+		<Arg>jdbc/bcdemo</Arg>
+		<Arg>
+			<New class="org.apache.commons.dbcp.BasicDataSource">
+				<Set name="driverClassName">com.mysql.jdbc.Driver</Set>
+				<Set name="url"><![CDATA[jdbc:mysql://127.0.0.1:3306/bcdemo?useUnicode=true&characterEncoding=UTF-8]]></Set>
+				<Set name="username">bcdemo</Set>
+				<Set name="password">bcdemo</Set>
+			</New>
+		</Arg>
+	</New> -->
+
+	<!-- 基于Atomikos的连接池配置:测试未通过
+	<New id="bcdemo" class="org.eclipse.jetty.plus.jndi.Resource">
+		<Arg></Arg>
+		<Arg>jdbc/bcdemo</Arg>
+		<Arg>
+			<New class="com.atomikos.jdbc.AtomikosDataSourceBean">
+				<Set name="minPoolSize">2</Set>
+				<Set name="maxPoolSize">50</Set>
+				<Set name="xaDataSourceClassName">com.mysql.jdbc.jdbc2.optional.MysqlXADataSource</Set>
+				<Set name="UniqueResourceName">bcdemo</Set>
+				<Get name="xaProperties">
+					<Call name="setProperty">
+						<Arg>url</Arg>
+						<Arg><![CDATA[jdbc:mysql://127.0.0.1:3306/bcdemo?useUnicode=true&characterEncoding=UTF-8]]></Arg>
+					</Call>
+					<Call name="setProperty">
+						<Arg>user</Arg>
+						<Arg>bcdemo</Arg>
+					</Call>
+					<Call name="setProperty">
+						<Arg>password</Arg>
+						<Arg>bcdemo</Arg>
+					</Call>
+				</Get>
+			</New>
+		</Arg>
+	</New> -->
+</Configure>
