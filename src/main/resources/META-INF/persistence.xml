@@ -48,6 +48,7 @@
 
 		<!-- feedback -->
 		<class>cn.bc.feedback.domain.Feedback</class>
+		<class>cn.bc.feedback.domain.Reply</class>
 
 		<!-- scheduler -->
 		<class>cn.bc.scheduler.domain.ScheduleJob</class>
