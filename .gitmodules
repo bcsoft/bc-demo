@@ -1,0 +1,12 @@
+[submodule "src/main/webapp/bc"]
+	path = src/main/webapp/bc
+	url = git@github.com:bcsoft/bc-framework-webapp.git
+[submodule "src/main/webapp/bc-test"]
+	path = src/main/webapp/bc-test
+	url = git@github.com:bcsoft/bc-test-webapp.git
+[submodule "src/main/webapp/ui-libs"]
+	path = src/main/webapp/ui-libs
+	url = git@github.com:bcsoft/ui-libs.git
+[submodule "src/main/webapp/ui-libs-demo"]
+	path = src/main/webapp/ui-libs-demo
+	url = git@github.com:bcsoft/ui-libs-demo.git
