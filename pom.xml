@@ -135,18 +135,18 @@
 			<artifactId>bc-scheduler</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-		<!-- WebSocket -->
+		<!-- WebSocket
 		<dependency>
 			<groupId>cn.bc</groupId>
 			<artifactId>bc-websocket</artifactId>
 			<version>${project.version}</version>
-		</dependency>
-		<!-- 在线聊天工具 -->
+		</dependency> -->
+		<!-- 在线聊天工具
 		<dependency>
 			<groupId>cn.bc</groupId>
 			<artifactId>bc-chat</artifactId>
 			<version>${project.version}</version>
-		</dependency>
+		</dependency> -->
 
 		<!-- 数据库连接池 -->
 		<dependency>
